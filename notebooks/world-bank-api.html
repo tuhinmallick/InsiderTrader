@@ -1,0 +1,1032 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>1. Indicators Example</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="canonical" href="https://worldbank.github.io/template/notebooks/world-bank-api.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="2. Package Example" href="world-bank-package.html" />
+    <link rel="prev" title="🚀 Project Template" href="../README.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/logo.png" class="logo" alt="logo">
+      
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Examples
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   1. Indicators Example
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="world-bank-package.html">
+   2. Package Example
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Additional Resources
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference external" href="https://datapartnership.org">
+   Development Data Partnership
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference external" href="https://wbdatalab.org">
+   World Bank Data Lab
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference external" href="https://www.worldbank.org/en/about/unit/unit-dec">
+   World Bank DEC
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference external" href="https://www.worldbank.org/en/research/dime">
+   World Bank DIME
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/worldbank/template/main?urlpath=tree/notebooks/world-bank-api.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/worldbank/template"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/worldbank/template/issues/new?title=Issue%20on%20page%20%2Fnotebooks/world-bank-api.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/worldbank/template/edit/main/notebooks/world-bank-api.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Edit this page"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="headerbtn__text-container">suggest edit</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/notebooks/world-bank-api.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#requirements">
+   1.1. Requirements
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#retrieve-data">
+   1.2. Retrieve Data
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#visualization">
+   1.3. Visualization
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Indicators Example</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#requirements">
+   1.1. Requirements
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#retrieve-data">
+   1.2. Retrieve Data
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#visualization">
+   1.3. Visualization
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="indicators-example">
+<h1><span class="section-number">1. </span>Indicators Example<a class="headerlink" href="#indicators-example" title="Permalink to this headline">#</a></h1>
+<blockquote>
+<div><p>The following is an example of a <a class="reference external" href="https://jupyter.org">Jupyter notebook</a> - a tutorial of how to retrieve data from the <a class="reference external" href="https://datahelpdesk.worldbank.org/knowledgebase/articles/889392-about-the-indicators-api-documentation">World Bank Indicators API</a> - that illustrates how to use computational content with the <a class="reference external" href="https://worldbank.github.io/template">template</a>.</p>
+</div></blockquote>
+<section id="requirements">
+<h2><span class="section-number">1.1. </span>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">itertools</span>
+
+<span class="kn">import</span> <span class="nn">bokeh</span>
+<span class="kn">import</span> <span class="nn">pandas</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">from</span> <span class="nn">bokeh.palettes</span> <span class="kn">import</span> <span class="n">Spectral6</span>
+<span class="kn">from</span> <span class="nn">bokeh.plotting</span> <span class="kn">import</span> <span class="n">figure</span><span class="p">,</span> <span class="n">output_notebook</span><span class="p">,</span> <span class="n">show</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="retrieve-data">
+<h2><span class="section-number">1.2. </span>Retrieve Data<a class="headerlink" href="#retrieve-data" title="Permalink to this headline">#</a></h2>
+<p>In this example, we retrieve <strong>Population, total</strong> (<code class="docutils literal notranslate"><span class="pre">SP.POP.TOTL</span></code>) from the <a class="reference external" href="https://data.worldbank.org/indicator">World Bank Indicators</a> for <a class="reference external" href="https://infobrics.org">BRICS</a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://api.worldbank.org/v2/country/chn;bra;ind;rus;zaf/indicator/SP.POP.TOTL?format=json&amp;per_page=10000&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s use <a class="reference external" href="https://requests.readthedocs.io">requests</a> to send a GET request,</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now, let’s normalize and create <code class="docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> from the response,</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># normalize</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">json_normalize</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="c1"># create dataframe</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Alternatively, the World Bank API supports downloading the data as an <a class="reference external" href="http://api.worldbank.org/v2/country/all/indicator/SP.POP.TOTL?date=2000&amp;source=2&amp;downloadformat=csv">archive</a>.</p>
+</div>
+<p>Let’s take a look at the dataframe,</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="s2">&quot;date&quot;</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="s2">&quot;countryiso3code&quot;</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span> <span class="o">/</span> <span class="mf">1e6</span> <span class="c1"># scaling</span>
+<span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>countryiso3code</th>
+      <th>BRA</th>
+      <th>CHN</th>
+      <th>IND</th>
+      <th>RUS</th>
+      <th>ZAF</th>
+    </tr>
+    <tr>
+      <th>date</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1960</th>
+      <td>72.179235</td>
+      <td>667.070</td>
+      <td>450.547675</td>
+      <td>119.897000</td>
+      <td>17.099836</td>
+    </tr>
+    <tr>
+      <th>1961</th>
+      <td>74.311338</td>
+      <td>660.330</td>
+      <td>459.642166</td>
+      <td>121.236000</td>
+      <td>17.524533</td>
+    </tr>
+    <tr>
+      <th>1962</th>
+      <td>76.514329</td>
+      <td>665.770</td>
+      <td>469.077191</td>
+      <td>122.591000</td>
+      <td>17.965733</td>
+    </tr>
+    <tr>
+      <th>1963</th>
+      <td>78.772647</td>
+      <td>682.335</td>
+      <td>478.825602</td>
+      <td>123.960000</td>
+      <td>18.423157</td>
+    </tr>
+    <tr>
+      <th>1964</th>
+      <td>81.064572</td>
+      <td>698.355</td>
+      <td>488.848139</td>
+      <td>125.345000</td>
+      <td>18.896303</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>2017</th>
+      <td>207.833825</td>
+      <td>1396.215</td>
+      <td>1338.676779</td>
+      <td>144.496739</td>
+      <td>57.009751</td>
+    </tr>
+    <tr>
+      <th>2018</th>
+      <td>209.469320</td>
+      <td>1402.760</td>
+      <td>1352.642283</td>
+      <td>144.477859</td>
+      <td>57.792520</td>
+    </tr>
+    <tr>
+      <th>2019</th>
+      <td>211.049519</td>
+      <td>1407.745</td>
+      <td>1366.417756</td>
+      <td>144.406261</td>
+      <td>58.558267</td>
+    </tr>
+    <tr>
+      <th>2020</th>
+      <td>212.559409</td>
+      <td>1411.100</td>
+      <td>1380.004385</td>
+      <td>144.073139</td>
+      <td>59.308690</td>
+    </tr>
+    <tr>
+      <th>2021</th>
+      <td>213.993441</td>
+      <td>1412.360</td>
+      <td>1393.409033</td>
+      <td>143.446060</td>
+      <td>60.041996</td>
+    </tr>
+  </tbody>
+</table>
+<p>62 rows × 5 columns</p>
+</div></div></div>
+</div>
+</section>
+<section id="visualization">
+<h2><span class="section-number">1.3. </span>Visualization<a class="headerlink" href="#visualization" title="Permalink to this headline">#</a></h2>
+<p>Let’s now plot the data as a time series using <a class="reference external" href="https://docs.bokeh.org">Bokeh</a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">output_notebook</span><span class="p">()</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">figure</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Population, total (World Bank)&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">700</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">600</span><span class="p">)</span>
+
+<span class="c1"># colors</span>
+<span class="n">colors</span> <span class="o">=</span> <span class="n">itertools</span><span class="o">.</span><span class="n">cycle</span><span class="p">(</span><span class="n">Spectral6</span><span class="p">)</span>
+
+<span class="c1"># plotting the line graph</span>
+<span class="k">for</span> <span class="n">column</span><span class="p">,</span> <span class="n">color</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">colors</span><span class="p">):</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">line</span><span class="p">(</span>
+        <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">,</span>
+        <span class="n">df</span><span class="p">[</span><span class="n">column</span><span class="p">],</span>
+        <span class="n">legend_label</span><span class="o">=</span><span class="n">column</span><span class="p">,</span>
+        <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span>
+        <span class="n">line_width</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="p">)</span>
+
+<span class="n">p</span><span class="o">.</span><span class="n">legend</span><span class="o">.</span><span class="n">location</span> <span class="o">=</span> <span class="s2">&quot;right&quot;</span>
+<span class="n">p</span><span class="o">.</span><span class="n">legend</span><span class="o">.</span><span class="n">click_policy</span> <span class="o">=</span> <span class="s2">&quot;mute&quot;</span>
+<span class="n">p</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">text_font_size</span> <span class="o">=</span> <span class="s2">&quot;12pt&quot;</span>
+
+<span class="n">p</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">axis_label</span> <span class="o">=</span> <span class="s2">&quot;Year&quot;</span>
+<span class="n">p</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">axis_label</span> <span class="o">=</span> <span class="s2">&quot;Population, total (in millions)&quot;</span>
+
+<span class="n">show</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div class="bk-root">
+        <a href="https://bokeh.org" target="_blank" class="bk-logo bk-logo-small bk-logo-notebook"></a>
+        <span id="1002">Loading BokehJS ...</span>
+    </div>
+</div><script type="application/javascript">(function(root) {
+  function now() {
+    return new Date();
+  }
+
+  const force = true;
+
+  if (typeof root._bokeh_onload_callbacks === "undefined" || force === true) {
+    root._bokeh_onload_callbacks = [];
+    root._bokeh_is_loading = undefined;
+  }
+
+const JS_MIME_TYPE = 'application/javascript';
+  const HTML_MIME_TYPE = 'text/html';
+  const EXEC_MIME_TYPE = 'application/vnd.bokehjs_exec.v0+json';
+  const CLASS_NAME = 'output_bokeh rendered_html';
+
+  /**
+   * Render data to the DOM node
+   */
+  function render(props, node) {
+    const script = document.createElement("script");
+    node.appendChild(script);
+  }
+
+  /**
+   * Handle when an output is cleared or removed
+   */
+  function handleClearOutput(event, handle) {
+    const cell = handle.cell;
+
+    const id = cell.output_area._bokeh_element_id;
+    const server_id = cell.output_area._bokeh_server_id;
+    // Clean up Bokeh references
+    if (id != null && id in Bokeh.index) {
+      Bokeh.index[id].model.document.clear();
+      delete Bokeh.index[id];
+    }
+
+    if (server_id !== undefined) {
+      // Clean up Bokeh references
+      const cmd_clean = "from bokeh.io.state import curstate; print(curstate().uuid_to_server['" + server_id + "'].get_sessions()[0].document.roots[0]._id)";
+      cell.notebook.kernel.execute(cmd_clean, {
+        iopub: {
+          output: function(msg) {
+            const id = msg.content.text.trim();
+            if (id in Bokeh.index) {
+              Bokeh.index[id].model.document.clear();
+              delete Bokeh.index[id];
+            }
+          }
+        }
+      });
+      // Destroy server and session
+      const cmd_destroy = "import bokeh.io.notebook as ion; ion.destroy_server('" + server_id + "')";
+      cell.notebook.kernel.execute(cmd_destroy);
+    }
+  }
+
+  /**
+   * Handle when a new output is added
+   */
+  function handleAddOutput(event, handle) {
+    const output_area = handle.output_area;
+    const output = handle.output;
+
+    // limit handleAddOutput to display_data with EXEC_MIME_TYPE content only
+    if ((output.output_type != "display_data") || (!Object.prototype.hasOwnProperty.call(output.data, EXEC_MIME_TYPE))) {
+      return
+    }
+
+    const toinsert = output_area.element.find("." + CLASS_NAME.split(' ')[0]);
+
+    if (output.metadata[EXEC_MIME_TYPE]["id"] !== undefined) {
+      toinsert[toinsert.length - 1].firstChild.textContent = output.data[JS_MIME_TYPE];
+      // store reference to embed id on output_area
+      output_area._bokeh_element_id = output.metadata[EXEC_MIME_TYPE]["id"];
+    }
+    if (output.metadata[EXEC_MIME_TYPE]["server_id"] !== undefined) {
+      const bk_div = document.createElement("div");
+      bk_div.innerHTML = output.data[HTML_MIME_TYPE];
+      const script_attrs = bk_div.children[0].attributes;
+      for (let i = 0; i < script_attrs.length; i++) {
+        toinsert[toinsert.length - 1].firstChild.setAttribute(script_attrs[i].name, script_attrs[i].value);
+        toinsert[toinsert.length - 1].firstChild.textContent = bk_div.children[0].textContent
+      }
+      // store reference to server id on output_area
+      output_area._bokeh_server_id = output.metadata[EXEC_MIME_TYPE]["server_id"];
+    }
+  }
+
+  function register_renderer(events, OutputArea) {
+
+    function append_mime(data, metadata, element) {
+      // create a DOM node to render to
+      const toinsert = this.create_output_subarea(
+        metadata,
+        CLASS_NAME,
+        EXEC_MIME_TYPE
+      );
+      this.keyboard_manager.register_events(toinsert);
+      // Render to node
+      const props = {data: data, metadata: metadata[EXEC_MIME_TYPE]};
+      render(props, toinsert[toinsert.length - 1]);
+      element.append(toinsert);
+      return toinsert
+    }
+
+    /* Handle when an output is cleared or removed */
+    events.on('clear_output.CodeCell', handleClearOutput);
+    events.on('delete.Cell', handleClearOutput);
+
+    /* Handle when a new output is added */
+    events.on('output_added.OutputArea', handleAddOutput);
+
+    /**
+     * Register the mime type and append_mime function with output_area
+     */
+    OutputArea.prototype.register_mime_type(EXEC_MIME_TYPE, append_mime, {
+      /* Is output safe? */
+      safe: true,
+      /* Index of renderer in `output_area.display_order` */
+      index: 0
+    });
+  }
+
+  // register the mime type if in Jupyter Notebook environment and previously unregistered
+  if (root.Jupyter !== undefined) {
+    const events = require('base/js/events');
+    const OutputArea = require('notebook/js/outputarea').OutputArea;
+
+    if (OutputArea.prototype.mime_types().indexOf(EXEC_MIME_TYPE) == -1) {
+      register_renderer(events, OutputArea);
+    }
+  }
+  if (typeof (root._bokeh_timeout) === "undefined" || force === true) {
+    root._bokeh_timeout = Date.now() + 5000;
+    root._bokeh_failed_load = false;
+  }
+
+  const NB_LOAD_WARNING = {'data': {'text/html':
+     "<div style='background-color: #fdd'>\n"+
+     "<p>\n"+
+     "BokehJS does not appear to have successfully loaded. If loading BokehJS from CDN, this \n"+
+     "may be due to a slow or bad network connection. Possible fixes:\n"+
+     "</p>\n"+
+     "<ul>\n"+
+     "<li>re-rerun `output_notebook()` to attempt to load from CDN again, or</li>\n"+
+     "<li>use INLINE resources instead, as so:</li>\n"+
+     "</ul>\n"+
+     "<code>\n"+
+     "from bokeh.resources import INLINE\n"+
+     "output_notebook(resources=INLINE)\n"+
+     "</code>\n"+
+     "</div>"}};
+
+  function display_loaded() {
+    const el = document.getElementById("1002");
+    if (el != null) {
+      el.textContent = "BokehJS is loading...";
+    }
+    if (root.Bokeh !== undefined) {
+      if (el != null) {
+        el.textContent = "BokehJS " + root.Bokeh.version + " successfully loaded.";
+      }
+    } else if (Date.now() < root._bokeh_timeout) {
+      setTimeout(display_loaded, 100)
+    }
+  }
+
+  function run_callbacks() {
+    try {
+      root._bokeh_onload_callbacks.forEach(function(callback) {
+        if (callback != null)
+          callback();
+      });
+    } finally {
+      delete root._bokeh_onload_callbacks
+    }
+    console.debug("Bokeh: all callbacks have finished");
+  }
+
+  function load_libs(css_urls, js_urls, callback) {
+    if (css_urls == null) css_urls = [];
+    if (js_urls == null) js_urls = [];
+
+    root._bokeh_onload_callbacks.push(callback);
+    if (root._bokeh_is_loading > 0) {
+      console.debug("Bokeh: BokehJS is being loaded, scheduling callback at", now());
+      return null;
+    }
+    if (js_urls == null || js_urls.length === 0) {
+      run_callbacks();
+      return null;
+    }
+    console.debug("Bokeh: BokehJS not loaded, scheduling load and callback at", now());
+    root._bokeh_is_loading = css_urls.length + js_urls.length;
+
+    function on_load() {
+      root._bokeh_is_loading--;
+      if (root._bokeh_is_loading === 0) {
+        console.debug("Bokeh: all BokehJS libraries/stylesheets loaded");
+        run_callbacks()
+      }
+    }
+
+    function on_error(url) {
+      console.error("failed to load " + url);
+    }
+
+    for (let i = 0; i < css_urls.length; i++) {
+      const url = css_urls[i];
+      const element = document.createElement("link");
+      element.onload = on_load;
+      element.onerror = on_error.bind(null, url);
+      element.rel = "stylesheet";
+      element.type = "text/css";
+      element.href = url;
+      console.debug("Bokeh: injecting link tag for BokehJS stylesheet: ", url);
+      document.body.appendChild(element);
+    }
+
+    for (let i = 0; i < js_urls.length; i++) {
+      const url = js_urls[i];
+      const element = document.createElement('script');
+      element.onload = on_load;
+      element.onerror = on_error.bind(null, url);
+      element.async = false;
+      element.src = url;
+      console.debug("Bokeh: injecting script tag for BokehJS library: ", url);
+      document.head.appendChild(element);
+    }
+  };
+
+  function inject_raw_css(css) {
+    const element = document.createElement("style");
+    element.appendChild(document.createTextNode(css));
+    document.body.appendChild(element);
+  }
+
+  const js_urls = ["https://cdn.bokeh.org/bokeh/release/bokeh-2.4.3.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-gl-2.4.3.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.4.3.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.4.3.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-mathjax-2.4.3.min.js"];
+  const css_urls = [];
+
+  const inline_js = [    function(Bokeh) {
+      Bokeh.set_log_level("info");
+    },
+function(Bokeh) {
+    }
+  ];
+
+  function run_inline_js() {
+    if (root.Bokeh !== undefined || force === true) {
+          for (let i = 0; i < inline_js.length; i++) {
+      inline_js[i].call(root, root.Bokeh);
+    }
+if (force === true) {
+        display_loaded();
+      }} else if (Date.now() < root._bokeh_timeout) {
+      setTimeout(run_inline_js, 100);
+    } else if (!root._bokeh_failed_load) {
+      console.log("Bokeh: BokehJS failed to load within specified timeout.");
+      root._bokeh_failed_load = true;
+    } else if (force !== true) {
+      const cell = $(document.getElementById("1002")).parents('.cell').data().cell;
+      cell.output_area.append_execute_result(NB_LOAD_WARNING)
+    }
+  }
+
+  if (root._bokeh_is_loading === 0) {
+    console.debug("Bokeh: BokehJS loaded, going straight to plotting");
+    run_inline_js();
+  } else {
+    load_libs(css_urls, js_urls, function() {
+      console.debug("Bokeh: BokehJS plotting callback run at", now());
+      run_inline_js();
+    });
+  }
+}(window));</script><div class="output text_html">
+<div class="bk-root" id="bff24eb0-c879-4722-b589-3a4e1b4a4b69" data-root-id="1003"></div>
+</div><script type="application/javascript">(function(root) {
+  function embed_document(root) {
+  const docs_json = {"d85928c6-eb18-4062-99dc-e38f6413a3af":{"defs":[],"roots":{"references":[{"attributes":{"below":[{"id":"1014"}],"center":[{"id":"1017"},{"id":"1021"},{"id":"1052"}],"left":[{"id":"1018"}],"renderers":[{"id":"1040"},{"id":"1058"},{"id":"1077"},{"id":"1098"},{"id":"1121"}],"title":{"id":"1004"},"toolbar":{"id":"1029"},"width":700,"x_range":{"id":"1006"},"x_scale":{"id":"1010"},"y_range":{"id":"1008"},"y_scale":{"id":"1012"}},"id":"1003","subtype":"Figure","type":"Plot"},{"attributes":{"coordinates":null,"data_source":{"id":"1094"},"glyph":{"id":"1095"},"group":null,"hover_glyph":null,"muted_glyph":{"id":"1097"},"nonselection_glyph":{"id":"1096"},"view":{"id":"1099"}},"id":"1098","type":"GlyphRenderer"},{"attributes":{"axis":{"id":"1018"},"coordinates":null,"dimension":1,"group":null,"ticker":null},"id":"1021","type":"Grid"},{"attributes":{"source":{"id":"1054"}},"id":"1059","type":"CDSView"},{"attributes":{"line_color":"#e6f598","line_width":2,"x":{"field":"x"},"y":{"field":"y"}},"id":"1074","type":"Line"},{"attributes":{"line_color":"#fee08b","line_width":2,"x":{"field":"x"},"y":{"field":"y"}},"id":"1095","type":"Line"},{"attributes":{},"id":"1006","type":"DataRange1d"},{"attributes":{"line_alpha":0.2,"line_color":"#99d594","line_width":2,"x":{"field":"x"},"y":{"field":"y"}},"id":"1057","type":"Line"},{"attributes":{"line_alpha":0.2,"line_color":"#fee08b","line_width":2,"x":{"field":"x"},"y":{"field":"y"}},"id":"1097","type":"Line"},{"attributes":{"data":{"x":["1960","1961","1962","1963","1964","1965","1966","1967","1968","1969","1970","1971","1972","1973","1974","1975","1976","1977","1978","1979","1980","1981","1982","1983","1984","1985","1986","1987","1988","1989","1990","1991","1992","1993","1994","1995","1996","1997","1998","1999","2000","2001","2002","2003","2004","2005","2006","2007","2008","2009","2010","2011","2012","2013","2014","2015","2016","2017","2018","2019","2020","2021"],"y":{"__ndarray__":"pfYi2o4ZMUA7rHDLR4YxQACrI0c69zFAzxJkBFRsMkCDTggddOUyQA9CQL6EYjNAr2Ab8WTjM0DU824sKGg0QEYGuYsw8TRA+1xtxf5+NUAY0XZM3RE2QGcsms5OqjZAnkSEfxFIN0D9TShEwOk3QFq77UJzjThA1bMglPcxOUB1WUxsPtY5QOUn1T4dezpAhUGZRpMjO0DHKTqSy9M7QHlcVIuIjjxADHbDtkVVPUClv5fCgyY+QO8Bui9n/j5AwLSoT3LXP0AIBaVo5VZAQKMgeHx7v0BAbxEY6xsmQUBegH106oxBQGu5MxMM90FAC5xsA3dmQkBosn+eBtxCQAb3Ax4YVkNAx9rf2R7RQ0B7+Z0mM0hEQKbvNQTHt0RAtY0/UdkeRUCXHk31ZH5FQGozTkNU10VAmYOgo1UrRkAAdQMF3ntGQG2P3nAfyUZASMX/HVETR0CxFwrYDlxHQOGX+nlTpUdAtAJDVrfwR0DgSKDBpj5IQByWBn5Uj0hA6BIOvcXjSEAoYhHDDj1JQNanHJPFm0lAaAjHLHsASkAr3PKRlGpKQMuhRbbz10pA1IBB0qdFS0AYmBWKdLFLQAgGED6UGkxAOQ1RhT+BTECFtpxLceVMQNC3BUt1R01AFk1nJ4OnTUAKSPsfYAVOQA==","dtype":"float64","order":"little","shape":[62]}},"selected":{"id":"1139"},"selection_policy":{"id":"1138"}},"id":"1117","type":"ColumnDataSource"},{"attributes":{"data":{"x":["1960","1961","1962","1963","1964","1965","1966","1967","1968","1969","1970","1971","1972","1973","1974","1975","1976","1977","1978","1979","1980","1981","1982","1983","1984","1985","1986","1987","1988","1989","1990","1991","1992","1993","1994","1995","1996","1997","1998","1999","2000","2001","2002","2003","2004","2005","2006","2007","2008","2009","2010","2011","2012","2013","2014","2015","2016","2017","2018","2019","2020","2021"],"y":{"__ndarray__":"xSCwcmj5XUDJdr6fGk9eQOf7qfHSpV5APQrXo3D9XkCuR+F6FFZfQEjhehSur19Ay6FFtvPdX0CDwMqhRQZgQARWDi2yHWBAaJHtfD81YECwcmiR7UxgQClcj8L1ZGBADAIrhxZ9YEDFILByaJVgQOf7qfHSrWBAZmZmZmbGYEBiEFg5tORgQDMzMzMzA2FAUrgeheshYUC+nxov3UBhQLgehetRYGFAJzEIrBx+YUB1kxgEVpphQEw3iUFgtWFApHA9CtfXYUD6fmq8dPthQPhT46WbHGJAkxgEVg49YkCBlUOLbFtiQFCNl24Sd2JAbjDUYQV/YkDrcd9qnYxiQMU56ug4kWJABmUaTa6OYkCsdHedDY1iQGJodXIGjGJAhUTaxh+FYkAV4SajSn1iQMPVARB3dWJA5/7qcd9mYkDhXwSNGVNiQD/kLVc/P2JAT+rL0s4pYkAaM4l6wRRiQOxP4nMnAmJAn1bRH5rwYUB9dVWgluFhQKhxb37D2WFAMnVXdsHXYUBI3jmUIdlhQPTfg9cu22FA304iwr/eYUBTPZl/dOZhQIkHlE058GFAidNJtjr6YUDVPh2PGQNiQPSnjer0CmJAuvQvSeUPYkAtI/WeSg9iQH2UERcADWJA/aGZJ1cCYkC4AZ8fRu5hQA==","dtype":"float64","order":"little","shape":[62]}},"selected":{"id":"1114"},"selection_policy":{"id":"1113"}},"id":"1094","type":"ColumnDataSource"},{"attributes":{"label":{"value":"BRA"},"renderers":[{"id":"1040"}]},"id":"1053","type":"LegendItem"},{"attributes":{"label":{"value":"IND"},"renderers":[{"id":"1077"}]},"id":"1093","type":"LegendItem"},{"attributes":{},"id":"1070","type":"Selection"},{"attributes":{"line_alpha":0.1,"line_color":"#fee08b","line_width":2,"x":{"field":"x"},"y":{"field":"y"}},"id":"1096","type":"Line"},{"attributes":{"coordinates":null,"data_source":{"id":"1073"},"glyph":{"id":"1074"},"group":null,"hover_glyph":null,"muted_glyph":{"id":"1076"},"nonselection_glyph":{"id":"1075"},"view":{"id":"1078"}},"id":"1077","type":"GlyphRenderer"},{"attributes":{"coordinates":null,"data_source":{"id":"1117"},"glyph":{"id":"1118"},"group":null,"hover_glyph":null,"muted_glyph":{"id":"1120"},"nonselection_glyph":{"id":"1119"},"view":{"id":"1122"}},"id":"1121","type":"GlyphRenderer"},{"attributes":{"tools":[{"id":"1022"},{"id":"1023"},{"id":"1024"},{"id":"1025"},{"id":"1026"},{"id":"1027"}]},"id":"1029","type":"Toolbar"},{"attributes":{},"id":"1049","type":"UnionRenderers"},{"attributes":{"source":{"id":"1117"}},"id":"1122","type":"CDSView"},{"attributes":{"source":{"id":"1094"}},"id":"1099","type":"CDSView"},{"attributes":{},"id":"1090","type":"UnionRenderers"},{"attributes":{"line_alpha":0.2,"line_color":"#fc8d59","line_width":2,"x":{"field":"x"},"y":{"field":"y"}},"id":"1120","type":"Line"},{"attributes":{},"id":"1091","type":"Selection"},{"attributes":{"line_color":"#3288bd","line_width":2,"x":{"field":"x"},"y":{"field":"y"}},"id":"1037","type":"Line"},{"attributes":{},"id":"1050","type":"Selection"},{"attributes":{},"id":"1012","type":"LinearScale"},{"attributes":{"label":{"value":"ZAF"},"renderers":[{"id":"1121"}]},"id":"1141","type":"LegendItem"},{"attributes":{"line_alpha":0.1,"line_color":"#fc8d59","line_width":2,"x":{"field":"x"},"y":{"field":"y"}},"id":"1119","type":"Line"},{"attributes":{},"id":"1114","type":"Selection"},{"attributes":{},"id":"1069","type":"UnionRenderers"},{"attributes":{},"id":"1138","type":"UnionRenderers"},{"attributes":{},"id":"1139","type":"Selection"},{"attributes":{"data":{"x":["1960","1961","1962","1963","1964","1965","1966","1967","1968","1969","1970","1971","1972","1973","1974","1975","1976","1977","1978","1979","1980","1981","1982","1983","1984","1985","1986","1987","1988","1989","1990","1991","1992","1993","1994","1995","1996","1997","1998","1999","2000","2001","2002","2003","2004","2005","2006","2007","2008","2009","2010","2011","2012","2013","2014","2015","2016","2017","2018","2019","2020","2021"],"y":{"__ndarray__":"HNMTlngLUkAiADj27JNSQJqYLsTqIFNAkBZnDHOxU0AwD5nyIURUQIO+9Pbn11RAT+YffZNsVUAzbf/KSgJWQPp9/+bFmFZAvf25aMgvV0ADste7P8dXQKeU10roXlhAyqSGNgD3WEA/Gk6Zm5BZQIHqH0QyLVpAdQZGXtbNWkACgGPPnnJbQLn+XZ85G1xAhel7DcHHXEB+GvfmN3hdQAXCTrFqLF5Ap0HRPIDkXkAmOPWB5J9fQIleRrFcLmBATdh+MkaMYEB3LLZJxehgQGdhTzt8Q2FAW11OCYicYUBzol2FFPRhQKDDfHmBSmJA8rBQaxqgYkCIEi15vPRiQHnlettMSGNAui9ntiubY0CLbVLR2O1jQJuRQe6iQGRAE+6VeauTZECCqzyBsOZkQMBC5sogOWVAvALRkzKKZUAbuAN1StllQCQrvwxGJmZAITtvYzNxZkB/T6xT5blmQIyjchM1AGdA6+HLRBFEZ0BmvK30WoVnQKgd/posxGdAUaG6ufgAaECy17s/XjxoQOYGQx3WdmhAcO6vHnewaEDhDP5+MeloQHU5JSAmIWlAhdBBl3BYaUD/klSmGI9pQFVtN8E3xWlAyjLEsa76aUB7a2CrBC9qQPuw3qiVYWpA0QK0reaRakAtsMdEyr9qQA==","dtype":"float64","order":"little","shape":[62]}},"selected":{"id":"1050"},"selection_policy":{"id":"1049"}},"id":"1036","type":"ColumnDataSource"},{"attributes":{},"id":"1010","type":"LinearScale"},{"attributes":{"coordinates":null,"data_source":{"id":"1036"},"glyph":{"id":"1037"},"group":null,"hover_glyph":null,"muted_glyph":{"id":"1039"},"nonselection_glyph":{"id":"1038"},"view":{"id":"1041"}},"id":"1040","type":"GlyphRenderer"},{"attributes":{"source":{"id":"1036"}},"id":"1041","type":"CDSView"},{"attributes":{},"id":"1019","type":"BasicTicker"},{"attributes":{},"id":"1113","type":"UnionRenderers"},{"attributes":{"label":{"value":"CHN"},"renderers":[{"id":"1058"}]},"id":"1072","type":"LegendItem"},{"attributes":{"axis_label":"Population, total (in millions)","coordinates":null,"formatter":{"id":"1044"},"group":null,"major_label_policy":{"id":"1045"},"ticker":{"id":"1019"}},"id":"1018","type":"LinearAxis"},{"attributes":{"line_alpha":0.1,"line_color":"#3288bd","line_width":2,"x":{"field":"x"},"y":{"field":"y"}},"id":"1038","type":"Line"},{"attributes":{},"id":"1044","type":"BasicTickFormatter"},{"attributes":{"axis":{"id":"1014"},"coordinates":null,"group":null,"ticker":null},"id":"1017","type":"Grid"},{"attributes":{},"id":"1027","type":"HelpTool"},{"attributes":{"data":{"x":["1960","1961","1962","1963","1964","1965","1966","1967","1968","1969","1970","1971","1972","1973","1974","1975","1976","1977","1978","1979","1980","1981","1982","1983","1984","1985","1986","1987","1988","1989","1990","1991","1992","1993","1994","1995","1996","1997","1998","1999","2000","2001","2002","2003","2004","2005","2006","2007","2008","2009","2010","2011","2012","2013","2014","2015","2016","2017","2018","2019","2020","2021"],"y":{"__ndarray__":"w/UoXI/YhEBxPQrXo6KEQFyPwvUozoRASOF6FK5ShUCkcD0K19KFQBSuR+F6WYZAMzMzMzP7hkBmZmZmZpSHQK5H4XoUNIhAMzMzMzPgiEDsUbgehZKJQKRwPQrXSIpACtejcD3wikDsUbgehY+LQM3MzMzMIoxAXI/C9SijjEAUrkfhehWNQHE9Cteje41AuB6F61HhjUDXo3A9CkiOQHsUrkfhqY5ArkfhehQPj0DXo3A9CoWPQBSuR+F6+o9AzczMzEwzkEBcj8L1KGyQQFyPwvUoq5BAcT0K1yPwkEDsUbgehTaRQJqZmZmZepFACtejcL28kUCF61G4HvuRQHsUrkfhM5JA9ihcj8JpkkCkcD0KV5+SQFK4HoVr05JAMzMzMzMGk0DNzMzMTDiTQArXo3C9Z5NAPQrXo/CSk0CuR+F6lLqTQGZmZmZm35NAmpmZmZkBlECamZmZmSGUQM3MzMxMQJRAexSuR+FelECuR+F6FHyUQNejcD2Kl5RAhetRuJ6ylEDXo3A9Cs2UQLgehevR5pRAcT0K1yMElUD2KFyPwiiVQClcj8L1TJVAPQrXo3BvlUA9CtejcI+VQFyPwvUor5VAj8L1KNzQlUDXo3A9CuuVQBSuR+H6/pVAZmZmZmYMlkA9CtejcBGWQA==","dtype":"float64","order":"little","shape":[62]}},"selected":{"id":"1070"},"selection_policy":{"id":"1069"}},"id":"1054","type":"ColumnDataSource"},{"attributes":{"coordinates":null,"group":null,"text":"Population, total (World Bank)","text_font_size":"12pt"},"id":"1004","type":"Title"},{"attributes":{},"id":"1023","type":"WheelZoomTool"},{"attributes":{"line_alpha":0.2,"line_color":"#3288bd","line_width":2,"x":{"field":"x"},"y":{"field":"y"}},"id":"1039","type":"Line"},{"attributes":{"line_color":"#99d594","line_width":2,"x":{"field":"x"},"y":{"field":"y"}},"id":"1055","type":"Line"},{"attributes":{},"id":"1022","type":"PanTool"},{"attributes":{},"id":"1008","type":"DataRange1d"},{"attributes":{"line_alpha":0.1,"line_color":"#99d594","line_width":2,"x":{"field":"x"},"y":{"field":"y"}},"id":"1056","type":"Line"},{"attributes":{"overlay":{"id":"1028"}},"id":"1024","type":"BoxZoomTool"},{"attributes":{},"id":"1045","type":"AllLabels"},{"attributes":{},"id":"1025","type":"SaveTool"},{"attributes":{},"id":"1015","type":"BasicTicker"},{"attributes":{},"id":"1026","type":"ResetTool"},{"attributes":{},"id":"1047","type":"BasicTickFormatter"},{"attributes":{"line_color":"#fc8d59","line_width":2,"x":{"field":"x"},"y":{"field":"y"}},"id":"1118","type":"Line"},{"attributes":{"bottom_units":"screen","coordinates":null,"fill_alpha":0.5,"fill_color":"lightgrey","group":null,"left_units":"screen","level":"overlay","line_alpha":1.0,"line_color":"black","line_dash":[4,4],"line_width":2,"right_units":"screen","syncable":false,"top_units":"screen"},"id":"1028","type":"BoxAnnotation"},{"attributes":{"data":{"x":["1960","1961","1962","1963","1964","1965","1966","1967","1968","1969","1970","1971","1972","1973","1974","1975","1976","1977","1978","1979","1980","1981","1982","1983","1984","1985","1986","1987","1988","1989","1990","1991","1992","1993","1994","1995","1996","1997","1998","1999","2000","2001","2002","2003","2004","2005","2006","2007","2008","2009","2010","2011","2012","2013","2014","2015","2016","2017","2018","2019","2020","2021"],"y":{"__ndarray__":"ZF3cRsMofECmCdtPRrp8QLtIoSw8UX1AMlhxqjXtfUBlNzP6kY1+QObqxyb5MX9AE2IuqRraf0A91LZhNEOAQJUMAFUcnIBAyqfHtqz4gEAIH0q0hFmBQO55/rTxvoFATdu/srIogkDHKxA9KZaCQHdn7bZrBoNAETY8vdJ4g0CaJQFqCu2DQLzNGydFY4RAZ7gBn//bhEAdIQN59leFQFpLAWmf14VAd6BOeRRbhkCpa+196uGGQNwqiIFua4dAA+li06r2h0BXsfhN4YKIQGQ730/ND4lAHy457nSdiUDQ7pBiwCuKQE8eFmqtuopA5J6u7jhKi0CduYeEL9qLQERq2sV0aoxAu+8YHjv7jECJzjKL0IyNQPvNxHRhH45Ab7ckB+yyjkDgS+FBM0ePQG02VmLe249Ah+C4jDs4kEAddXRcTYKQQLQ7pBgAzJBA3j6rzEQVkUAixJWzF16RQKwA321+ppFAL8Tqj3DukUBblUT28TWSQNfZkH/WfJJAavgW1q3CkkAy422l5waTQGKHMekfSZNA+TB72SaJk0C7XwX4HseTQFxxcVReA5RA7wG6L2c+lECwAKYMnHiUQG3n+6kRspRAet6NBbXqlEAbf6KykSKVQNWWOsirWZVAX16AfQSQlUDw94vZosWVQA==","dtype":"float64","order":"little","shape":[62]}},"selected":{"id":"1091"},"selection_policy":{"id":"1090"}},"id":"1073","type":"ColumnDataSource"},{"attributes":{"line_alpha":0.2,"line_color":"#e6f598","line_width":2,"x":{"field":"x"},"y":{"field":"y"}},"id":"1076","type":"Line"},{"attributes":{},"id":"1048","type":"AllLabels"},{"attributes":{"label":{"value":"RUS"},"renderers":[{"id":"1098"}]},"id":"1116","type":"LegendItem"},{"attributes":{"line_alpha":0.1,"line_color":"#e6f598","line_width":2,"x":{"field":"x"},"y":{"field":"y"}},"id":"1075","type":"Line"},{"attributes":{"axis_label":"Year","coordinates":null,"formatter":{"id":"1047"},"group":null,"major_label_policy":{"id":"1048"},"ticker":{"id":"1015"}},"id":"1014","type":"LinearAxis"},{"attributes":{"coordinates":null,"data_source":{"id":"1054"},"glyph":{"id":"1055"},"group":null,"hover_glyph":null,"muted_glyph":{"id":"1057"},"nonselection_glyph":{"id":"1056"},"view":{"id":"1059"}},"id":"1058","type":"GlyphRenderer"},{"attributes":{"source":{"id":"1073"}},"id":"1078","type":"CDSView"},{"attributes":{"click_policy":"mute","coordinates":null,"group":null,"items":[{"id":"1053"},{"id":"1072"},{"id":"1093"},{"id":"1116"},{"id":"1141"}],"location":"right"},"id":"1052","type":"Legend"}],"root_ids":["1003"]},"title":"Bokeh Application","version":"2.4.3"}};
+  const render_items = [{"docid":"d85928c6-eb18-4062-99dc-e38f6413a3af","root_ids":["1003"],"roots":{"1003":"bff24eb0-c879-4722-b589-3a4e1b4a4b69"}}];
+  root.Bokeh.embed.embed_items_notebook(docs_json, render_items);
+  }
+  if (root.Bokeh !== undefined) {
+    embed_document(root);
+  } else {
+    let attempts = 0;
+    const timer = setInterval(function(root) {
+      if (root.Bokeh !== undefined) {
+        clearInterval(timer);
+        embed_document(root);
+      } else {
+        attempts++;
+        if (attempts > 100) {
+          clearInterval(timer);
+          console.log("Bokeh: ERROR: Unable to run BokehJS code because BokehJS library is missing");
+        }
+      }
+    }, 10, root)
+  }
+})(window);</script></div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./notebooks"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="../README.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">🚀 Project Template</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="world-bank-package.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">2. </span>Package Example</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By World Bank Development Data Group<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>
