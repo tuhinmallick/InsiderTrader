@@ -1,0 +1,19 @@
+format: jb-book
+root: README
+
+parts:
+  - caption: Examples
+    numbered: True
+    chapters:
+    - file: notebooks/world-bank-api.ipynb
+    - file: notebooks/world-bank-package.ipynb
+  - caption: Additional Resources
+    chapters:
+      - url: https://datapartnership.org
+        title: Development Data Partnership
+      - url: https://wbdatalab.org
+        title: World Bank Data Lab
+      - url: https://www.worldbank.org/en/about/unit/unit-dec
+        title: World Bank DEC
+      - url: https://www.worldbank.org/en/research/dime
+        title: World Bank DIME
