@@ -22,13 +22,12 @@ class exploratory_data_analysis:
     def __init__(self, df: pd.DataFrame, target_name=False, time_series=False):
         self.target_name = target_name
         self.df = df
-        if  time_series==True:
-          if type(self.df.index) is pd.DatetimeIndex:
-              self.x_date = self.df.index
-          else:
-              raise ValueError("DataFrame index must be pandas datetime.")
-
-          self.y_target = self.df[self.target_name]
+        if time_series == True:
+            if type(self.df.index) is pd.DatetimeIndex:
+                self.x_date = self.df.index
+            else:
+                raise ValueError("DataFrame index must be pandas datetime.")
+            self.y_target = self.df[self.target_name]
 
     # XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
     #                                                                 UTILITY AND CALCULATION
@@ -85,23 +84,24 @@ class exploratory_data_analysis:
             dictionary: Returns the buy, sale and option exercise and theri count  in a dataframe.
         """
         # Generate the cross correlation list.
-        df_buy=df[df['Transaction']=="Buy"]
-        df_sale=df[df['Transaction']=="Sale"]
-        df_opt=df[df['Transaction']=="Option Exercise"]
+        df_buy = df[df["Transaction"] == "Buy"]
+        df_sale = df[df["Transaction"] == "Sale"]
+        df_opt = df[df["Transaction"] == "Option Exercise"]
 
-        df_count=df.groupby(df['Date']).count()
-        df_buy_count=df_buy.groupby(df_buy['Date']).count()
-        df_sale_count=df_sale.groupby(df_sale['Date']).count()
-        df_opt_count=df_opt.groupby(df_opt['Date']).count()
+        df_count = df.groupby(df["Date"]).count()
+        df_buy_count = df_buy.groupby(df_buy["Date"]).count()
+        df_sale_count = df_sale.groupby(df_sale["Date"]).count()
+        df_opt_count = df_opt.groupby(df_opt["Date"]).count()
 
-        combined_df={"df_buy": df_buy,
-                     "df_sale": df_sale,
-                     "df_opt": df_opt,
-                     "df_count": df_count,
-                     "df_buy_count": df_buy_count,
-                     "df_sale_count": df_sale_count,
-                     "df_opt_count": df_opt_count,
-                    }
+        combined_df = {
+            "df_buy": df_buy,
+            "df_sale": df_sale,
+            "df_opt": df_opt,
+            "df_count": df_count,
+            "df_buy_count": df_buy_count,
+            "df_sale_count": df_sale_count,
+            "df_opt_count": df_opt_count,
+        }
 
         return combined_df
 
@@ -114,12 +114,12 @@ class exploratory_data_analysis:
         Returns:
             dictionary: Returns the buy, sale and option exercise and theri count  in a dataframe.
         """
-        trans_per_insider=pd.DataFrame(df['Insider Trading'].value_counts())
-        trans_per_insider=trans_per_insider.reset_index()
-        trans_per_insider.columns=['Name','trans_num']
-        trans=trans_per_insider.groupby(trans_per_insider['trans_num']).count()
-        trans.columns=['count']
-        return trans      
+        trans_per_insider = pd.DataFrame(df["Insider Trading"].value_counts())
+        trans_per_insider = trans_per_insider.reset_index()
+        trans_per_insider.columns = ["Name", "trans_num"]
+        trans = trans_per_insider.groupby(trans_per_insider["trans_num"]).count()
+        trans.columns = ["count"]
+        return trans
 
     def top_contributor(self, threshold=0):
         """Function to compute the crosscorrelation for a target variable over a period of (+/-) lags.
@@ -130,9 +130,9 @@ class exploratory_data_analysis:
         Returns:
             dictionary: Returns the buy, sale and option exercise and theri count  in a dataframe.
         """
-        contributor=pd.DataFrame(self.df['Insider Trading'].value_counts())
-        contributor.columns=['incidents_num']
-        top_contributors=contributor[contributor['incidents_num']>threshold]
+        contributor = pd.DataFrame(self.df["Insider Trading"].value_counts())
+        contributor.columns = ["incidents_num"]
+        top_contributors = contributor[contributor["incidents_num"] > threshold]
         return top_contributors
 
     def market_cap(self):
@@ -144,17 +144,17 @@ class exploratory_data_analysis:
         Returns:
             dictionary: Returns the buy, sale and option exercise and theri count  in a dataframe.
         """
-        num_of_contributors=list(self.top_contributor().index)
-        total_value=[]
+        num_of_contributors = list(self.top_contributor().index)
+        total_value = []
         for x in range(len(num_of_contributors)):
-            contributor=self.df[self.df['Insider Trading']==num_of_contributors[x]]
-            contributor_value=list(contributor['Value ($)'])[0]
+            contributor = self.df[self.df["Insider Trading"] == num_of_contributors[x]]
+            contributor_value = list(contributor["Value ($)"])[0]
             total_value.append(contributor_value)
-        top_market_cap=pd.DataFrame(num_of_contributors)
-        top_market_cap.columns=['Contributor']
-        top_market_cap['Value ($)']=total_value
-        top_market_cap=top_market_cap[top_market_cap['Value ($)']!='unknown']
-        top_market_cap['Value ($)']=[float(x) for x in top_market_cap['Value ($)']]
+        top_market_cap = pd.DataFrame(num_of_contributors)
+        top_market_cap.columns = ["Contributor"]
+        top_market_cap["Value ($)"] = total_value
+        top_market_cap = top_market_cap[top_market_cap["Value ($)"] != "unknown"]
+        top_market_cap["Value ($)"] = [float(x) for x in top_market_cap["Value ($)"]]
         return top_market_cap
 
     def calculate_future_prices(self, stock_df_copy: pd.DataFrame):
@@ -166,26 +166,37 @@ class exploratory_data_analysis:
         Returns:
             dictionary: Returns the buy, sale and option exercise and theri count  in a dataframe.
         """
-        df_copy=self.df.copy()
-        
-        df_copy['new_trans_date']=[time.strptime(str(y.date()), "%Y-%m-%d") for y in df_copy['Date']]
-        stock_df_copy.index=[time.strptime(str(x.date()), "%Y-%m-%d") for x in stock_df_copy.Date]
-        df_copy=df_copy.reset_index()
-        
-        act_day,day_1,day_2,day_3,day_4,day_5,month=([] for i in range (7))
+        df_copy = self.df.copy()
+
+        df_copy["new_trans_date"] = [
+            time.strptime(str(y.date()), "%Y-%m-%d") for y in df_copy["Date"]
+        ]
+        stock_df_copy.index = [
+            time.strptime(str(x.date()), "%Y-%m-%d") for x in stock_df_copy.Date
+        ]
+        df_copy = df_copy.reset_index()
+
+        act_day, day_1, day_2, day_3, day_4, day_5, month = ([] for i in range(7))
         for i in range(len(df_copy)):
             for j in range(len(stock_df_copy)):
-                if df_copy['new_trans_date'][i]==stock_df_copy.index[j]:
-                  act_day.append(stock_df_copy['Close'][j])
-                  day_1.append(stock_df_copy['Close'][j+1])
-                  day_2.append(stock_df_copy['Close'][j+2])
-                  day_3.append(stock_df_copy['Close'][j+3])
-                  day_4.append(stock_df_copy['Close'][j+4])
-                  day_5.append(stock_df_copy['Close'][j+5])
-                  month.append(stock_df_copy['Close'][j+30])
-
-        df_copy=df_copy.assign(Close=act_day, Close_day1=day_1, Close_day2=day_2, Close_day3=day_3, Close_day4=day_4, Close_day5=day_5, Close_month=month)            
-        del act_day,day_1,day_2,day_3,day_4,day_5,month
+                if df_copy["new_trans_date"][i] == stock_df_copy.index[j]:
+                    act_day.append(stock_df_copy["Close"][j])
+                    day_1.append(stock_df_copy["Close"][j + 1])
+                    day_2.append(stock_df_copy["Close"][j + 2])
+                    day_3.append(stock_df_copy["Close"][j + 3])
+                    day_4.append(stock_df_copy["Close"][j + 4])
+                    day_5.append(stock_df_copy["Close"][j + 5])
+                    month.append(stock_df_copy["Close"][j + 30])
+        df_copy = df_copy.assign(
+            Close=act_day,
+            Close_day1=day_1,
+            Close_day2=day_2,
+            Close_day3=day_3,
+            Close_day4=day_4,
+            Close_day5=day_5,
+            Close_month=month,
+        )
+        del act_day, day_1, day_2, day_3, day_4, day_5, month
         return df_copy
 
     def calculate_returns(self, stock_df_copy: pd.DataFrame, diff: str):
@@ -196,22 +207,64 @@ class exploratory_data_analysis:
 
         Returns:
             dictionary: Returns the buy, sale and option exercise and theri count  in a dataframe.
-        """ 
-        df_copy=self.df.copy()
+        """
+        df_copy = self.df.copy()
 
-        act_day,day_1,day_2,day_3,day_4,day_5,month=([] for i in range (7))
+        act_day, day_1, day_2, day_3, day_4, day_5, month = ([] for i in range(7))
         for day in range(len(stock_df_copy)):
-          day_1.append(((stock_df_copy['Close_day1'][day]-stock_df_copy[diff][day])/stock_df_copy[diff][day])*100)
-          day_2.append(((stock_df_copy['Close_day2'][day]-stock_df_copy[diff][day])/stock_df_copy[diff][day])*100)
-          day_3.append(((stock_df_copy['Close_day3'][day]-stock_df_copy[diff][day])/stock_df_copy[diff][day])*100)
-          day_4.append(((stock_df_copy['Close_day4'][day]-stock_df_copy[diff][day])/stock_df_copy[diff][day])*100)
-          day_5.append(((stock_df_copy['Close_day5'][day]-stock_df_copy[diff][day])/stock_df_copy[diff][day])*100)
-          month.append(((stock_df_copy['Close_month'][day]-stock_df_copy[diff][day])/stock_df_copy[diff][day])*100)
-
-        df_copy=df_copy.assign(day1_return=day_1, day2_return=day_2, day3_return=day_3, day4_return=day_4, day5_return=day_5, month_return=month)            
-        del act_day,day_1,day_2,day_3,day_4,day_5,month
+            day_1.append(
+                (
+                    (stock_df_copy["Close_day1"][day] - stock_df_copy[diff][day])
+                    / stock_df_copy[diff][day]
+                )
+                * 100
+            )
+            day_2.append(
+                (
+                    (stock_df_copy["Close_day2"][day] - stock_df_copy[diff][day])
+                    / stock_df_copy[diff][day]
+                )
+                * 100
+            )
+            day_3.append(
+                (
+                    (stock_df_copy["Close_day3"][day] - stock_df_copy[diff][day])
+                    / stock_df_copy[diff][day]
+                )
+                * 100
+            )
+            day_4.append(
+                (
+                    (stock_df_copy["Close_day4"][day] - stock_df_copy[diff][day])
+                    / stock_df_copy[diff][day]
+                )
+                * 100
+            )
+            day_5.append(
+                (
+                    (stock_df_copy["Close_day5"][day] - stock_df_copy[diff][day])
+                    / stock_df_copy[diff][day]
+                )
+                * 100
+            )
+            month.append(
+                (
+                    (stock_df_copy["Close_month"][day] - stock_df_copy[diff][day])
+                    / stock_df_copy[diff][day]
+                )
+                * 100
+            )
+        df_copy = df_copy.assign(
+            day1_return=day_1,
+            day2_return=day_2,
+            day3_return=day_3,
+            day4_return=day_4,
+            day5_return=day_5,
+            month_return=month,
+        )
+        del act_day, day_1, day_2, day_3, day_4, day_5, month
         return df_copy
-    
+
     def boxplot_prep(self, df: pd.DataFrame, col_list: list):
         """Function to compute the crosscorrelation for a target variable over a period of (+/-) lags.
 
@@ -222,27 +275,58 @@ class exploratory_data_analysis:
             dictionary: Returns the buy, sale and option exercise and theri count  in a dataframe.
         """
 
-        col_name, return_value = [],[]
+        col_name, return_value = [], []
         for col in col_list:
-          for x in range(len(df[col])):
-              col_name.append(col)
-              return_value.append(df[col][x])
-        return_df=pd.DataFrame(col_name)
-        return_df.columns=['day']
-        return_df['return']=return_value
+            for x in range(len(df[col])):
+                col_name.append(col)
+                return_value.append(df[col][x])
+        return_df = pd.DataFrame(col_name)
+        return_df.columns = ["day"]
+        return_df["return"] = return_value
         del col_name, return_value
 
         return return_df
 
-    # def insiders_per_company(self, df: pd.DataFrame):
-    #     """Function to compute the crosscorrelation for a target variable over a period of (+/-) lags.
+    def short_returns(self, df: pd.DataFrame, threshold: int, include: list):
+        """Function to compute the crosscorrelation for a target variable over a period of (+/-) lags.
 
-    #     Args:
-    #         df (pandas.DataFrame): The dataframe containing the whole data.
+        Args:
+            df (pandas.DataFrame): The dataframe containing the whole data.
+            threshold (int): The cut-off limit for shwoing returns.
+            include (int): The list cotaining the activity.
 
-    #     Returns:
-    #         dictionary: Returns the buy, sale and option exercise and theri count  in a dataframe.
-    #     """
+        Returns:
+            dictionary: Returns the buy, sale and option exercise and theri count  in a dataframe.
+        """
+
+        combined_df = {}
+        future_prices = self.calculate_future_prices(df)
+        return_df = self.calculate_returns(future_prices, "Cost")
+        df_buy = return_df[return_df["Transaction"] == "Buy"].reset_index()
+        df_sale = return_df[return_df["Transaction"] == "Sale"].reset_index()
+        df_opt = return_df[return_df["Transaction"] == "Option Exercise"].reset_index()
+        col_name = [
+            "day1_return",
+            "day2_return",
+            "day3_return",
+            "day4_return",
+            "day5_return",
+        ]
+        buy = self.boxplot_prep(df_buy, col_name)
+        sale = self.boxplot_prep(df_sale, col_name)
+        opt = self.boxplot_prep(df_opt, col_name)
+        buy = buy[buy["return"] < threshold]
+        sale = sale[sale["return"] < threshold]
+        opt = opt[opt["return"] < threshold]
+
+        for act in include:
+            if act == "buy":
+                combined_df["buy"] = buy
+            elif act == "sale":
+                combined_df["sale"] = sale
+            else:
+                combined_df["opt"] = opt
+        return combined_df
 
     # def insiders_per_company(self, df: pd.DataFrame):
     #     """Function to compute the crosscorrelation for a target variable over a period of (+/-) lags.
@@ -310,26 +394,21 @@ class exploratory_data_analysis:
                 self.df[y_variable].rolling(rolling_window).mean(),
                 label=f"Moving Average",
             )
-
         if rolling_std == True:
             ax.plot(
                 self.df[y_variable].rolling(rolling_window).std(),
                 label=f"Moving Standard Deviation",
             )
-
         if (rolling_mean == True) or (rolling_std == True):
             plt.legend(fontsize=fontsize_legend)
-
         # Set the x and y range:
         if type(x_range) == list:
             ax.set_xlim(
                 datetime.strptime(x_range[0], "%d/%m/%Y").date(),
                 datetime.strptime(x_range[1], "%d/%m/%Y").date(),
             )
-
         if type(y_range) == list:
             ax.set_ylim(y_range[0], y_range[1])
-
         # Plot aesthetics
         ax.set_title(label=title, fontsize=fontsize_title)
         ax.set_xlabel(xlabel=xlabel, fontsize=fontsize_label)
@@ -348,7 +427,6 @@ class exploratory_data_analysis:
             plt.show()
         else:
             plt.show()
-
         if streamlit == True:
             return fig
 
@@ -414,7 +492,6 @@ class exploratory_data_analysis:
             plt.show()
         else:
             plt.show()
-
         if streamlit == True:
             return fig
 
@@ -484,7 +561,6 @@ class exploratory_data_analysis:
             plt.show()
         else:
             plt.show()
-
         if streamlit == True:
             return fig
 
@@ -607,7 +683,6 @@ class exploratory_data_analysis:
             plt.show()
         else:
             plt.show()
-
         if streamlit == True:
             return fig
 
@@ -719,7 +794,6 @@ class exploratory_data_analysis:
             y_target = diff(self.df[y_variable], k_diff=k_diff)
         else:
             y_target = self.df[y_variable].copy()
-
         # Handle missing values by dropping them.
         y_target.dropna(inplace=True)
 
@@ -988,7 +1062,6 @@ class exploratory_data_analysis:
         # Reshape if ndim == 1
         if axs.ndim == 1:
             axs = axs.reshape(1, -1)
-
         # Iterate through the the correlation plots. Adding 4 plots per row.
         for i, x_variable in enumerate(x_variables):
             # Add x an y value from dataframe.
@@ -1015,13 +1088,11 @@ class exploratory_data_analysis:
             axs[i // 4, i % 4].grid(axis="x")
             axs[i // 4, i % 4].set_xticks(np.arange(-max_lags, max_lags + 5, n_x_ticks))
             axs[i // 4, i % 4].tick_params(axis="x", labelbottom=True)
-
         # Disable any unused or empty plots
         i += 1
         while i < axs.size:
             axs[i // 4, i % 4].set_visible(False)
             i += 1
-
         # Layout and plot
         fig.suptitle(
             f"Cross Correlation Against {y_variable.title()}", fontsize=fontsize_title
@@ -1144,7 +1215,6 @@ class exploratory_data_analysis:
             plt.show()
         else:
             plt.show()
-
         if streamlit == True:
             return fig
 
@@ -1243,7 +1313,6 @@ class exploratory_data_analysis:
                 transform=ax.transAxes,
                 bbox=props,
             )
-
         # Plot aestethics
         ax.set_title(
             f"Granger causality, {y_variable.title()} vs {x_variable.title()}",
@@ -1319,7 +1388,6 @@ class exploratory_data_analysis:
                     name="Moving Average",
                 )
             )
-
         if rolling_std == True:
             fig.add_trace(
                 go.Scatter(
@@ -1328,7 +1396,6 @@ class exploratory_data_analysis:
                     name="Moving Standard Deviation",
                 )
             )
-
         fig.update_layout(
             autosize=False,
             width=figsize[0],
@@ -1375,7 +1442,6 @@ class exploratory_data_analysis:
             self.df[box_group] = [d.year for d in self.df.index]
         else:
             self.df[box_group] = [d.strftime("%b") for d in self.df.index]
-
         fig = go.Figure()
 
         fig.add_trace(
@@ -1563,7 +1629,6 @@ class exploratory_data_analysis:
 
     def plotly_insider_activity(
         self,
-        df: pd.DataFrame,
         start_date: str,
         end_date: str,
         figsize=(1400, 500),
@@ -1571,12 +1636,9 @@ class exploratory_data_analysis:
         display_fig=True,
         **kwargs,
     ):
-        """Function to generate the single granger causality plot.
+        """Function to generate the insider activity over time.
 
         Args:
-            y_variable (str): Name of the target variable
-            x_variable (str): Name of the feature variable
-            max_lags (int, optional): Number of max lags applied in the granger function. Defaults to 12.
             figsize (tuple, optional): Figure size of the plot in inch. Defaults to (1400, 500).
             streamlit (bool, optional): Select if fig object is returned from function. Defaults to False.
             display_fig (bool, optional): Select if figure is displayed. Defaults to True.
@@ -1586,48 +1648,46 @@ class exploratory_data_analysis:
         """
 
         # Generate the insider activity
-        combined_df = self.insider_activity(
-            self.df
-        )
+        combined_df = self.insider_activity(self.df)
 
         fig = go.Figure()
 
         fig.add_trace(
             go.Scatter(
                 x=combined_df["df_count"].index,
-                y=df.index,
-                name = "Overall Insider activity",
-                line = dict(color = '#000000'),
+                y=self.df.index,
+                name="Overall Insider activity",
+                line=dict(color="#000000"),
             )
         )
 
         fig.add_trace(
             go.Scatter(
                 x=combined_df["df_buy_count"].index,
-                y=df.index,
-                name = "Buy",
-                line = dict(color = '#008000'),
+                y=self.df.index,
+                name="Buy",
+                line=dict(color="#008000"),
             )
         )
 
         fig.add_trace(
             go.Scatter(
                 x=combined_df["df_sale_count"].index,
-                y=df.index,
-                name = "Sale",
-                line = dict(color = '#008000'),
+                y=self.df.index,
+                name="Sale",
+                line=dict(color="#008000"),
             )
         )
 
         fig.add_trace(
             go.Scatter(
                 x=combined_df["df_opt_count"].index,
-                y=df.index,
-                name = "Option Exercise",
-                line = dict(color = '#FFFF00'),
+                y=self.df.index,
+                name="Option Exercise",
+                line=dict(color="#FFFF00"),
             )
         )
-
+        # Plot aestethics
         fig.update_layout(
             title=f"Insider activity over time",
             xaxis_title="Date in months",
@@ -1636,8 +1696,7 @@ class exploratory_data_analysis:
             width=figsize[0],
             height=figsize[1],
             # legend=dict(yanchor="top", xanchor="right"),
-            xaxis = dict(
-                range = [start_date,end_date]),
+            xaxis=dict(range=[start_date, end_date]),
             hovermode="x unified",
             margin=dict(l=80, r=30, t=30, b=50),
         )
@@ -1646,22 +1705,18 @@ class exploratory_data_analysis:
             # NOTE this could also be adjusted to save the fig.
             fig.show()
         if streamlit == True:
-            return fig  
+            return fig
 
     def plotly_individual_insider_activity(
         self,
-        df: pd.DataFrame,
         figsize=(1400, 500),
         streamlit=False,
         display_fig=True,
         **kwargs,
     ):
-        """Function to generate the single granger causality plot.
+        """Function to generate the insider activity for every individual.
 
         Args:
-            y_variable (str): Name of the target variable
-            x_variable (str): Name of the feature variable
-            max_lags (int, optional): Number of max lags applied in the granger function. Defaults to 12.
             figsize (tuple, optional): Figure size of the plot in inch. Defaults to (1400, 500).
             streamlit (bool, optional): Select if fig object is returned from function. Defaults to False.
             display_fig (bool, optional): Select if figure is displayed. Defaults to True.
@@ -1671,63 +1726,50 @@ class exploratory_data_analysis:
         """
 
         # Generate the Granger Causality
-        combined_df = self.insider_activity(
-            self.df
-        )
-        trans=self.transactions_per_insider(df)
-        trans_buy=self.transactions_per_insider(combined_df["df_buy"])
-        trans_sell=self.transactions_per_insider(combined_df["df_sale"])
-        trans_opt=self.transactions_per_insider(combined_df["df_opt"])
+        combined_df = self.insider_activity(self.df)
+        trans = self.transactions_per_insider(self.df)
+        trans_buy = self.transactions_per_insider(combined_df["df_buy"])
+        trans_sell = self.transactions_per_insider(combined_df["df_sale"])
+        trans_opt = self.transactions_per_insider(combined_df["df_opt"])
 
         fig = go.Figure()
 
         fig.add_trace(
             go.Bar(
                 x=trans.index,
-                y=trans['count'],
-                name='overall distribution',
-                marker=dict(
-                    color='#96d9d6'
-                )
+                y=trans["count"],
+                name="overall distribution",
+                marker=dict(color="#96d9d6"),
             )
         )
 
         fig.add_trace(
             go.Scatter(
                 x=trans_buy.index,
-                y=trans_buy['count'],
-                name='Buy',
-                mode = 'lines+markers',
-                marker = dict(
-                    size = 5,
-                    color = '#735797'
-                )
+                y=trans_buy["count"],
+                name="Buy",
+                mode="lines+markers",
+                marker=dict(size=5, color="#735797"),
             )
         )
 
         fig.add_trace(
             go.Scatter(
                 x=trans_sell.index,
-                y=trans_sell['count'],
-                name='Sale',
-                mode = 'lines+markers',
-                marker = dict(
-                    size = 5,
-                    color = '#7ac74c'
-                )
+                y=trans_sell["count"],
+                name="Sale",
+                mode="lines+markers",
+                marker=dict(size=5, color="#7ac74c"),
             )
         )
 
         fig.add_trace(
             go.Scatter(
                 x=trans_opt.index,
-                y=trans_opt['count'],
-                name='Option Exercise',
-                mode = 'lines+markers',
-                marker = dict(
-                    size = 5,
-                    color = '#FF0000'
-                )
+                y=trans_opt["count"],
+                name="Option Exercise",
+                mode="lines+markers",
+                marker=dict(size=5, color="#FF0000"),
             )
         )
 
@@ -1747,7 +1789,7 @@ class exploratory_data_analysis:
             # NOTE this could also be adjusted to save the fig.
             fig.show()
         if streamlit == True:
-            return fig 
+            return fig
 
     def plotly_top_contributor(
         self,
@@ -1756,7 +1798,7 @@ class exploratory_data_analysis:
         display_fig=True,
         **kwargs,
     ):
-        """Function to generate the single granger causality plot.
+        """Function to generate the histogram plot for top insider activity.
 
         Args:
             figsize (tuple, optional): Figure size of the plot in inch. Defaults to (1400, 500).
@@ -1766,16 +1808,16 @@ class exploratory_data_analysis:
         Returns:
             plotly figure object: Returns plotly figure object if streamlit is true.
         """
-        top_contributor=self.top_contributor()
+
+        # Generate the Top Contributor
+        top_contributor = self.top_contributor()
         fig = go.Figure()
 
         fig.add_trace(
             go.Bar(
                 x=top_contributor.index,
-                y=top_contributor['incidents_num'],
-                marker=dict(
-                    color='#e15c46'
-                )
+                y=top_contributor["incidents_num"],
+                marker=dict(color="#e15c46"),
             )
         )
 
@@ -1794,7 +1836,7 @@ class exploratory_data_analysis:
             # NOTE this could also be adjusted to save the fig.
             fig.show()
         if streamlit == True:
-            return fig 
+            return fig
 
     def plotly_market_cap(
         self,
@@ -1803,7 +1845,7 @@ class exploratory_data_analysis:
         display_fig=True,
         **kwargs,
     ):
-        """Function to generate the single granger causality plot.
+        """Function to generate the histogram plot for market capital.
 
         Args:
             figsize (tuple, optional): Figure size of the plot in inch. Defaults to (1400, 500).
@@ -1813,16 +1855,17 @@ class exploratory_data_analysis:
         Returns:
             plotly figure object: Returns plotly figure object if streamlit is true.
         """
-        top_market_cap=self.market_cap()
+
+        # Generate the market capital
+        top_market_cap = self.market_cap()
+
         fig = go.Figure()
 
         fig.add_trace(
             go.Bar(
-                x=top_market_cap['Contributor'],
-                y=top_market_cap['Value ($)'],
-                marker=dict(
-                    color='#4C9900'
-                )
+                x=top_market_cap["Contributor"],
+                y=top_market_cap["Value ($)"],
+                marker=dict(color="#4C9900"),
             )
         )
 
@@ -1841,7 +1884,7 @@ class exploratory_data_analysis:
             # NOTE this could also be adjusted to save the fig.
             fig.show()
         if streamlit == True:
-            return fig 
+            return fig
 
     def plotly_market_vs_insider(
         self,
@@ -1853,7 +1896,7 @@ class exploratory_data_analysis:
         display_fig=True,
         **kwargs,
     ):
-        """Function to generate the single granger causality plot.
+        """Function to generate the plot to compare insider trading and market prices.
 
         Args:
             figsize (tuple, optional): Figure size of the plot in inch. Defaults to (1400, 500).
@@ -1863,21 +1906,25 @@ class exploratory_data_analysis:
         Returns:
             plotly figure object: Returns plotly figure object if streamlit is true.
         """
-        combined_df = self.insider_activity(
-            self.df
-        )
+
+        # Generate the Insider Activity
+        combined_df = self.insider_activity(self.df)
+
         fig = go.Figure()
-        grouped_sale = combined_df["df_sale"].groupby(combined_df["df_sale"]['Date']).sum()
-        grouped_buy = combined_df["df_buy"].groupby(combined_df["df_buy"]['Date']).sum()
-        grouped_opt = combined_df["df_opt"].groupby(combined_df["df_opt"]['Date']).sum()
+
+        # Generate grouping of activities
+        grouped_sale = (
+            combined_df["df_sale"].groupby(combined_df["df_sale"]["Date"]).sum()
+        )
+        grouped_buy = combined_df["df_buy"].groupby(combined_df["df_buy"]["Date"]).sum()
+        grouped_opt = combined_df["df_opt"].groupby(combined_df["df_opt"]["Date"]).sum()
+
         fig.add_trace(
             go.Bar(
                 x=grouped_sale.index,
                 y=grouped_sale["Value ($)"],
                 name="Sale",
-                marker=dict(
-                    color='#FF0000'
-                )
+                marker=dict(color="#FF0000"),
             )
         )
 
@@ -1886,9 +1933,7 @@ class exploratory_data_analysis:
                 x=grouped_buy.index,
                 y=grouped_buy["Value ($)"],
                 name="Buy",
-                marker=dict(
-                    color='#0000FF'
-                )
+                marker=dict(color="#0000FF"),
             )
         )
 
@@ -1897,9 +1942,7 @@ class exploratory_data_analysis:
                 x=grouped_opt.index,
                 y=grouped_opt["Value ($)"],
                 name="Option exercise",
-                marker=dict(
-                    color='#008000'
-                )
+                marker=dict(color="#008000"),
             )
         )
         print(df_timeseries["Volume"])
@@ -1907,8 +1950,8 @@ class exploratory_data_analysis:
             go.Scatter(
                 x=df_timeseries["Date"],
                 y=df_timeseries["Volume"],
-                name = "S&P 500",
-                line = dict(color = 'rgba(50,50,50,0.2)'),
+                name="S&P 500",
+                line=dict(color="rgba(50,50,50,0.2)"),
             )
         )
 
@@ -1920,8 +1963,7 @@ class exploratory_data_analysis:
             width=figsize[0],
             height=figsize[1],
             hovermode="x unified",
-            xaxis = dict(
-                range = [start_date,end_date]),
+            xaxis=dict(range=[start_date, end_date]),
             margin=dict(l=80, r=30, t=30, b=50),
         )
 
@@ -1929,7 +1971,7 @@ class exploratory_data_analysis:
             # NOTE this could also be adjusted to save the fig.
             fig.show()
         if streamlit == True:
-            return fig       
+            return fig
 
     def plotly_insider_activity_roles(
         self,
@@ -1938,7 +1980,7 @@ class exploratory_data_analysis:
         display_fig=True,
         **kwargs,
     ):
-        """Function to generate the single granger causality plot.
+        """Function to generate the insider activty plot w.r.t roles.
 
         Args:
             figsize (tuple, optional): Figure size of the plot in inch. Defaults to (1400, 500).
@@ -1948,24 +1990,26 @@ class exploratory_data_analysis:
         Returns:
             plotly figure object: Returns plotly figure object if streamlit is true.
         """
-        df_insider=pd.crosstab(self.df['Date'], df['Relationship'])
-        fig = go.Figure()
-        color = iter(cm.rainbow(np.linspace(0, 1, len(df_insider.columns))))
-        for role in df_insider.columns:
-          c = next(color)
-          fig.add_trace(
-              go.Scatter(
-                  x=df_insider.index,
-                  y=df_insider[role],
-                  name=role,
-                  mode = 'lines+markers',
-                  marker = dict(
-                      size = 5,
-                      color = c
-                  )
-              )
-          )
 
+        # Generate the cross relation between Date and Relationship
+        df_insider = pd.crosstab(self.df["Date"], df["Relationship"])
+
+        fig = go.Figure()
+        # Generate list of color codes
+        color = iter(cm.rainbow(np.linspace(0, 1, len(df_insider.columns))))
+
+        # Iterate roles and color
+        for role in df_insider.columns:
+            c = next(color)
+            fig.add_trace(
+                go.Scatter(
+                    x=df_insider.index,
+                    y=df_insider[role],
+                    name=role,
+                    mode="lines+markers",
+                    marker=dict(size=5, color=c),
+                )
+            )
         fig.update_layout(
             title="Insider Activity for different Roles",
             xaxis_title="Date",
@@ -1981,7 +2025,7 @@ class exploratory_data_analysis:
             # NOTE this could also be adjusted to save the fig.
             fig.show()
         if streamlit == True:
-            return fig 
+            return fig
 
     def plotly_insider_activity_timeseries_plot(
         self,
@@ -1993,7 +2037,7 @@ class exploratory_data_analysis:
         display_fig=True,
         **kwargs,
     ):
-        """Function to generate the single granger causality plot.
+        """Function to generate the insider activity plot w.r.t market prices in terms of volume.
 
         Args:
             figsize (tuple, optional): Figure size of the plot in inch. Defaults to (1400, 500).
@@ -2003,78 +2047,40 @@ class exploratory_data_analysis:
         Returns:
             plotly figure object: Returns plotly figure object if streamlit is true.
         """
-        combined_df = self.insider_activity(
-            self.df
-        )
+
+        # Generate the Insider Activity
+        combined_df = self.insider_activity(self.df)
+
         fig = go.Figure()
 
         fig.add_trace(
             go.Scatter(
                 x=df_timeseries["Date"],
                 y=df_timeseries["Close"],
-                name = "Sale",
-                # size="Shares",
-                line = dict(color = 'rgba(50,50,50,0.2)'),
+                name="Sale",
+                line=dict(color="rgba(50,50,50,0.2)"),
             )
         )
 
-        # fig.add_trace(
-        #     go.Scatter(
-        #         x=combined_df["df_buy_count"].index,
-        #         y=self.df.index,
-        #         name = "Buy",
-        #         marker = dict(color = '#008000'),
-        #     )
-        # )
+        # Generate list of transactions
+        transactions = ["buy", "sale", "opt"]
+        # Generate list of color codes
+        color = iter(cm.rainbow(np.linspace(0, 1, len(transactions.columns))))
 
-        # fig.add_trace(
-        #     go.Scatter(
-        #         x=combined_df["df_sale_count"].index,
-        #         y=self.df.index,
-        #         name = "Sale",
-        #         marker = dict(color = '#FF0000'),
-        #     )
-        # )
-
-        # fig.add_trace(
-        #     go.Scatter(
-        #         x=combined_df["df_opt_count"].index,
-        #         y=self.df.index,
-        #         name = "Option Exercise",
-        #         marker = dict(color = '#FFFF00'),
-        #     )
-        # )
-
-        color = iter(["Red","Green","Blue"])
-        transactions=["buy","sale","opt"]
+        # Iterate the list of transactions
         for trans in transactions:
-          c = next(color)
-          df = "df_"+trans
-          fig.add_trace(
-              go.Scatter(
-                  y=combined_df[df]["Cost"],
-                  x=combined_df[df]["Date"],
-                  name=trans,
-                  mode = 'markers',
-                  marker = dict(
-                      size = 15,
-                      color = c
-                  )
-              )
-          )
-        # print(self.df.index)
-        # fig.add_trace(
-        #       go.Scatter(
-        #           y=combined_df["df_sale"]["Cost"],
-        #           x=self.df["Date"],
-        #           name="Sale",
-        #           mode = 'markers',
-        #           marker = dict(
-        #               # size = 5,
-        #               color = '#FF0000',
-        #           )
-        #       )
-        #   )
+            c = next(color)
+            df = "df_" + trans
+            fig.add_trace(
+                go.Scatter(
+                    y=combined_df[df]["Cost"],
+                    x=combined_df[df]["Date"],
+                    name=trans,
+                    mode="markers",
+                    opacity=0.6,
+                    marker=dict(size=15, color=c),
+                )
+            )
         fig.update_layout(
             title=f"Insider activity over time",
             xaxis_title="Date in months",
@@ -2083,16 +2089,7 @@ class exploratory_data_analysis:
             width=figsize[0],
             height=figsize[1],
             legend=dict(yanchor="top", xanchor="right"),
-            # hoverdata={
-            #             "Shares":False,
-            #             "Transaction":False,
-            #             "Cost":False,
-            #             "Insider Trading":True,
-            #             "Relationship":True,
-            #             'Value ($)': ":,.0f"
-            #            },
-            xaxis = dict(
-                range = [start_date,end_date]),
+            xaxis=dict(range=[start_date, end_date]),
             hovermode="x unified",
             margin=dict(l=80, r=30, t=30, b=50),
         )
@@ -2101,11 +2098,13 @@ class exploratory_data_analysis:
             # NOTE this could also be adjusted to save the fig.
             fig.show()
         if streamlit == True:
-            return fig 
+            return fig
 
     def plotly_short_returns(
         self,
-        stock_df: pd.DataFrame, 
+        stock_df: pd.DataFrame,
+        threshold: int,
+        include: list,
         figsize=(1400, 500),
         streamlit=False,
         display_fig=True,
@@ -2114,6 +2113,7 @@ class exploratory_data_analysis:
         """Function to generate the single granger causality plot.
 
         Args:
+            stock_df (, optional): Figure size of the plot in inch. Defaults to (1400, 500).
             figsize (tuple, optional): Figure size of the plot in inch. Defaults to (1400, 500).
             streamlit (bool, optional): Select if fig object is returned from function. Defaults to False.
             display_fig (bool, optional): Select if figure is displayed. Defaults to True.
@@ -2121,70 +2121,33 @@ class exploratory_data_analysis:
         Returns:
             plotly figure object: Returns plotly figure object if streamlit is true.
         """
-        future_prices=self.calculate_future_prices(stock_df)
-        return_df=self.calculate_returns(future_prices,"Cost")
-        df_buy=return_df[return_df["Transaction"]=="Buy"].reset_index()
-        df_sale=return_df[return_df["Transaction"]=="Sale"].reset_index()
-        df_opt=return_df[return_df["Transaction"]=="Option Exercise"].reset_index()
-        col_name=['day1_return','day2_return','day3_return','day4_return','day5_return']
-        buy=self.boxplot_prep(df_buy,col_name)
-        sale=self.boxplot_prep(df_sale,col_name)
-        opt=self.boxplot_prep(df_opt,col_name)
-        buy=buy[buy['return']<50]
-        sale=sale[sale['return']<50]
+
+        comb_df = self.short_returns(stock_df, threshold, include)
+        # Generate list of color codes
+        color = iter(["Red", "Green", "Blue"])
+
         fig = go.Figure()
 
-        fig.add_trace(
-            go.Box(
-                x=buy["day"],
-                y=buy["return"],
-                name="Buy",
-                opacity = 0.5,
-                marker=dict(
-                    color='#35e3c4'
+        for trans, trans_df in comb_df.items():
+            c = next(color)
+            fig.add_trace(
+                go.Box(
+                    x=trans_df["day"],
+                    y=trans_df["return"],
+                    name=trans,
+                    opacity=0.5,
+                    marker=dict(color=c),
                 )
             )
-        )
-
-        fig.add_trace(
-            go.Box(
-                x=sale["day"],
-                y=sale["return"],
-                name="Sale",
-                opacity = 0.5,
-                marker=dict(
-                    color='#172d2b'
-                )
-            )
-        )
-
-        # fig.add_trace(
-        #     go.Box(
-        #         x=opt["day"],
-        #         y=opt["return"],
-        #         name="Option Exercise",
-        #         marker=dict(
-        #             color='#6da77a',
-        #             opacity=0.8,
-        #         )
-        #     )
-        # )
-
         fig.update_layout(
             title="Short term returns on Insider Trades",
-            xaxis=dict(
-                title='Day',
-                zeroline=False
-            ),
-            yaxis=dict(
-                title='Returns in %',
-                zeroline=False
-            ),
+            xaxis=dict(title="Day", zeroline=False),
+            yaxis=dict(title="Returns in %", zeroline=False),
             autosize=True,
             width=figsize[0],
             height=figsize[1],
             hovermode="x unified",
-            boxmode='group',
+            boxmode="group",
             margin=dict(l=80, r=30, t=30, b=50),
         )
 
@@ -2192,4 +2155,4 @@ class exploratory_data_analysis:
             # NOTE this could also be adjusted to save the fig.
             fig.show()
         if streamlit == True:
-            return fig 
+            return fig
