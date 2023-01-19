@@ -34,15 +34,15 @@
     <img src="docs/images/project_logo_.jpg" alt="Logo" width="80" height="80">
   </a>
 
-<h3 align="center">project_title</h3>
+<h3 align="center">InsiderTrader</h3>
 
   <p align="center">
-    project_description
+    InsiderTrader is a python package that helps in detecting insider trading activities in the stock market.
     <br />
     <a href="https://github.com/tuhinmallick/InsiderTrader"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/tuhinmallick/InsiderTrader">View Demo</a>
+    <a href="https://github.com/tuhinmallick/InsiderTrader/blob/main/notebooks/Insider_trading_analysis.ipynb">View Demo</a>
     ·
     <a href="https://github.com/tuhinmallick/InsiderTrader/issues">Report Bug</a>
     ·
