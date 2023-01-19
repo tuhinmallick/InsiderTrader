@@ -1731,7 +1731,7 @@ class Exploratory_data_analysis:
                 x=combined_df["df_sale_count"].index,
                 y=self.df.index,
                 name="Sale",
-                line=dict(color="#008000"),
+                line=dict(color="#FF0000"),
             )
         )
 
