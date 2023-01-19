@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-import os
+import os, time
 from datetime import datetime
 
 import matplotlib.pyplot as plt
@@ -121,8 +121,7 @@ class Exploratory_data_analysis:
         trans_per_insider = pd.DataFrame(df["Insider Trading"].value_counts())
         trans_per_insider = trans_per_insider.reset_index()
         trans_per_insider.columns = ["Name", "trans_num"]
-        trans = trans_per_insider.groupby(
-            trans_per_insider["trans_num"]).count()
+        trans = trans_per_insider.groupby(trans_per_insider["trans_num"]).count()
         trans.columns = ["count"]
         return trans
 
@@ -1985,6 +1984,7 @@ class Exploratory_data_analysis:
                 x=grouped_sale.index,
                 y=grouped_sale["Value ($)"],
                 name="Sale",
+                opacity=0.7,
                 marker=dict(color="#FF0000"),
             )
         )
@@ -1994,6 +1994,7 @@ class Exploratory_data_analysis:
                 x=grouped_buy.index,
                 y=grouped_buy["Value ($)"],
                 name="Buy",
+                opacity=0.7,
                 marker=dict(color="#0000FF"),
             )
         )
@@ -2003,10 +2004,10 @@ class Exploratory_data_analysis:
                 x=grouped_opt.index,
                 y=grouped_opt["Value ($)"],
                 name="Option exercise",
+                opacity=0.7,
                 marker=dict(color="#008000"),
             )
         )
-        print(df_timeseries["Volume"])
         fig.add_trace(
             go.Scatter(
                 x=df_timeseries["Date"],
@@ -2053,7 +2054,7 @@ class Exploratory_data_analysis:
         """
 
         # Generate the cross relation between Date and Relationship
-        df_insider = pd.crosstab(self.df["Date"], df["Relationship"])
+        df_insider = pd.crosstab(self.df["Date"], self.df["Relationship"])
 
         fig = go.Figure()
         # Generate list of color codes
