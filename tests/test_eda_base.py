@@ -10,6 +10,7 @@ from src.insider_eda.eda_base import Exploratory_data_analysis
 
 
 class TestExploratoryDataAnalysis(unittest.TestCase):
+
     def test_init(self):
         # test for correct initialization
         df = pd.DataFrame({"col1": [1, 2, 3], "col2": [4, 5, 6]})
@@ -21,10 +22,15 @@ class TestExploratoryDataAnalysis(unittest.TestCase):
 
         # test for correct initialization with time series data
         df = pd.DataFrame(
-            {"col1": [1, 2, 3], "col2": [4, 5, 6]},
+            {
+                "col1": [1, 2, 3],
+                "col2": [4, 5, 6]
+            },
             index=pd.date_range(start="2022-01-01", end="2022-01-03"),
         )
-        eda = Exploratory_data_analysis(df, target_name="col1", time_series=True)
+        eda = Exploratory_data_analysis(df,
+                                        target_name="col1",
+                                        time_series=True)
         self.assertIsInstance(eda, Exploratory_data_analysis)
         self.assertEqual(eda.target_name, "col1")
         self.assertIsInstance(eda.df, pd.DataFrame)
@@ -33,9 +39,15 @@ class TestExploratoryDataAnalysis(unittest.TestCase):
         self.assertTrue(eda.y_target.equals(df["col1"]))
 
         # test for ValueError when index is not datetime
-        df = pd.DataFrame({"col1": [1, 2, 3], "col2": [4, 5, 6]}, index=[1, 2, 3])
+        df = pd.DataFrame({
+            "col1": [1, 2, 3],
+            "col2": [4, 5, 6]
+        },
+                          index=[1, 2, 3])
         with self.assertRaises(ValueError):
-            eda = Exploratory_data_analysis(df, target_name="col1", time_series=True)
+            eda = Exploratory_data_analysis(df,
+                                            target_name="col1",
+                                            time_series=True)
 
 
 if __name__ == "__main__":
