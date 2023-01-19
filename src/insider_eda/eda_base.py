@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
-import os, time
+import os
+import time
 from datetime import datetime
 
 import matplotlib.pyplot as plt
@@ -121,7 +122,8 @@ class Exploratory_data_analysis:
         trans_per_insider = pd.DataFrame(df["Insider Trading"].value_counts())
         trans_per_insider = trans_per_insider.reset_index()
         trans_per_insider.columns = ["Name", "trans_num"]
-        trans = trans_per_insider.groupby(trans_per_insider["trans_num"]).count()
+        trans = trans_per_insider.groupby(
+            trans_per_insider["trans_num"]).count()
         trans.columns = ["count"]
         return trans
 
@@ -375,7 +377,8 @@ class Exploratory_data_analysis:
             "rolling_window") else 6
         xlabel = kwargs["xlabel"] if kwargs.get("xlabel") else "Date"
         file_name_addition = (
-            kwargs["file_name_addition"] if kwargs.get("file_name_addition") else ""
+            kwargs["file_name_addition"] if kwargs.get(
+                "file_name_addition") else ""
         )  # add any additional string to the file name.
         # Set to false since facecolor is set to default. Would overwrite
         # facecolor to make transparent.
@@ -459,7 +462,8 @@ class Exploratory_data_analysis:
             "line_color") else "cyan"
         zorder = kwargs["zorder"] if kwargs.get("zorder") else 0
         file_name_addition = (
-            kwargs["file_name_addition"] if kwargs.get("file_name_addition") else ""
+            kwargs["file_name_addition"] if kwargs.get(
+                "file_name_addition") else ""
         )  # add any additional string to the file name.
         # Set to false since facecolor is set to default. Would overwrite
         # facecolor to make transparent.
@@ -531,7 +535,8 @@ class Exploratory_data_analysis:
             "line_color") else "cyan"
         zorder = kwargs["zorder"] if kwargs.get("zorder") else 0
         file_name_addition = (
-            kwargs["file_name_addition"] if kwargs.get("file_name_addition") else ""
+            kwargs["file_name_addition"] if kwargs.get(
+                "file_name_addition") else ""
         )  # add any additional string to the file name.
         # Set to false since facecolor is set to default. Would overwrite
         # facecolor to make transparent.
@@ -610,7 +615,8 @@ class Exploratory_data_analysis:
         box_line_color = (kwargs["x_labelrotation"] if kwargs.get(
             "x_labelrotation") else "silver")
         file_name_addition = (
-            kwargs["file_name_addition"] if kwargs.get("file_name_addition") else ""
+            kwargs["file_name_addition"] if kwargs.get(
+                "file_name_addition") else ""
         )  # add any additional string to the file name.
         # Set to false since facecolor is set to default. Would overwrite
         # facecolor to make transparent.
@@ -725,7 +731,8 @@ class Exploratory_data_analysis:
         plot_matrix_shape = (
             kwargs["plot_matrix_shape"] if kwargs.get("plot_matrix_shape") else 240)
         file_name_addition = (
-            kwargs["file_name_addition"] if kwargs.get("file_name_addition") else ""
+            kwargs["file_name_addition"] if kwargs.get(
+                "file_name_addition") else ""
         )  # add any additional string to the file name.
         # Set to false since facecolor is set to default. Would overwrite
         # facecolor to make transparent.
@@ -799,7 +806,8 @@ class Exploratory_data_analysis:
         # Parse some kwargs configurations
         k_diff = kwargs["k_diff"] if kwargs.get("k_diff") else 1
         file_name_addition = (
-            kwargs["file_name_addition"] if kwargs.get("file_name_addition") else ""
+            kwargs["file_name_addition"] if kwargs.get(
+                "file_name_addition") else ""
         )  # add any additional string to the file name.
         # Set to false since facecolor is set to default. Would overwrite
         # facecolor to make transparent.
@@ -861,7 +869,8 @@ class Exploratory_data_analysis:
         extrapolate_trend = (kwargs["extrapolate_trend"] if kwargs.get(
             "extrapolate_trend") else "freq")
         decompose_model = (
-            kwargs["decompose_model"] if kwargs.get("decompose_model") else "additive"
+            kwargs["decompose_model"] if kwargs.get(
+                "decompose_model") else "additive"
         )  # Can be "additive", "multiplicative",
         title_label = (
             kwargs["title_label"]
@@ -874,7 +883,8 @@ class Exploratory_data_analysis:
         axhline_linewidth = (
             kwargs["axhline_linewidth"] if kwargs.get("axhline_linewidth") else 1.5)
         file_name_addition = (
-            kwargs["file_name_addition"] if kwargs.get("file_name_addition") else ""
+            kwargs["file_name_addition"] if kwargs.get(
+                "file_name_addition") else ""
         )  # add any additional string to the file name.
         # Set to false since facecolor is set to default. Would overwrite
         # facecolor to make transparent.
@@ -981,7 +991,8 @@ class Exploratory_data_analysis:
         axhline_linewidth = (
             kwargs["axhline_linewidth"] if kwargs.get("axhline_linewidth") else 1.5)
         file_name_addition = (
-            kwargs["file_name_addition"] if kwargs.get("file_name_addition") else ""
+            kwargs["file_name_addition"] if kwargs.get(
+                "file_name_addition") else ""
         )  # add any additional string to the file name.
         # Set to false since facecolor is set to default. Would overwrite
         # facecolor to make transparent.
@@ -1066,7 +1077,8 @@ class Exploratory_data_analysis:
         usevlines = kwargs["usevlines"] if kwargs.get("usevlines") else True
         normed = kwargs["normed"] if kwargs.get("normed") else True
         file_name_addition = (
-            kwargs["file_name_addition"] if kwargs.get("file_name_addition") else ""
+            kwargs["file_name_addition"] if kwargs.get(
+                "file_name_addition") else ""
         )  # add any additional string to the file name.
         # Set to false since facecolor is set to default. Would overwrite
         # facecolor to make transparent.
@@ -1190,7 +1202,8 @@ class Exploratory_data_analysis:
         usevlines = kwargs["usevlines"] if kwargs.get("usevlines") else True
         normed = kwargs["normed"] if kwargs.get("normed") else True
         file_name_addition = (
-            kwargs["file_name_addition"] if kwargs.get("file_name_addition") else ""
+            kwargs["file_name_addition"] if kwargs.get(
+                "file_name_addition") else ""
         )  # add any additional string to the file name.
         # Set to false since facecolor is set to default. Would overwrite
         # facecolor to make transparent.
@@ -1317,7 +1330,8 @@ class Exploratory_data_analysis:
         fontsize_xyticks = (
             kwargs["fontsize_xyticks"] if kwargs.get("fontsize_xyticks") else 12)
         file_name_addition = (
-            kwargs["file_name_addition"] if kwargs.get("file_name_addition") else ""
+            kwargs["file_name_addition"] if kwargs.get(
+                "file_name_addition") else ""
         )  # add any additional string to the file name.
         # Set to false since facecolor is set to default. Would overwrite
         # facecolor to make transparent.
@@ -1543,7 +1557,8 @@ class Exploratory_data_analysis:
         fig.add_trace(
             go.Scatter(
                 x=np.array(
-                    range(int(df_corr["Lag"].min() - 1), int(df_corr["Lag"].max() + 2))
+                    range(int(df_corr["Lag"].min() - 1),
+                          int(df_corr["Lag"].max() + 2))
                 ),
                 y=(len(df_corr) + 2) * [0.1],
                 fill="tozeroy",
@@ -1557,7 +1572,8 @@ class Exploratory_data_analysis:
         fig.add_trace(
             go.Scatter(
                 x=np.array(
-                    range(int(df_corr["Lag"].min() - 1), int(df_corr["Lag"].max() + 2))
+                    range(int(df_corr["Lag"].min() - 1),
+                          int(df_corr["Lag"].max() + 2))
                 ),
                 y=(len(df_corr) + 2) * [-0.1],
                 fill="tozeroy",
@@ -2082,13 +2098,12 @@ class Exploratory_data_analysis:
             hovermode="x unified",
             margin=dict(l=80, r=30, t=30, b=50),
         )
-    
+
         if display_fig == True:
             # NOTE this could also be adjusted to save the fig.
             fig.show()
         if streamlit == True:
             return fig
-        
 
     def plotly_insider_activity_timeseries_plot(
         self,
