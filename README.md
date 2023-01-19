@@ -206,9 +206,8 @@ Project Link: [https://github.com/tuhinmallick/InsiderTrader](https://github.com
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
 
-* []()
-* []()
-* []()
+* [ilyaryabov](https://www.kaggle.com/datasets/ilyaryabov/insider-trading-sp500-inside-info)
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
