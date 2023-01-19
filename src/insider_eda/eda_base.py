@@ -2145,16 +2145,20 @@ class Exploratory_data_analysis:
         display_fig=True,
         **kwargs,
     ):
-        """Function to generate the single granger causality plot.
+        """Function to generate a plotly figure object representing the returns of insider trades and S&P 500 stocks.
 
         Args:
-            stock_df (, optional): Figure size of the plot in inch. Defaults to (1400, 500).
-            figsize (tuple, optional): Figure size of the plot in inch. Defaults to (1400, 500).
-            streamlit (bool, optional): Select if fig object is returned from function. Defaults to False.
-            display_fig (bool, optional): Select if figure is displayed. Defaults to True.
+        stock_df (pd.DataFrame): A DataFrame containing stock data.
+        include (list): A list of stock symbols to include in the plot.
+        returns (str): A string representing the type of returns to display on the plot.
+        figsize (tuple, optional): A tuple representing the size of the plot in inches. Defaults to (1400, 500).
+        threshold (bool, optional): A flag indicating whether to use a threshold. Defaults to False.
+        streamlit (bool, optional): A flag indicating whether to return the plotly figure object. Defaults to False.
+        display_fig (bool, optional): A flag indicating whether to display the figure. Defaults to True.
+        **kwargs: Additional keyword arguments.
 
         Returns:
-            plotly figure object: Returns plotly figure object if streamlit is true.
+        plotly figure object: The plotly figure object if streamlit is set to True.
         """
 
         comb_df = self.show_returns(stock_df, threshold, include, returns_type= returns)
