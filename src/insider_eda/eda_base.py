@@ -2035,7 +2035,59 @@ class Exploratory_data_analysis:
         if streamlit:
             return fig
 
+    def plotly_insider_activity_roles(
+        self,
+        figsize=(1400, 500),
+        streamlit=False,
+        display_fig=True,
+        **kwargs,
+    ):
+        """Function to generate the insider activty plot w.r.t roles.
+
+        Args:
+            figsize (tuple, optional): Figure size of the plot in inch. Defaults to (1400, 500).
+            streamlit (bool, optional): Select if fig object is returned from function. Defaults to False.
+            display_fig (bool, optional): Select if figure is displayed. Defaults to True.
+
+        Returns:
+            plotly figure object: Returns plotly figure object if streamlit is true.
+        """
+
+        # Generate the cross relation between Date and Relationship
+        df_insider = pd.crosstab(self.df["Date"], df["Relationship"])
+
+        fig = go.Figure()
+        # Generate list of color codes
+        color = iter(cm.rainbow(np.linspace(0, 1, len(df_insider.columns))))
+
+        # Iterate roles and color
+        for role in df_insider.columns:
+            c = next(color)
+            fig.add_trace(
+                go.Scatter(
+                    x=df_insider.index,
+                    y=df_insider[role],
+                    name=role,
+                    mode="lines+markers",
+                    marker=dict(size=5, color=c),
+                )
+            )
+        fig.update_layout(
+            title="Insider Activity for different Roles",
+            xaxis_title="Date",
+            yaxis_title="Number of Insider Incidents",
+            autosize=False,
+            width=figsize[0],
+            height=figsize[1],
+            hovermode="x unified",
+            margin=dict(l=80, r=30, t=30, b=50),
+        )
     
+        if display_fig == True:
+            # NOTE this could also be adjusted to save the fig.
+            fig.show()
+        if streamlit == True:
+            return fig
         
 
     def plotly_insider_activity_timeseries_plot(
