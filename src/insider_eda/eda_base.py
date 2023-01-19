@@ -17,13 +17,36 @@ from statsmodels.tsa.statespace.tools import diff
 from statsmodels.tsa.seasonal import seasonal_decompose, STL
 from statsmodels.tsa.stattools import adfuller, grangercausalitytests
 
-
 class Exploratory_data_analysis:
+    """
+    This class is for Exploratory Data Analysis.
+
+    This class can be used to perform some common EDA tasks on a given DataFrame.
+
+    :param df: DataFrame containing the data
+    :type df: pd.DataFrame
+    :param target_name: The name of the target variable, if the data is not time series this parameter can be set as False
+    :type target_name: str or bool
+    :param time_series: Boolean indicating whether the data is time series
+    :type time_series: bool
+    :raises ValueError: If the DataFrame index is not a pandas datetime index when time_series is set to True
+    """
     def __init__(self, df: pd.DataFrame, target_name=False, time_series=False):
+        """
+        The init method of the Exploratory_data_analysis class initializes the class with a DataFrame, target variable name, and a boolean value indicating whether the data is time-series.
+
+        :param df: pandas DataFrame containing the data
+        :type df: pd.DataFrame
+        :param target_name: The name of the target variable, if the data is not time series this parameter can be set as False
+        :type target_name: str or bool
+        :param time_series: Boolean indicating whether the data is time series
+        :type time_series: bool
+        :raises ValueError: If the DataFrame index is not a pandas datetime index when time_series is set to True
+        """
         self.target_name = target_name
         self.df = df
-        if time_series:
-            if isinstance(self.df.index, pd.DatetimeIndex):
+        if time_series == True:
+            if type(self.df.index) is pd.DatetimeIndex:
                 self.x_date = self.df.index
             else:
                 raise ValueError("DataFrame index must be pandas datetime.")
@@ -151,17 +174,14 @@ class Exploratory_data_analysis:
         num_of_contributors = list(self.top_contributor().index)
         total_value = []
         for x in range(len(num_of_contributors)):
-            contributor = self.df[self.df["Insider Trading"]
-                                  == num_of_contributors[x]]
+            contributor = self.df[self.df["Insider Trading"] == num_of_contributors[x]]
             contributor_value = list(contributor["Value ($)"])[0]
             total_value.append(contributor_value)
         top_market_cap = pd.DataFrame(num_of_contributors)
         top_market_cap.columns = ["Contributor"]
         top_market_cap["Value ($)"] = total_value
-        top_market_cap = top_market_cap[top_market_cap["Value ($)"]
-                                        != "unknown"]
-        top_market_cap["Value ($)"] = [float(x)
-                                       for x in top_market_cap["Value ($)"]]
+        top_market_cap = top_market_cap[top_market_cap["Value ($)"] != "unknown"]
+        top_market_cap["Value ($)"] = [float(x) for x in top_market_cap["Value ($)"]]
         return top_market_cap
 
     def calculate_future_prices(self, stock_df_copy: pd.DataFrame):
@@ -283,7 +303,7 @@ class Exploratory_data_analysis:
 
         return return_df
 
-    def short_returns(self, df: pd.DataFrame, threshold: int, include: list):
+    def show_returns(self, df: pd.DataFrame, threshold: int, include: list, returns_type: str):
         """Function to compute the crosscorrelation for a target variable over a period of (+/-) lags.
 
         Args:
@@ -302,26 +322,32 @@ class Exploratory_data_analysis:
         df_sale = return_df[return_df["Transaction"] == "Sale"].reset_index()
         df_opt = return_df[return_df["Transaction"]
                            == "Option Exercise"].reset_index()
-        col_name = [
-            "day1_return",
-            "day2_return",
-            "day3_return",
-            "day4_return",
-            "day5_return",
+        if returns_type=="short":
+            col_name = [
+                "day1_return",
+                "day2_return",
+                "day3_return",
+                "day4_return",
+                "day5_return",
         ]
+        else:
+            col_name=["month_return"]
         buy = self.boxplot_prep(df_buy, col_name)
         sale = self.boxplot_prep(df_sale, col_name)
         opt = self.boxplot_prep(df_opt, col_name)
-        buy = buy[buy["return"] < threshold]
-        sale = sale[sale["return"] < threshold]
-        opt = opt[opt["return"] < threshold]
 
         for act in include:
             if act == "buy":
+                if threshold:
+                    buy = buy[buy["return"] < threshold]
                 combined_df["buy"] = buy
             elif act == "sale":
+                if threshold:
+                    sale = sale[sale["return"] < threshold]
                 combined_df["sale"] = sale
             else:
+                if threshold:
+                    opt = opt[opt["return"] < threshold]
                 combined_df["opt"] = opt
         return combined_df
 
@@ -1750,7 +1776,6 @@ class Exploratory_data_analysis:
             autosize=False,
             width=figsize[0],
             height=figsize[1],
-            # legend=dict(yanchor="top", xanchor="right"),
             xaxis=dict(range=[start_date, end_date]),
             hovermode="x unified",
             margin=dict(l=80, r=30, t=30, b=50),
@@ -1780,7 +1805,7 @@ class Exploratory_data_analysis:
             plotly figure object: Returns plotly figure object if streamlit is true.
         """
 
-        # Generate the Granger Causality
+        # Generate the Insider activity
         combined_df = self.insider_activity(self.df)
         trans = self.transactions_per_insider(self.df)
         trans_buy = self.transactions_per_insider(combined_df["df_buy"])
@@ -1831,8 +1856,8 @@ class Exploratory_data_analysis:
 
         fig.update_layout(
             title="Distribution of number of insiders per company",
-            xaxis_title="Number of insiders",
-            yaxis_title="Number of Companies",
+            xaxis_title="Number of Insider events",
+            yaxis_title="Number of Insider",
             autosize=False,
             width=figsize[0],
             height=figsize[1],
@@ -1866,15 +1891,15 @@ class Exploratory_data_analysis:
         """
 
         # Generate the Top Contributor
-        top_contributor = self.top_contributor()
+        top_contributor = self.top_contributor().sort_values(by=["incidents_num"],ascending=False)
         fig = go.Figure()
 
         fig.add_trace(
             go.Bar(
                 x=top_contributor.index,
                 y=top_contributor["incidents_num"],
-                opacity=0.7,
-                marker=dict(color="#e15c46"),
+                opacity=0.5,
+                marker=dict(color="#4C9900"),
             )
         )
 
@@ -1914,7 +1939,7 @@ class Exploratory_data_analysis:
         """
 
         # Generate the market capital
-        top_market_cap = self.market_cap()
+        top_market_cap = self.market_cap().sort_values(by=["Value ($)"],ascending=False)
 
         fig = go.Figure()
 
@@ -1922,7 +1947,7 @@ class Exploratory_data_analysis:
             go.Bar(
                 x=top_market_cap["Contributor"],
                 y=top_market_cap["Value ($)"],
-                opacity=0.7,
+                opacity=0.5,
                 marker=dict(color="#4C9900"),
             )
         )
@@ -1938,18 +1963,20 @@ class Exploratory_data_analysis:
             margin=dict(l=80, r=30, t=30, b=50),
         )
 
-        if display_fig:
+        if display_fig == True:
             # NOTE this could also be adjusted to save the fig.
             fig.show()
-        if streamlit:
+        if streamlit == True:
             return fig
 
     def plotly_market_vs_insider(
         self,
         df_timeseries: pd.DataFrame,
+        include: list,
         start_date: str,
         end_date: str,
         figsize=(1400, 500),
+        threshold=None,
         streamlit=False,
         display_fig=True,
         **kwargs,
@@ -1969,45 +1996,29 @@ class Exploratory_data_analysis:
         combined_df = self.insider_activity(self.df)
 
         fig = go.Figure()
-
-        # Generate grouping of activities
-        grouped_sale = (
-            combined_df["df_sale"].groupby(
-                combined_df["df_sale"]["Date"]).sum())
-        grouped_buy = combined_df["df_buy"].groupby(
-            combined_df["df_buy"]["Date"]).sum()
-        grouped_opt = combined_df["df_opt"].groupby(
-            combined_df["df_opt"]["Date"]).sum()
-
-        fig.add_trace(
+        
+        # Generate list of color codes
+        color = iter(["Red","Green","Blue"])
+        # Iterate the list of transactions
+        for trans in include:
+            c = next(color)
+            df = "df_" + trans
+            # Generate grouping of activities
+            grouped_trans = (
+            combined_df[df].groupby(
+                combined_df[df]["Date"]).sum(numeric_only=True))
+            if threshold:
+                grouped_trans=grouped_trans[grouped_trans["Value ($)"]<threshold]
+            fig.add_trace(
             go.Bar(
-                x=grouped_sale.index,
-                y=grouped_sale["Value ($)"],
-                name="Sale",
+                x=grouped_trans.index,
+                y=grouped_trans["Value ($)"],
+                name=trans,
                 opacity=0.7,
-                marker=dict(color="#FF0000"),
+                marker=dict(color=c),
             )
         )
-
-        fig.add_trace(
-            go.Bar(
-                x=grouped_buy.index,
-                y=grouped_buy["Value ($)"],
-                name="Buy",
-                opacity=0.7,
-                marker=dict(color="#0000FF"),
-            )
-        )
-
-        fig.add_trace(
-            go.Bar(
-                x=grouped_opt.index,
-                y=grouped_opt["Value ($)"],
-                name="Option exercise",
-                opacity=0.7,
-                marker=dict(color="#008000"),
-            )
-        )
+            
         fig.add_trace(
             go.Scatter(
                 x=df_timeseries["Date"],
@@ -2054,7 +2065,7 @@ class Exploratory_data_analysis:
         """
 
         # Generate the cross relation between Date and Relationship
-        df_insider = pd.crosstab(self.df["Date"], df["Relationship"])
+        df_insider = pd.crosstab(self.df["Date"], self.df["Relationship"])
 
         fig = go.Figure()
         # Generate list of color codes
@@ -2082,7 +2093,7 @@ class Exploratory_data_analysis:
             hovermode="x unified",
             margin=dict(l=80, r=30, t=30, b=50),
         )
-    
+
         if display_fig == True:
             # NOTE this could also be adjusted to save the fig.
             fig.show()
@@ -2096,6 +2107,7 @@ class Exploratory_data_analysis:
         start_date: str,
         end_date: str,
         figsize=(1400, 500),
+        include=False,
         streamlit=False,
         display_fig=True,
         **kwargs,
@@ -2120,18 +2132,17 @@ class Exploratory_data_analysis:
             go.Scatter(
                 x=df_timeseries["Date"],
                 y=df_timeseries["Close"],
-                name="Sale",
+                name="S&P",
                 line=dict(color="rgba(50,50,50,0.2)"),
             )
         )
-
-        # Generate list of transactions
-        transactions = ["buy", "sale", "opt"]
+        if include==False:
+            include = ["buy","sale","opt"]
         # Generate list of color codes
-        color = iter(cm.rainbow(np.linspace(0, 1, len(transactions))))
+        color = iter(["Red","Green","Blue"])
 
         # Iterate the list of transactions
-        for trans in transactions:
+        for trans in include:
             c = next(color)
             df = "df_" + trans
             fig.add_trace(
@@ -2163,12 +2174,13 @@ class Exploratory_data_analysis:
         if streamlit:
             return fig
 
-    def plotly_short_returns(
+    def plotly_returns(
         self,
         stock_df: pd.DataFrame,
-        threshold: int,
         include: list,
+        returns: str,
         figsize=(1400, 500),
+        threshold=False,
         streamlit=False,
         display_fig=True,
         **kwargs,
@@ -2185,7 +2197,7 @@ class Exploratory_data_analysis:
             plotly figure object: Returns plotly figure object if streamlit is true.
         """
 
-        comb_df = self.short_returns(stock_df, threshold, include)
+        comb_df = self.show_returns(stock_df, threshold, include, returns_type= returns)
         # Generate list of color codes
         color = iter(["Red", "Green", "Blue"])
 
@@ -2203,8 +2215,8 @@ class Exploratory_data_analysis:
                 )
             )
         fig.update_layout(
-            title="Short term returns on Insider Trades",
-            xaxis=dict(title="Day", zeroline=False),
+            title=f"{returns} terms returns on Insider trades and S&P 500 stocks",
+            xaxis=dict(title="Return", zeroline=False),
             yaxis=dict(title="Returns in %", zeroline=False),
             autosize=True,
             width=figsize[0],
