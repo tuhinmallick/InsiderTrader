@@ -20,6 +20,7 @@ from statsmodels.tsa.statespace.tools import diff
 from statsmodels.tsa.stattools import adfuller
 from statsmodels.tsa.stattools import grangercausalitytests
 
+
 class Exploratory_data_analysis:
     """
     This class is for Exploratory Data Analysis.
@@ -34,6 +35,7 @@ class Exploratory_data_analysis:
     :type time_series: bool
     :raises ValueError: If the DataFrame index is not a pandas datetime index when time_series is set to True
     """
+
     def __init__(self, df: pd.DataFrame, target_name=False, time_series=False):
         """
         The init method of the Exploratory_data_analysis class initializes the class with a DataFrame, target variable name, and a boolean value indicating whether the data is time-series.
@@ -103,21 +105,21 @@ class Exploratory_data_analysis:
 
     def insider_activity(self, df: pd.DataFrame):
         """
-            Function to analyze insider activity by counting the number of buy, sale, and option exercise transactions in a given dataframe over a period of time.
+        Function to analyze insider activity by counting the number of buy, sale, and option exercise transactions in a given dataframe over a period of time.
 
-            Args:
-            df (pandas.DataFrame): The dataframe containing the data on insider activity. The dataframe should contain a column named "Transaction" that specifies the type of transaction (i.e. "Buy", "Sale", "Option Exercise"). The dataframe should also contain a column named "Date" that specifies the date of the transaction.
+        Args:
+        df (pandas.DataFrame): The dataframe containing the data on insider activity. The dataframe should contain a column named "Transaction" that specifies the type of transaction (i.e. "Buy", "Sale", "Option Exercise"). The dataframe should also contain a column named "Date" that specifies the date of the transaction.
 
-            Returns:
-            dictionary: A dictionary containing the following dataframes:
-            - "df_buy": Dataframe containing all rows of the input dataframe where the "Transaction" column is "Buy"
-            - "df_sale": Dataframe containing all rows of the input dataframe where the "Transaction" column is "Sale"
-            - "df_opt": Dataframe containing all rows of the input dataframe where the "Transaction" column is "Option Exercise"
-            - "df_count": Dataframe containing the count of all transactions by date
-            - "df_buy_count": Dataframe containing the count of buy transactions by date
-            - "df_sale_count": Dataframe containing the count of sale transactions by date
-            - "df_opt_count": Dataframe containing the count of option exercise transactions by date
-            """
+        Returns:
+        dictionary: A dictionary containing the following dataframes:
+        - "df_buy": Dataframe containing all rows of the input dataframe where the "Transaction" column is "Buy"
+        - "df_sale": Dataframe containing all rows of the input dataframe where the "Transaction" column is "Sale"
+        - "df_opt": Dataframe containing all rows of the input dataframe where the "Transaction" column is "Option Exercise"
+        - "df_count": Dataframe containing the count of all transactions by date
+        - "df_buy_count": Dataframe containing the count of buy transactions by date
+        - "df_sale_count": Dataframe containing the count of sale transactions by date
+        - "df_opt_count": Dataframe containing the count of option exercise transactions by date
+        """
         # Generate the cross correlation list.
         df_buy = df[df["Transaction"] == "Buy"]
         df_sale = df[df["Transaction"] == "Sale"]
@@ -192,14 +194,18 @@ class Exploratory_data_analysis:
         num_of_contributors = list(self.top_contributor().index)
         total_value = []
         for x in range(len(num_of_contributors)):
-            contributor = self.df[self.df["Insider Trading"] == num_of_contributors[x]]
+            contributor = self.df[self.df["Insider Trading"] ==
+                                  num_of_contributors[x]]
             contributor_value = list(contributor["Value ($)"])[0]
             total_value.append(contributor_value)
         top_market_cap = pd.DataFrame(num_of_contributors)
         top_market_cap.columns = ["Contributor"]
         top_market_cap["Value ($)"] = total_value
-        top_market_cap = top_market_cap[top_market_cap["Value ($)"] != "unknown"]
-        top_market_cap["Value ($)"] = [float(x) for x in top_market_cap["Value ($)"]]
+        top_market_cap = top_market_cap[
+            top_market_cap["Value ($)"] != "unknown"]
+        top_market_cap["Value ($)"] = [
+            float(x) for x in top_market_cap["Value ($)"]
+        ]
         return top_market_cap
 
     def calculate_future_prices(self, stock_df_copy: pd.DataFrame):
@@ -323,7 +329,8 @@ class Exploratory_data_analysis:
 
         return return_df
 
-    def show_returns(self, df: pd.DataFrame, threshold: int, include: list, returns_type: str):
+    def show_returns(self, df: pd.DataFrame, threshold: int, include: list,
+                     returns_type: str):
         """
         Show returns for specified activities
 
@@ -342,18 +349,18 @@ class Exploratory_data_analysis:
         return_df = self.calculate_returns(future_prices, "Cost")
         df_buy = return_df[return_df["Transaction"] == "Buy"].reset_index()
         df_sale = return_df[return_df["Transaction"] == "Sale"].reset_index()
-        df_opt = return_df[return_df["Transaction"]
-                           == "Option Exercise"].reset_index()
-        if returns_type=="short":
+        df_opt = return_df[return_df["Transaction"] ==
+                           "Option Exercise"].reset_index()
+        if returns_type == "short":
             col_name = [
                 "day1_return",
                 "day2_return",
                 "day3_return",
                 "day4_return",
                 "day5_return",
-        ]
+            ]
         else:
-            col_name=["month_return"]
+            col_name = ["month_return"]
         buy = self.boxplot_prep(df_buy, col_name)
         sale = self.boxplot_prep(df_sale, col_name)
         opt = self.boxplot_prep(df_opt, col_name)
@@ -1839,7 +1846,8 @@ class Exploratory_data_analysis:
         """
 
         # Generate the Top Contributor
-        top_contributor = self.top_contributor().sort_values(by=["incidents_num"],ascending=False)
+        top_contributor = self.top_contributor().sort_values(
+            by=["incidents_num"], ascending=False)
         fig = go.Figure()
 
         fig.add_trace(
@@ -1848,8 +1856,7 @@ class Exploratory_data_analysis:
                 y=top_contributor["incidents_num"],
                 opacity=0.5,
                 marker=dict(color="#4C9900"),
-            )
-        )
+            ))
 
         fig.update_layout(
             title="Top contributor for insider activities",
@@ -1889,7 +1896,8 @@ class Exploratory_data_analysis:
         """
 
         # Generate the market capital
-        top_market_cap = self.market_cap().sort_values(by=["Value ($)"],ascending=False)
+        top_market_cap = self.market_cap().sort_values(by=["Value ($)"],
+                                                       ascending=False)
 
         fig = go.Figure()
 
@@ -1952,29 +1960,28 @@ class Exploratory_data_analysis:
         combined_df = self.insider_activity(self.df)
 
         fig = go.Figure()
-        
+
         # Generate list of color codes
-        color = iter(["Red","Green","Blue"])
+        color = iter(["Red", "Green", "Blue"])
         # Iterate the list of transactions
         for trans in include:
             c = next(color)
             df = "df_" + trans
             # Generate grouping of activities
-            grouped_trans = (
-            combined_df[df].groupby(
+            grouped_trans = (combined_df[df].groupby(
                 combined_df[df]["Date"]).sum(numeric_only=True))
             if threshold:
-                grouped_trans=grouped_trans[grouped_trans["Value ($)"]<threshold]
+                grouped_trans = grouped_trans[
+                    grouped_trans["Value ($)"] < threshold]
             fig.add_trace(
-            go.Bar(
-                x=grouped_trans.index,
-                y=grouped_trans["Value ($)"],
-                name=trans,
-                opacity=0.7,
-                marker=dict(color=c),
-            )
-        )
-            
+                go.Bar(
+                    x=grouped_trans.index,
+                    y=grouped_trans["Value ($)"],
+                    name=trans,
+                    opacity=0.7,
+                    marker=dict(color=c),
+                ))
+
         fig.add_trace(
             go.Scatter(
                 x=df_timeseries["Date"],
@@ -2095,12 +2102,11 @@ class Exploratory_data_analysis:
                 y=df_timeseries["Close"],
                 name="S&P",
                 line=dict(color="rgba(50,50,50,0.2)"),
-            )
-        )
-        if include==False:
-            include = ["buy","sale","opt"]
+            ))
+        if include == False:
+            include = ["buy", "sale", "opt"]
         # Generate list of color codes
-        color = iter(["Red","Green","Blue"])
+        color = iter(["Red", "Green", "Blue"])
 
         # Iterate the list of transactions
         for trans in include:
@@ -2161,7 +2167,10 @@ class Exploratory_data_analysis:
         plotly figure object: The plotly figure object if streamlit is set to True.
         """
 
-        comb_df = self.show_returns(stock_df, threshold, include, returns_type= returns)
+        comb_df = self.show_returns(stock_df,
+                                    threshold,
+                                    include,
+                                    returns_type=returns)
         # Generate list of color codes
         color = iter(["Red", "Green", "Blue"])
 
@@ -2178,7 +2187,8 @@ class Exploratory_data_analysis:
                     marker=dict(color=c),
                 ))
         fig.update_layout(
-            title=f"{returns} terms returns on Insider trades and S&P 500 stocks",
+            title=
+            f"{returns} terms returns on Insider trades and S&P 500 stocks",
             xaxis=dict(title="Return", zeroline=False),
             yaxis=dict(title="Returns in %", zeroline=False),
             autosize=True,
