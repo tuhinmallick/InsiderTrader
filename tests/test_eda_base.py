@@ -2,8 +2,10 @@
 Tests eda_base.py.
 """
 import unittest
-import pandas as pd
+
 import numpy as np
+import pandas as pd
+
 from src.insider_eda.eda_base import Exploratory_data_analysis
 
 

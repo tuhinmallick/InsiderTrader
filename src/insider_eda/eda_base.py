@@ -1,21 +1,19 @@
-import pandas as pd
-import numpy as np
 import os
 import time
 from datetime import datetime
 
-import matplotlib.pyplot as plt
-from matplotlib.pyplot import cm
 import matplotlib.mlab as mlab
-
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
 import plotly.graph_objects as go
-from plotly.subplots import make_subplots
-
 import seaborn as sns
-
-from statsmodels.graphics.tsaplots import plot_acf, plot_pacf, month_plot, quarter_plot
+from matplotlib.pyplot import cm
+from plotly.subplots import make_subplots
+from statsmodels.graphics.tsaplots import (month_plot, plot_acf, plot_pacf,
+                                           quarter_plot)
+from statsmodels.tsa.seasonal import STL, seasonal_decompose
 from statsmodels.tsa.statespace.tools import diff
-from statsmodels.tsa.seasonal import seasonal_decompose, STL
 from statsmodels.tsa.stattools import adfuller, grangercausalitytests
 
 
