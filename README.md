@@ -195,7 +195,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - email@email_client.com
+Your Name - [@tuhinmallick](https://twitter.com/tuhinmallick) - tuhin.mllk@gmail.com
 
 Project Link: [https://github.com/tuhinmallick/InsiderTrader](https://github.com/tuhinmallick/InsiderTrader)
 
