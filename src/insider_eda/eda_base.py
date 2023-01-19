@@ -102,14 +102,22 @@ class Exploratory_data_analysis:
         return df_corr
 
     def insider_activity(self, df: pd.DataFrame):
-        """Function to compute the crosscorrelation for a target variable over a period of (+/-) lags.
-
-        Args:
-            df (pandas.DataFrame): The dataframe containing the whole data.
-
-        Returns:
-            dictionary: Returns the buy, sale and option exercise and theri count  in a dataframe.
         """
+            Function to analyze insider activity by counting the number of buy, sale, and option exercise transactions in a given dataframe over a period of time.
+
+            Args:
+            df (pandas.DataFrame): The dataframe containing the data on insider activity. The dataframe should contain a column named "Transaction" that specifies the type of transaction (i.e. "Buy", "Sale", "Option Exercise"). The dataframe should also contain a column named "Date" that specifies the date of the transaction.
+
+            Returns:
+            dictionary: A dictionary containing the following dataframes:
+            - "df_buy": Dataframe containing all rows of the input dataframe where the "Transaction" column is "Buy"
+            - "df_sale": Dataframe containing all rows of the input dataframe where the "Transaction" column is "Sale"
+            - "df_opt": Dataframe containing all rows of the input dataframe where the "Transaction" column is "Option Exercise"
+            - "df_count": Dataframe containing the count of all transactions by date
+            - "df_buy_count": Dataframe containing the count of buy transactions by date
+            - "df_sale_count": Dataframe containing the count of sale transactions by date
+            - "df_opt_count": Dataframe containing the count of option exercise transactions by date
+            """
         # Generate the cross correlation list.
         df_buy = df[df["Transaction"] == "Buy"]
         df_sale = df[df["Transaction"] == "Sale"]
@@ -133,13 +141,17 @@ class Exploratory_data_analysis:
         return combined_df
 
     def transactions_per_insider(self, df: pd.DataFrame):
-        """Function to compute the crosscorrelation for a target variable over a period of (+/-) lags.
+        """
+        Function to count the number of transactions per insider in a given dataframe.
 
         Args:
-            df (pandas.DataFrame): The dataframe containing the whole data.
+        df (pandas.DataFrame): The dataframe containing the data on insider activity. The dataframe should contain a column named "Insider Trading" that specifies the name of the insider involved in the transaction.
 
         Returns:
-            dictionary: Returns the buy, sale and option exercise and theri count  in a dataframe.
+        DataFrame: A DataFrame containing the count of transactions per insider, grouped by the number of transactions. The columns of the DataFrame are:
+        - "Name": The name of the insider
+        - "trans_num": The number of transactions made by the insider
+        - "count": The number of insiders who made the same number of transactions
         """
         trans_per_insider = pd.DataFrame(df["Insider Trading"].value_counts())
         trans_per_insider = trans_per_insider.reset_index()
@@ -150,14 +162,18 @@ class Exploratory_data_analysis:
         return trans
 
     def top_contributor(self, threshold=0):
-        """Function to compute the crosscorrelation for a target variable over a period of (+/-) lags.
+        """
+        Function to identify the top contributors of insider activity in a given dataframe based on a threshold value.
 
         Args:
-            df (pandas.DataFrame): The dataframe containing the whole data.
+        threshold (int, optional): The minimum number of incidents an insider must have to be considered a top contributor. Defaults to 0.
 
         Returns:
-            dictionary: Returns the buy, sale and option exercise and theri count  in a dataframe.
+        DataFrame: A DataFrame containing the top contributors of insider activity, where the number of incidents is greater than the threshold value. The columns of the DataFrame are:
+        - "Insider Trading": The name of the insider
+        - "incidents_num": The number of insider activity incidents made by the insider
         """
+
         contributor = pd.DataFrame(self.df["Insider Trading"].value_counts())
         contributor.columns = ["incidents_num"]
         top_contributors = contributor[
@@ -165,13 +181,13 @@ class Exploratory_data_analysis:
         return top_contributors
 
     def market_cap(self):
-        """Function to compute the crosscorrelation for a target variable over a period of (+/-) lags.
-
-        Args:
-            df (pandas.DataFrame): The dataframe containing the whole data.
+        """
+        Function to calculate the market cap of the top contributors of insider activity in a given dataframe.
 
         Returns:
-            dictionary: Returns the buy, sale and option exercise and theri count  in a dataframe.
+        DataFrame: A DataFrame containing the market cap value of the top contributors of insider activity, where the number of incidents is greater than the threshold value. The columns of the DataFrame are:
+        - "Contributor": The name of the top contributor
+        - "Value ($)": The market cap value of the top contributor
         """
         num_of_contributors = list(self.top_contributor().index)
         total_value = []
@@ -187,13 +203,21 @@ class Exploratory_data_analysis:
         return top_market_cap
 
     def calculate_future_prices(self, stock_df_copy: pd.DataFrame):
-        """Function to compute the crosscorrelation for a target variable over a period of (+/-) lags.
+        """
+        Function to calculate the future prices of a stock based on the transaction date in a given dataframe.
 
         Args:
-            df (pandas.DataFrame): The dataframe containing the whole data.
+        stock_df_copy (pandas.DataFrame): The dataframe containing the stock's historical prices.
 
         Returns:
-            dictionary: Returns the buy, sale and option exercise and theri count  in a dataframe.
+        DataFrame: A DataFrame containing the transaction information and the future prices of the stock. The new columns of the DataFrame are:
+        - "Close": The closing price of the stock on the transaction date
+        - "Close_day1": The closing price of the stock on the day after the transaction date
+        - "Close_day2": The closing price of the stock on the second day after the transaction date
+        - "Close_day3": The closing price of the stock on the third day after the transaction date
+        - "Close_day4": The closing price of the stock on the fourth day after the transaction date
+        - "Close_day5": The closing price of the stock on the fifth day after the transaction date
+        - "Close_month": The closing price of the stock on the 30th day after the transaction date
         """
         df_copy = self.df.copy()
 
@@ -231,13 +255,15 @@ class Exploratory_data_analysis:
         return df_copy
 
     def calculate_returns(self, stock_df_copy: pd.DataFrame, diff: str):
-        """Function to compute the crosscorrelation for a target variable over a period of (+/-) lags.
+        """
+        Calculate returns for a stock dataframe
 
         Args:
-            df (pandas.DataFrame): The dataframe containing the whole data.
+        stock_df_copy (pd.DataFrame): The dataframe containing the stock data
+        diff (str): The column name to use as the base for calculating returns
 
         Returns:
-            dictionary: Returns the buy, sale and option exercise and theri count  in a dataframe.
+        pd.DataFrame: Returns the input dataframe with additional columns for day1_return, day2_return, day3_return, day4_return, day5_return, and month_return
         """
         df_copy = self.df.copy()
 
@@ -274,13 +300,15 @@ class Exploratory_data_analysis:
         return df_copy
 
     def boxplot_prep(self, df: pd.DataFrame, col_list: list):
-        """Function to compute the crosscorrelation for a target variable over a period of (+/-) lags.
+        """
+        Prepare a dataframe for plotting in a boxplot
 
         Args:
-            df (pandas.DataFrame): The dataframe containing the whole data.
+        df (pd.DataFrame): The input dataframe
+        col_list (list): A list of columns in the input dataframe to use in the boxplot
 
         Returns:
-            dictionary: Returns the buy, sale and option exercise and theri count  in a dataframe.
+        pd.DataFrame: Returns a new dataframe with columns 'day' and 'return', containing the values from the specified columns in the input dataframe
         """
 
         col_name, return_value = [], []
@@ -296,15 +324,17 @@ class Exploratory_data_analysis:
         return return_df
 
     def show_returns(self, df: pd.DataFrame, threshold: int, include: list, returns_type: str):
-        """Function to compute the crosscorrelation for a target variable over a period of (+/-) lags.
+        """
+        Show returns for specified activities
 
         Args:
-            df (pandas.DataFrame): The dataframe containing the whole data.
-            threshold (int): The cut-off limit for shwoing returns.
-            include (int): The list cotaining the activity.
+        df (pd.DataFrame): The input dataframe containing the data
+        threshold (int): The cut-off limit for showing returns
+        include (list): A list of activities to show returns for (options: "buy", "sale", "opt")
+        returns_type (str): The return type to show, options: "short" or "long"
 
         Returns:
-            dictionary: Returns the buy, sale and option exercise and theri count  in a dataframe.
+        dictionary: A dictionary containing dataframes of returns for the specified activities, with keys "buy", "sale", "opt"
         """
 
         combined_df = {}
@@ -343,15 +373,6 @@ class Exploratory_data_analysis:
                 combined_df["opt"] = opt
         return combined_df
 
-    # def insiders_per_company(self, df: pd.DataFrame):
-    #     """Function to compute the crosscorrelation for a target variable over a period of (+/-) lags.
-
-    #     Args:
-    #         df (pandas.DataFrame): The dataframe containing the whole data.
-
-    #     Returns:
-    #         dictionary: Returns the buy, sale and option exercise and theri count  in a dataframe.
-    #     """
     # XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
     #                                                                 MATPLOTLIB FUNCTIONS
     # XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
@@ -1643,15 +1664,18 @@ class Exploratory_data_analysis:
             display_fig=True,
             **kwargs,
     ):
-        """Function to generate the insider activity over time.
+        """
+        Plot insider activity over time
 
         Args:
-            figsize (tuple, optional): Figure size of the plot in inch. Defaults to (1400, 500).
-            streamlit (bool, optional): Select if fig object is returned from function. Defaults to False.
-            display_fig (bool, optional): Select if figure is displayed. Defaults to True.
+        start_date (str): The start date for the plot's x-axis
+        end_date (str): The end date for the plot's x-axis
+        figsize (tuple, optional): Tuple of width and height for the plot in inches. Defaults to (1400, 500).
+        streamlit (bool, optional): If True, returns the plotly figure object. Defaults to False.
+        display_fig (bool, optional): If True, displays the plot. Defaults to True.
 
         Returns:
-            plotly figure object: Returns plotly figure object if streamlit is true.
+        plotly.graph_objs._figure.Figure: Returns the plotly figure object if streamlit is True.
         """
 
         # Generate the insider activity
@@ -1716,15 +1740,19 @@ class Exploratory_data_analysis:
             display_fig=True,
             **kwargs,
     ):
-        """Function to generate the insider activity for every individual.
+        """
+        Function to generate the insider activity for every individual using Plotly.
 
         Args:
-            figsize (tuple, optional): Figure size of the plot in inch. Defaults to (1400, 500).
-            streamlit (bool, optional): Select if fig object is returned from function. Defaults to False.
-            display_fig (bool, optional): Select if figure is displayed. Defaults to True.
+        self: The class object.
+        figsize (tuple, optional): Figure size of the plot in inch. Defaults to (1400, 500).
+        streamlit (bool, optional): Select if fig object is returned from function. Defaults to False.
+        display_fig (bool, optional): Select if figure is displayed. Defaults to True.
+        **kwargs: Additional keyword arguments passed to the function.
 
         Returns:
-            plotly figure object: Returns plotly figure object if streamlit is true.
+        plotly.graph_objs._figure.Figure: Returns a plotly figure object if streamlit is True. The figure
+        shows the overall distribution, buy, sale and option exercise of insider activities for every individual.
         """
 
         # Generate the Insider activity
@@ -1797,15 +1825,17 @@ class Exploratory_data_analysis:
             display_fig=True,
             **kwargs,
     ):
-        """Function to generate the histogram plot for top insider activity.
+        """
+        Function to generate the histogram plot for top insider activity.
 
         Args:
-            figsize (tuple, optional): Figure size of the plot in inch. Defaults to (1400, 500).
-            streamlit (bool, optional): Select if fig object is returned from function. Defaults to False.
-            display_fig (bool, optional): Select if figure is displayed. Defaults to True.
+        figsize (tuple, optional): Figure size of the plot in inch. Defaults to (1400, 500).
+        streamlit (bool, optional): Select if fig object is returned from function. Defaults to False.
+        display_fig (bool, optional): Select if figure is displayed. Defaults to True.
+        **kwargs: Additional parameters passed to the plotly function
 
         Returns:
-            plotly figure object: Returns plotly figure object if streamlit is true.
+        plotly figure object: Returns plotly figure object if streamlit is true.
         """
 
         # Generate the Top Contributor
@@ -1845,15 +1875,17 @@ class Exploratory_data_analysis:
             display_fig=True,
             **kwargs,
     ):
-        """Function to generate the histogram plot for market capital.
+        """
+        Function to generate the histogram plot for market capital.
 
         Args:
-            figsize (tuple, optional): Figure size of the plot in inch. Defaults to (1400, 500).
-            streamlit (bool, optional): Select if fig object is returned from function. Defaults to False.
-            display_fig (bool, optional): Select if figure is displayed. Defaults to True.
+        figsize (tuple, optional): Figure size of the plot in inch. Defaults to (1400, 500).
+        streamlit (bool, optional): Select if fig object is returned from function. Defaults to False.
+        display_fig (bool, optional): Select if figure is displayed. Defaults to True.
+        **kwargs: Additional parameters passed to the plotly function
 
         Returns:
-            plotly figure object: Returns plotly figure object if streamlit is true.
+        plotly figure object: Returns plotly figure object if streamlit is true.
         """
 
         # Generate the market capital
@@ -1898,15 +1930,22 @@ class Exploratory_data_analysis:
         display_fig=True,
         **kwargs,
     ):
-        """Function to generate the plot to compare insider trading and market prices.
+        """
+        Function to generate the plot to compare insider trading and market prices.
 
         Args:
-            figsize (tuple, optional): Figure size of the plot in inch. Defaults to (1400, 500).
-            streamlit (bool, optional): Select if fig object is returned from function. Defaults to False.
-            display_fig (bool, optional): Select if figure is displayed. Defaults to True.
+        df_timeseries (pd.DataFrame): DataFrame containing the market prices
+        include (list): List of insider trading activities to include in the plot
+        start_date (str): Start date for the plot
+        end_date (str): End date for the plot
+        figsize (tuple, optional): Figure size of the plot in inch. Defaults to (1400, 500).
+        threshold (int, optional): threshold for insider trading value to include in the plot
+        streamlit (bool, optional): Select if fig object is returned from function. Defaults to False.
+        display_fig (bool, optional): Select if figure is displayed. Defaults to True.
+        **kwargs: Additional parameters passed to the plotly function
 
         Returns:
-            plotly figure object: Returns plotly figure object if streamlit is true.
+        plotly figure object: Returns plotly figure object if streamlit is true.
         """
 
         # Generate the Insider Activity
@@ -1969,15 +2008,17 @@ class Exploratory_data_analysis:
             display_fig=True,
             **kwargs,
     ):
-        """Function to generate the insider activty plot w.r.t roles.
+        """
+        Function to generate the insider activity plot with respect to roles.
 
         Args:
-            figsize (tuple, optional): Figure size of the plot in inch. Defaults to (1400, 500).
-            streamlit (bool, optional): Select if fig object is returned from function. Defaults to False.
-            display_fig (bool, optional): Select if figure is displayed. Defaults to True.
+        figsize (tuple, optional): Figure size of the plot in inch. Defaults to (1400, 500).
+        streamlit (bool, optional): Select if fig object is returned from function. Defaults to False.
+        display_fig (bool, optional): Select if figure is displayed. Defaults to True.
+        **kwargs: Additional parameters passed to the plotly function
 
         Returns:
-            plotly figure object: Returns plotly figure object if streamlit is true.
+        plotly figure object: Returns plotly figure object if streamlit is true.
         """
 
         # Generate the cross relation between Date and Relationship
@@ -2026,15 +2067,21 @@ class Exploratory_data_analysis:
         display_fig=True,
         **kwargs,
     ):
-        """Function to generate the insider activity plot w.r.t market prices in terms of volume.
+        """
+        Function to generate the insider activity plot with respect to market prices in terms of volume.
 
         Args:
-            figsize (tuple, optional): Figure size of the plot in inch. Defaults to (1400, 500).
-            streamlit (bool, optional): Select if fig object is returned from function. Defaults to False.
-            display_fig (bool, optional): Select if figure is displayed. Defaults to True.
+        df_timeseries (pd.DataFrame): DataFrame containing the market prices
+        start_date (str): Start date for the plot
+        end_date (str): End date for the plot
+        figsize (tuple, optional): Figure size of the plot in inch. Defaults to (1400, 500).
+        include (list): List of insider trading activities to include in the plot, defaults to ["buy","sale","opt"]
+        streamlit (bool, optional): Select if fig object is returned from function. Defaults to False.
+        display_fig (bool, optional): Select if figure is displayed. Defaults to True.
+        **kwargs: Additional parameters passed to the plotly function
 
         Returns:
-            plotly figure object: Returns plotly figure object if streamlit is true.
+        plotly figure object: Returns plotly figure object if streamlit is true.
         """
 
         # Generate the Insider Activity
