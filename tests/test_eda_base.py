@@ -43,7 +43,7 @@ class TestExploratoryDataAnalysis(unittest.TestCase):
             "col1": [1, 2, 3],
             "col2": [4, 5, 6]
         },
-                          index=[1, 2, 3])
+            index=[1, 2, 3])
         with self.assertRaises(ValueError):
             eda = Exploratory_data_analysis(df,
                                             target_name="col1",
