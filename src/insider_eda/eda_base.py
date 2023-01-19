@@ -1795,7 +1795,8 @@ class Exploratory_data_analysis:
                 x=trans.index,
                 y=trans["count"],
                 name="overall distribution",
-                marker=dict(color="#96d9d6"),
+                opacity=0.7,
+                marker=dict(color="#e15c46"),
             )
         )
 
@@ -1873,6 +1874,7 @@ class Exploratory_data_analysis:
             go.Bar(
                 x=top_contributor.index,
                 y=top_contributor["incidents_num"],
+                opacity=0.7,
                 marker=dict(color="#e15c46"),
             )
         )
@@ -1921,6 +1923,7 @@ class Exploratory_data_analysis:
             go.Bar(
                 x=top_market_cap["Contributor"],
                 y=top_market_cap["Value ($)"],
+                opacity=0.7,
                 marker=dict(color="#4C9900"),
             )
         )
