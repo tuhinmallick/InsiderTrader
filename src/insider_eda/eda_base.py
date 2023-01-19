@@ -1,21 +1,24 @@
-import pandas as pd
-import numpy as np
-import os, time
+import os
+import time
 from datetime import datetime
 
-import matplotlib.pyplot as plt
-from matplotlib.pyplot import cm
 import matplotlib.mlab as mlab
-
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
 import plotly.graph_objects as go
-from plotly.subplots import make_subplots
-
 import seaborn as sns
-
-from statsmodels.graphics.tsaplots import plot_acf, plot_pacf, month_plot, quarter_plot
+from matplotlib.pyplot import cm
+from plotly.subplots import make_subplots
+from statsmodels.graphics.tsaplots import month_plot
+from statsmodels.graphics.tsaplots import plot_acf
+from statsmodels.graphics.tsaplots import plot_pacf
+from statsmodels.graphics.tsaplots import quarter_plot
+from statsmodels.tsa.seasonal import seasonal_decompose
+from statsmodels.tsa.seasonal import STL
 from statsmodels.tsa.statespace.tools import diff
-from statsmodels.tsa.seasonal import seasonal_decompose, STL
-from statsmodels.tsa.stattools import adfuller, grangercausalitytests
+from statsmodels.tsa.stattools import adfuller
+from statsmodels.tsa.stattools import grangercausalitytests
 
 class Exploratory_data_analysis:
     """
@@ -71,11 +74,10 @@ class Exploratory_data_analysis:
 
         return datax.corr(datay.shift(lag))
 
-    def crosscorrelation_generator(
-            self,
-            y_variable: str,
-            x_variable: str,
-            max_lags=12):
+    def crosscorrelation_generator(self,
+                                   y_variable: str,
+                                   x_variable: str,
+                                   max_lags=12):
         """Function to compute the crosscorrelation for a target variable over a period of (+/-) lags.
 
         Args:
@@ -93,12 +95,10 @@ class Exploratory_data_analysis:
         ]  # NOTE needs to be +1 to reach the value.
 
         # Combine into dataframe.
-        df_corr = pd.DataFrame(
-            {
-                "Lag": np.array(range(-max_lags, max_lags + 1)),
-                "Correlation": xcov_monthly,
-            }
-        )
+        df_corr = pd.DataFrame({
+            "Lag": np.array(range(-max_lags, max_lags + 1)),
+            "Correlation": xcov_monthly,
+        })
         return df_corr
 
     def insider_activity(self, df: pd.DataFrame):
@@ -144,7 +144,8 @@ class Exploratory_data_analysis:
         trans_per_insider = pd.DataFrame(df["Insider Trading"].value_counts())
         trans_per_insider = trans_per_insider.reset_index()
         trans_per_insider.columns = ["Name", "trans_num"]
-        trans = trans_per_insider.groupby(trans_per_insider["trans_num"]).count()
+        trans = trans_per_insider.groupby(
+            trans_per_insider["trans_num"]).count()
         trans.columns = ["count"]
         return trans
 
@@ -159,7 +160,8 @@ class Exploratory_data_analysis:
         """
         contributor = pd.DataFrame(self.df["Insider Trading"].value_counts())
         contributor.columns = ["incidents_num"]
-        top_contributors = contributor[contributor["incidents_num"] > threshold]
+        top_contributors = contributor[
+            contributor["incidents_num"] > threshold]
         return top_contributors
 
     def market_cap(self):
@@ -198,12 +200,14 @@ class Exploratory_data_analysis:
         df_copy["new_trans_date"] = [
             time.strptime(str(y.date()), "%Y-%m-%d") for y in df_copy["Date"]
         ]
-        stock_df_copy.index = [time.strptime(
-            str(x.date()), "%Y-%m-%d") for x in stock_df_copy.Date]
+        stock_df_copy.index = [
+            time.strptime(str(x.date()), "%Y-%m-%d")
+            for x in stock_df_copy.Date
+        ]
         df_copy = df_copy.reset_index()
 
-        act_day, day_1, day_2, day_3, day_4, day_5, month = (
-            [] for i in range(7))
+        act_day, day_1, day_2, day_3, day_4, day_5, month = ([]
+                                                             for i in range(7))
         for i in range(len(df_copy)):
             for j in range(len(stock_df_copy)):
                 if df_copy["new_trans_date"][i] == stock_df_copy.index[j]:
@@ -237,39 +241,27 @@ class Exploratory_data_analysis:
         """
         df_copy = self.df.copy()
 
-        act_day, day_1, day_2, day_3, day_4, day_5, month = (
-            [] for i in range(7))
+        act_day, day_1, day_2, day_3, day_4, day_5, month = ([]
+                                                             for i in range(7))
         for day in range(len(stock_df_copy)):
-            day_1.append(
-                ((stock_df_copy["Close_day1"][day] -
-                  stock_df_copy[diff][day]) /
-                 stock_df_copy[diff][day]) *
-                100)
-            day_2.append(
-                ((stock_df_copy["Close_day2"][day] -
-                  stock_df_copy[diff][day]) /
-                 stock_df_copy[diff][day]) *
-                100)
-            day_3.append(
-                ((stock_df_copy["Close_day3"][day] -
-                  stock_df_copy[diff][day]) /
-                 stock_df_copy[diff][day]) *
-                100)
-            day_4.append(
-                ((stock_df_copy["Close_day4"][day] -
-                  stock_df_copy[diff][day]) /
-                 stock_df_copy[diff][day]) *
-                100)
-            day_5.append(
-                ((stock_df_copy["Close_day5"][day] -
-                  stock_df_copy[diff][day]) /
-                 stock_df_copy[diff][day]) *
-                100)
+            day_1.append((
+                (stock_df_copy["Close_day1"][day] - stock_df_copy[diff][day]) /
+                stock_df_copy[diff][day]) * 100)
+            day_2.append((
+                (stock_df_copy["Close_day2"][day] - stock_df_copy[diff][day]) /
+                stock_df_copy[diff][day]) * 100)
+            day_3.append((
+                (stock_df_copy["Close_day3"][day] - stock_df_copy[diff][day]) /
+                stock_df_copy[diff][day]) * 100)
+            day_4.append((
+                (stock_df_copy["Close_day4"][day] - stock_df_copy[diff][day]) /
+                stock_df_copy[diff][day]) * 100)
+            day_5.append((
+                (stock_df_copy["Close_day5"][day] - stock_df_copy[diff][day]) /
+                stock_df_copy[diff][day]) * 100)
             month.append(
-                ((stock_df_copy["Close_month"][day] -
-                  stock_df_copy[diff][day]) /
-                 stock_df_copy[diff][day]) *
-                100)
+                ((stock_df_copy["Close_month"][day] - stock_df_copy[diff][day])
+                 / stock_df_copy[diff][day]) * 100)
         df_copy = df_copy.assign(
             day1_return=day_1,
             day2_return=day_2,
@@ -365,16 +357,16 @@ class Exploratory_data_analysis:
     # XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
     def single_timeseries_plot(
-        self,
-        y_variable: str,
-        rolling_mean=False,
-        rolling_std=False,
-        save_path=None,
-        title="",
-        figsize=(14, 7),
-        dpi=100,
-        streamlit=False,
-        **kwargs,
+            self,
+            y_variable: str,
+            rolling_mean=False,
+            rolling_std=False,
+            save_path=None,
+            title="",
+            figsize=(14, 7),
+            dpi=100,
+            streamlit=False,
+            **kwargs,
     ):
         """Function to create a single series timeseries plot for a target variable.
 
@@ -388,25 +380,22 @@ class Exploratory_data_analysis:
             dpi (int, optional): DPI value of the plot. Defaults to 100.
         """
         # Parse some kwargs configurations
-        fontsize_title = (
-            kwargs["fontsize_title"] if kwargs.get("fontsize_title") else 20
-        )
-        fontsize_label = (
-            kwargs["fontsize_label"] if kwargs.get("fontsize_label") else 16
-        )
-        fontsize_legend = (
-            kwargs["fontsize_legend"] if kwargs.get("fontsize_legend") else 14
-        )
+        fontsize_title = (kwargs["fontsize_title"]
+                          if kwargs.get("fontsize_title") else 20)
+        fontsize_label = (kwargs["fontsize_label"]
+                          if kwargs.get("fontsize_label") else 16)
+        fontsize_legend = (kwargs["fontsize_legend"]
+                           if kwargs.get("fontsize_legend") else 14)
         rolling_window = kwargs["rolling_window"] if kwargs.get(
             "rolling_window") else 6
         xlabel = kwargs["xlabel"] if kwargs.get("xlabel") else "Date"
-        file_name_addition = (
-            kwargs["file_name_addition"] if kwargs.get("file_name_addition") else ""
-        )  # add any additional string to the file name.
+        file_name_addition = (kwargs["file_name_addition"]
+                              if kwargs.get("file_name_addition") else ""
+                              )  # add any additional string to the file name.
         # Set to false since facecolor is set to default. Would overwrite
         # facecolor to make transparent.
-        transparent = (kwargs["transparent"]
-                       if kwargs.get("transparent") else False)
+        transparent = kwargs["transparent"] if kwargs.get(
+            "transparent") else False
         facecolor = kwargs["facecolor"] if kwargs.get(
             "facecolor") else "#151934"
         x_range = kwargs["x_range"] if kwargs.get("x_range") else None
@@ -458,13 +447,13 @@ class Exploratory_data_analysis:
             return fig
 
     def monthly_plot(
-        self,
-        y_variable: str,
-        save_path=None,
-        figsize=(20, 7),
-        dpi=80,
-        streamlit=False,
-        **kwargs,
+            self,
+            y_variable: str,
+            save_path=None,
+            figsize=(20, 7),
+            dpi=80,
+            streamlit=False,
+            **kwargs,
     ):
         """Function to plot the monthly trend of a target variable.
 
@@ -475,22 +464,20 @@ class Exploratory_data_analysis:
             dpi (int, optional): DPI value of the plot. Defaults to 80.
         """
         # Parse some kwargs configurations
-        fontsize_title = (
-            kwargs["fontsize_title"] if kwargs.get("fontsize_title") else 20
-        )
-        fontsize_label = (
-            kwargs["fontsize_label"] if kwargs.get("fontsize_label") else 14
-        )
+        fontsize_title = (kwargs["fontsize_title"]
+                          if kwargs.get("fontsize_title") else 20)
+        fontsize_label = (kwargs["fontsize_label"]
+                          if kwargs.get("fontsize_label") else 14)
         line_color = kwargs["line_color"] if kwargs.get(
             "line_color") else "cyan"
         zorder = kwargs["zorder"] if kwargs.get("zorder") else 0
-        file_name_addition = (
-            kwargs["file_name_addition"] if kwargs.get("file_name_addition") else ""
-        )  # add any additional string to the file name.
+        file_name_addition = (kwargs["file_name_addition"]
+                              if kwargs.get("file_name_addition") else ""
+                              )  # add any additional string to the file name.
         # Set to false since facecolor is set to default. Would overwrite
         # facecolor to make transparent.
-        transparent = (kwargs["transparent"]
-                       if kwargs.get("transparent") else False)
+        transparent = kwargs["transparent"] if kwargs.get(
+            "transparent") else False
         facecolor = kwargs["facecolor"] if kwargs.get(
             "facecolor") else "#151934"
 
@@ -499,9 +486,8 @@ class Exploratory_data_analysis:
         fig = month_plot(x=self.df[y_variable].dropna(), ax=ax)
 
         # Plot aesthetics
-        ax.set_title(
-            label=f"Month Plot {y_variable.title()}",
-            fontsize=fontsize_title)
+        ax.set_title(label=f"Month Plot {y_variable.title()}",
+                     fontsize=fontsize_title)
         ax.set_xlabel(xlabel="Month", fontsize=fontsize_label)
         ax.set_ylabel(ylabel=y_variable.title(), fontsize=fontsize_label)
 
@@ -517,8 +503,7 @@ class Exploratory_data_analysis:
             fig.savefig(
                 os.path.join(
                     save_path,
-                    f"monthly_plot_{y_variable}{file_name_addition}" +
-                    ".png"),
+                    f"monthly_plot_{y_variable}{file_name_addition}" + ".png"),
                 facecolor=facecolor,
                 transparent=transparent,
             )
@@ -529,13 +514,13 @@ class Exploratory_data_analysis:
             return fig
 
     def quarterly_plot(
-        self,
-        y_variable: str,
-        save_path=None,
-        figsize=(20, 7),
-        dpi=80,
-        streamlit=False,
-        **kwargs,
+            self,
+            y_variable: str,
+            save_path=None,
+            figsize=(20, 7),
+            dpi=80,
+            streamlit=False,
+            **kwargs,
     ):
         """Function to plot the quarterly trend of a target variable.
 
@@ -547,22 +532,20 @@ class Exploratory_data_analysis:
             dpi (int, optional): DPI value of the plot. Defaults to 80.
         """
         # Parse some kwargs configurations
-        fontsize_title = (
-            kwargs["fontsize_title"] if kwargs.get("fontsize_title") else 20
-        )
-        fontsize_label = (
-            kwargs["fontsize_label"] if kwargs.get("fontsize_label") else 14
-        )
+        fontsize_title = (kwargs["fontsize_title"]
+                          if kwargs.get("fontsize_title") else 20)
+        fontsize_label = (kwargs["fontsize_label"]
+                          if kwargs.get("fontsize_label") else 14)
         line_color = kwargs["line_color"] if kwargs.get(
             "line_color") else "cyan"
         zorder = kwargs["zorder"] if kwargs.get("zorder") else 0
-        file_name_addition = (
-            kwargs["file_name_addition"] if kwargs.get("file_name_addition") else ""
-        )  # add any additional string to the file name.
+        file_name_addition = (kwargs["file_name_addition"]
+                              if kwargs.get("file_name_addition") else ""
+                              )  # add any additional string to the file name.
         # Set to false since facecolor is set to default. Would overwrite
         # facecolor to make transparent.
-        transparent = (kwargs["transparent"]
-                       if kwargs.get("transparent") else False)
+        transparent = kwargs["transparent"] if kwargs.get(
+            "transparent") else False
         facecolor = kwargs["facecolor"] if kwargs.get(
             "facecolor") else "#151934"
 
@@ -573,9 +556,8 @@ class Exploratory_data_analysis:
         fig = quarter_plot(x=df_sub.dropna(), ax=ax)
 
         # Plot aesthetics
-        ax.set_title(
-            label=f"Month Plot {y_variable.title()}",
-            fontsize=fontsize_title)
+        ax.set_title(label=f"Month Plot {y_variable.title()}",
+                     fontsize=fontsize_title)
         ax.set_xlabel(xlabel="Month", fontsize=fontsize_label)
         ax.set_ylabel(ylabel=y_variable.title(), fontsize=fontsize_label)
 
@@ -604,13 +586,13 @@ class Exploratory_data_analysis:
             return fig
 
     def seasonal_boxplot_ym(
-        self,
-        y_variable: str,
-        save_path=None,
-        figsize=(20, 7),
-        dpi=80,
-        streamlit=False,
-        **kwargs,
+            self,
+            y_variable: str,
+            save_path=None,
+            figsize=(20, 7),
+            dpi=80,
+            streamlit=False,
+            **kwargs,
     ):
         """Function that creates the seasonal boxplot for year and month.
 
@@ -621,27 +603,23 @@ class Exploratory_data_analysis:
             dpi (int, optional): DPI value of the plot. Defaults to 80.
         """
         # Parse some kwargs configurations
-        fontsize_title = (
-            kwargs["fontsize_title"] if kwargs.get("fontsize_title") else 20
-        )
-        fontsize_label = (
-            kwargs["fontsize_label"] if kwargs.get("fontsize_label") else 14
-        )
-        fontsize_ticks = (
-            kwargs["fontsize_ticks"] if kwargs.get("fontsize_ticks") else 14
-        )
-        x_labelrotation = (
-            kwargs["x_labelrotation"] if kwargs.get("x_labelrotation") else 45
-        )
-        box_line_color = (kwargs["x_labelrotation"] if kwargs.get(
-            "x_labelrotation") else "silver")
-        file_name_addition = (
-            kwargs["file_name_addition"] if kwargs.get("file_name_addition") else ""
-        )  # add any additional string to the file name.
+        fontsize_title = (kwargs["fontsize_title"]
+                          if kwargs.get("fontsize_title") else 20)
+        fontsize_label = (kwargs["fontsize_label"]
+                          if kwargs.get("fontsize_label") else 14)
+        fontsize_ticks = (kwargs["fontsize_ticks"]
+                          if kwargs.get("fontsize_ticks") else 14)
+        x_labelrotation = (kwargs["x_labelrotation"]
+                           if kwargs.get("x_labelrotation") else 45)
+        box_line_color = (kwargs["x_labelrotation"]
+                          if kwargs.get("x_labelrotation") else "silver")
+        file_name_addition = (kwargs["file_name_addition"]
+                              if kwargs.get("file_name_addition") else ""
+                              )  # add any additional string to the file name.
         # Set to false since facecolor is set to default. Would overwrite
         # facecolor to make transparent.
-        transparent = (kwargs["transparent"]
-                       if kwargs.get("transparent") else False)
+        transparent = kwargs["transparent"] if kwargs.get(
+            "transparent") else False
         facecolor = kwargs["facecolor"] if kwargs.get(
             "facecolor") else "#151934"
 
@@ -684,12 +662,10 @@ class Exploratory_data_analysis:
         )
 
         # Plot Aesthetics
-        axs[0].set_title(
-            label="Year-wise Box Plot\n(The Trend)", fontsize=fontsize_title
-        )
-        axs[1].set_title(
-            label="Month-wise Box Plot\n(The Seasonality)",
-            fontsize=fontsize_title)
+        axs[0].set_title(label="Year-wise Box Plot\n(The Trend)",
+                         fontsize=fontsize_title)
+        axs[1].set_title(label="Month-wise Box Plot\n(The Seasonality)",
+                         fontsize=fontsize_title)
 
         axs[0].set_xlabel(xlabel="Year".title(), fontsize=fontsize_label)
         axs[1].set_xlabel(xlabel="Month".title(), fontsize=fontsize_label)
@@ -697,12 +673,12 @@ class Exploratory_data_analysis:
         axs[0].set_ylabel(ylabel=y_variable.title(), fontsize=fontsize_label)
         axs[1].set_ylabel(ylabel=y_variable.title(), fontsize=fontsize_label)
 
-        axs[0].tick_params(
-            axis="x", labelsize=fontsize_ticks, labelrotation=x_labelrotation
-        )
-        axs[1].tick_params(
-            axis="x", labelsize=fontsize_ticks, labelrotation=x_labelrotation
-        )
+        axs[0].tick_params(axis="x",
+                           labelsize=fontsize_ticks,
+                           labelrotation=x_labelrotation)
+        axs[1].tick_params(axis="x",
+                           labelsize=fontsize_ticks,
+                           labelrotation=x_labelrotation)
 
         axs[0].tick_params(axis="y", labelsize=fontsize_ticks)
         axs[1].tick_params(axis="y", labelsize=fontsize_ticks)
@@ -728,13 +704,13 @@ class Exploratory_data_analysis:
             return fig
 
     def target_lag_plots(
-        self,
-        y_variable: str,
-        lags=8,
-        save_path=None,
-        figsize=(16, 7),
-        streamlit=False,
-        **kwargs,
+            self,
+            y_variable: str,
+            lags=8,
+            save_path=None,
+            figsize=(16, 7),
+            streamlit=False,
+            **kwargs,
     ):
         """Function to create a series of lag plots (number specified by lags) for the specified variable.
 
@@ -745,25 +721,23 @@ class Exploratory_data_analysis:
             figsize (tuple, optional): Figure size of the plot in inch. Defaults to (16,7).
         """
         # Parse some kwargs configurations
-        fontsize_title = (
-            kwargs["fontsize_title"] if kwargs.get("fontsize_title") else 20
-        )
-        plot_matrix_shape = (
-            kwargs["plot_matrix_shape"] if kwargs.get("plot_matrix_shape") else 240)
-        file_name_addition = (
-            kwargs["file_name_addition"] if kwargs.get("file_name_addition") else ""
-        )  # add any additional string to the file name.
+        fontsize_title = (kwargs["fontsize_title"]
+                          if kwargs.get("fontsize_title") else 20)
+        plot_matrix_shape = (kwargs["plot_matrix_shape"]
+                             if kwargs.get("plot_matrix_shape") else 240)
+        file_name_addition = (kwargs["file_name_addition"]
+                              if kwargs.get("file_name_addition") else ""
+                              )  # add any additional string to the file name.
         # Set to false since facecolor is set to default. Would overwrite
         # facecolor to make transparent.
-        transparent = (kwargs["transparent"]
-                       if kwargs.get("transparent") else False)
+        transparent = kwargs["transparent"] if kwargs.get(
+            "transparent") else False
         facecolor = kwargs["facecolor"] if kwargs.get(
             "facecolor") else "#151934"
 
         plt.figure(figsize=figsize)
-        plt.suptitle(
-            f"Lag Correlation Plot for {y_variable}",
-            fontsize=fontsize_title)
+        plt.suptitle(f"Lag Correlation Plot for {y_variable}",
+                     fontsize=fontsize_title)
 
         # Abstract values and convert to columns for the target varaiable
         values = self.df[y_variable]
@@ -792,8 +766,7 @@ class Exploratory_data_analysis:
             plt.savefig(
                 os.path.join(
                     save_path,
-                    f"lag_plot_{y_variable}{file_name_addition}" +
-                    ".png"),
+                    f"lag_plot_{y_variable}{file_name_addition}" + ".png"),
                 facecolor=facecolor,
                 transparent=transparent,
             )
@@ -804,14 +777,14 @@ class Exploratory_data_analysis:
             return plt
 
     def plot_acf_pacf(
-        self,
-        y_variable: str,
-        diff_target=False,
-        lags=60,
-        save_path=None,
-        streamlit=False,
-        figsize=(15, 6),
-        **kwargs,
+            self,
+            y_variable: str,
+            diff_target=False,
+            lags=60,
+            save_path=None,
+            streamlit=False,
+            figsize=(15, 6),
+            **kwargs,
     ):
         """Function to create the autocorrelation and partial autocorrelation plot.
 
@@ -824,13 +797,13 @@ class Exploratory_data_analysis:
         """
         # Parse some kwargs configurations
         k_diff = kwargs["k_diff"] if kwargs.get("k_diff") else 1
-        file_name_addition = (
-            kwargs["file_name_addition"] if kwargs.get("file_name_addition") else ""
-        )  # add any additional string to the file name.
+        file_name_addition = (kwargs["file_name_addition"]
+                              if kwargs.get("file_name_addition") else ""
+                              )  # add any additional string to the file name.
         # Set to false since facecolor is set to default. Would overwrite
         # facecolor to make transparent.
-        transparent = (kwargs["transparent"]
-                       if kwargs.get("transparent") else False)
+        transparent = kwargs["transparent"] if kwargs.get(
+            "transparent") else False
         facecolor = kwargs["facecolor"] if kwargs.get(
             "facecolor") else "#151934"
 
@@ -856,8 +829,7 @@ class Exploratory_data_analysis:
             fig.savefig(
                 os.path.join(
                     save_path,
-                    f"acf_pacf_{y_variable}{file_name_addition}" +
-                    ".png"),
+                    f"acf_pacf_{y_variable}{file_name_addition}" + ".png"),
                 facecolor=facecolor,
                 transparent=transparent,
             )
@@ -868,12 +840,12 @@ class Exploratory_data_analysis:
             return fig
 
     def plot_seasonal_decomposition(
-        self,
-        y_variable: str,
-        save_path=None,
-        figsize=(16, 12),
-        streamlit=False,
-        **kwargs,
+            self,
+            y_variable: str,
+            save_path=None,
+            figsize=(16, 12),
+            streamlit=False,
+            **kwargs,
     ):
         """Function to create the seasonal composition plot.
 
@@ -884,38 +856,33 @@ class Exploratory_data_analysis:
         """
         # Parse some kwargs configurations
         fontsize_title = kwargs["k_diff"] if kwargs.get("k_diff") else 20
-        extrapolate_trend = (kwargs["extrapolate_trend"] if kwargs.get(
-            "extrapolate_trend") else "freq")
-        decompose_model = (
-            kwargs["decompose_model"] if kwargs.get("decompose_model") else "additive"
-        )  # Can be "additive", "multiplicative",
+        extrapolate_trend = (kwargs["extrapolate_trend"]
+                             if kwargs.get("extrapolate_trend") else "freq")
+        decompose_model = (kwargs["decompose_model"]
+                           if kwargs.get("decompose_model") else "additive"
+                           )  # Can be "additive", "multiplicative",
         title_label = (
-            kwargs["title_label"]
-            if kwargs.get("title_label")
-            else f"{decompose_model.title()} Decomposition of {y_variable}"
-        )
-        axhline_color = (
-            kwargs["axhline_color"] if kwargs.get("axhline_color") else "white"
-        )
-        axhline_linewidth = (
-            kwargs["axhline_linewidth"] if kwargs.get("axhline_linewidth") else 1.5)
-        file_name_addition = (
-            kwargs["file_name_addition"] if kwargs.get("file_name_addition") else ""
-        )  # add any additional string to the file name.
+            kwargs["title_label"] if kwargs.get("title_label") else
+            f"{decompose_model.title()} Decomposition of {y_variable}")
+        axhline_color = (kwargs["axhline_color"]
+                         if kwargs.get("axhline_color") else "white")
+        axhline_linewidth = (kwargs["axhline_linewidth"]
+                             if kwargs.get("axhline_linewidth") else 1.5)
+        file_name_addition = (kwargs["file_name_addition"]
+                              if kwargs.get("file_name_addition") else ""
+                              )  # add any additional string to the file name.
         # Set to false since facecolor is set to default. Would overwrite
         # facecolor to make transparent.
-        transparent = (kwargs["transparent"]
-                       if kwargs.get("transparent") else False)
+        transparent = kwargs["transparent"] if kwargs.get(
+            "transparent") else False
         facecolor = kwargs["facecolor"] if kwargs.get(
             "facecolor") else "#151934"
 
         # Set plot Params
-        plt.rcParams.update(
-            {
-                "figure.figsize": figsize,
-                "lines.markersize": 2,
-            }
-        )
+        plt.rcParams.update({
+            "figure.figsize": figsize,
+            "lines.markersize": 2,
+        })
 
         # Generate plot and plot features
         result_add = seasonal_decompose(
@@ -931,8 +898,8 @@ class Exploratory_data_analysis:
             plt.savefig(
                 os.path.join(
                     save_path,
-                    f"seasonal_decomposition_{y_variable}{file_name_addition}" +
-                    ".png",
+                    f"seasonal_decomposition_{y_variable}{file_name_addition}"
+                    + ".png",
                 ),
                 facecolor=facecolor,
                 transparent=transparent,
@@ -943,12 +910,11 @@ class Exploratory_data_analysis:
         if streamlit:
             return plt
 
-    def ask_adfuller(
-            self,
-            y_variable: str,
-            autolag="aic",
-            streamlit=False,
-            **kwargs):
+    def ask_adfuller(self,
+                     y_variable: str,
+                     autolag="aic",
+                     streamlit=False,
+                     **kwargs):
         """Function to run ad fuller test on target variable.
 
         Args:
@@ -957,11 +923,11 @@ class Exploratory_data_analysis:
         """
         # Parse some kwargs configuration
         # "c" default, "ct" constant and trend, "ctt" constant linear and quatratic, "n" non constant
-        regression = (kwargs["maxlag"] if kwargs.get("maxlag") else "c")
+        regression = kwargs["maxlag"] if kwargs.get("maxlag") else "c"
         # Run the test:
-        test_results = adfuller(
-            self.df[y_variable], regression=regression, autolag=autolag
-        )
+        test_results = adfuller(self.df[y_variable],
+                                regression=regression,
+                                autolag=autolag)
 
         print(
             "---------------------------------------------------------------------------------------------------------------------"
@@ -978,14 +944,14 @@ class Exploratory_data_analysis:
         )
 
     def plot_stl_decomposition(
-        self,
-        y_variable: str,
-        seasonal=11,
-        trend=15,
-        save_path=None,
-        streamlit=False,
-        figsize=(16, 12),
-        **kwargs,
+            self,
+            y_variable: str,
+            seasonal=11,
+            trend=15,
+            save_path=None,
+            streamlit=False,
+            figsize=(16, 12),
+            **kwargs,
     ):
         """Function to create the seasonal composition plot.
 
@@ -996,33 +962,27 @@ class Exploratory_data_analysis:
         """
         # Parse some kwargs configurations
         fontsize_title = kwargs["k_diff"] if kwargs.get("k_diff") else 20
-        title_label = (
-            kwargs["title_label"]
-            if kwargs.get("title_label")
-            else f"STL Decomposition of {y_variable}"
-        )
-        axhline_color = (
-            kwargs["axhline_color"] if kwargs.get("axhline_color") else "white"
-        )
-        axhline_linewidth = (
-            kwargs["axhline_linewidth"] if kwargs.get("axhline_linewidth") else 1.5)
-        file_name_addition = (
-            kwargs["file_name_addition"] if kwargs.get("file_name_addition") else ""
-        )  # add any additional string to the file name.
+        title_label = (kwargs["title_label"] if kwargs.get("title_label") else
+                       f"STL Decomposition of {y_variable}")
+        axhline_color = (kwargs["axhline_color"]
+                         if kwargs.get("axhline_color") else "white")
+        axhline_linewidth = (kwargs["axhline_linewidth"]
+                             if kwargs.get("axhline_linewidth") else 1.5)
+        file_name_addition = (kwargs["file_name_addition"]
+                              if kwargs.get("file_name_addition") else ""
+                              )  # add any additional string to the file name.
         # Set to false since facecolor is set to default. Would overwrite
         # facecolor to make transparent.
-        transparent = (kwargs["transparent"]
-                       if kwargs.get("transparent") else False)
+        transparent = kwargs["transparent"] if kwargs.get(
+            "transparent") else False
         facecolor = kwargs["facecolor"] if kwargs.get(
             "facecolor") else "#151934"
 
         # Set plot Params
-        plt.rcParams.update(
-            {
-                "figure.figsize": figsize,
-                "lines.markersize": 2,
-            }
-        )
+        plt.rcParams.update({
+            "figure.figsize": figsize,
+            "lines.markersize": 2,
+        })
 
         # Generate plot and plot features
         stl = STL(self.df[y_variable], seasonal=seasonal, trend=trend)
@@ -1050,15 +1010,15 @@ class Exploratory_data_analysis:
             return fig
 
     def correlate_all_plot(
-        self,
-        y_variable: str,
-        x_variables: list,
-        max_lags=30,
-        streamlit=False,
-        save_path=None,
-        figsize=(20, 35),
-        rect=(0, 0, 1, 0.96),
-        **kwargs,
+            self,
+            y_variable: str,
+            x_variables: list,
+            max_lags=30,
+            streamlit=False,
+            save_path=None,
+            figsize=(20, 35),
+            rect=(0, 0, 1, 0.96),
+            **kwargs,
     ):
         """Function to create a correlation plot between a target variable y and all the feature variables x.
 
@@ -1071,33 +1031,29 @@ class Exploratory_data_analysis:
             rect (tuple, optional): Tuple that indicates how the tight layout is configured. Defaults to (0,0,1,0.96).
         """
         # Parse some kwargs configurations
-        fontsize_title = (
-            kwargs["fontsize_title"] if kwargs.get("fontsize_title") else 20
-        )
-        fontsize_sub_title = (
-            kwargs["fontsize_title"] if kwargs.get("fontsize_title") else 16
-        )
-        fontsize_label = (
-            kwargs["fontsize_label"] if kwargs.get("fontsize_label") else 14
-        )
+        fontsize_title = (kwargs["fontsize_title"]
+                          if kwargs.get("fontsize_title") else 20)
+        fontsize_sub_title = (kwargs["fontsize_title"]
+                              if kwargs.get("fontsize_title") else 16)
+        fontsize_label = (kwargs["fontsize_label"]
+                          if kwargs.get("fontsize_label") else 14)
         n_x_ticks = kwargs["n_x_ticks"] if kwargs.get("n_x_ticks") else 10
-        threshold_value = (
-            kwargs["threshold_value"] if kwargs.get("threshold_value") else 0.1
-        )
-        color_fillbetween = (kwargs["color_fillbetween"] if kwargs.get(
-            "color_fillbetween") else "pink")
-        alpha_fillbetween = (
-            kwargs["alpha_fillbetween"] if kwargs.get("alpha_fillbetween") else 0.2)
+        threshold_value = (kwargs["threshold_value"]
+                           if kwargs.get("threshold_value") else 0.1)
+        color_fillbetween = (kwargs["color_fillbetween"]
+                             if kwargs.get("color_fillbetween") else "pink")
+        alpha_fillbetween = (kwargs["alpha_fillbetween"]
+                             if kwargs.get("alpha_fillbetween") else 0.2)
         xcorr_lw = kwargs["xcorr_lw"] if kwargs.get("xcorr_lw") else 2
         usevlines = kwargs["usevlines"] if kwargs.get("usevlines") else True
         normed = kwargs["normed"] if kwargs.get("normed") else True
-        file_name_addition = (
-            kwargs["file_name_addition"] if kwargs.get("file_name_addition") else ""
-        )  # add any additional string to the file name.
+        file_name_addition = (kwargs["file_name_addition"]
+                              if kwargs.get("file_name_addition") else ""
+                              )  # add any additional string to the file name.
         # Set to false since facecolor is set to default. Would overwrite
         # facecolor to make transparent.
-        transparent = (kwargs["transparent"]
-                       if kwargs.get("transparent") else False)
+        transparent = kwargs["transparent"] if kwargs.get(
+            "transparent") else False
         facecolor = kwargs["facecolor"] if kwargs.get(
             "facecolor") else "#151934"
 
@@ -1139,13 +1095,14 @@ class Exploratory_data_analysis:
                 alpha=alpha_fillbetween,
             )
             # Plot aestethics
-            axs[i // 4, i %
-                4].set_title(x_variable, fontsize=fontsize_sub_title)
-            axs[i // 4, i %
-                4].set_xlabel("<-- lag | lead -->", fontsize=fontsize_label)
+            axs[i // 4, i % 4].set_title(x_variable,
+                                         fontsize=fontsize_sub_title)
+            axs[i // 4, i % 4].set_xlabel("<-- lag | lead -->",
+                                          fontsize=fontsize_label)
             axs[i // 4, i % 4].grid(axis="x")
-            axs[i // 4, i %
-                4].set_xticks(np.arange(-max_lags, max_lags + 5, n_x_ticks))
+            axs[i // 4,
+                i % 4].set_xticks(np.arange(-max_lags, max_lags + 5,
+                                            n_x_ticks))
             axs[i // 4, i % 4].tick_params(axis="x", labelbottom=True)
         # Disable any unused or empty plots
         i += 1
@@ -1153,9 +1110,8 @@ class Exploratory_data_analysis:
             axs[i // 4, i % 4].set_visible(False)
             i += 1
         # Layout and plot
-        fig.suptitle(
-            f"Cross Correlation Against {y_variable.title()}",
-            fontsize=fontsize_title)
+        fig.suptitle(f"Cross Correlation Against {y_variable.title()}",
+                     fontsize=fontsize_title)
         fig.tight_layout(rect=rect)
 
         if save_path is not None:
@@ -1175,15 +1131,15 @@ class Exploratory_data_analysis:
             return fig
 
     def single_correlate_plot(
-        self,
-        y_variable: str,
-        x_variable: str,
-        max_lags=30,
-        streamlit=False,
-        save_path=None,
-        figsize=(15, 6),
-        dpi=180,
-        **kwargs,
+            self,
+            y_variable: str,
+            x_variable: str,
+            max_lags=30,
+            streamlit=False,
+            save_path=None,
+            figsize=(15, 6),
+            dpi=180,
+            **kwargs,
     ):
         """Function to plot a correlation plot between  variable y and x for n lags.
 
@@ -1196,32 +1152,29 @@ class Exploratory_data_analysis:
             dpi (int, optional): dpi (int, optional): DPI value of the plot. Defaults to 180.
         """
         # Parse some kwargs configurations
-        fontsize_title = (
-            kwargs["fontsize_title"] if kwargs.get("fontsize_title") else 20
-        )
-        fontsize_label = (
-            kwargs["fontsize_label"] if kwargs.get("fontsize_label") else 14
-        )
-        fontsize_xyticks = (
-            kwargs["fontsize_xyticks"] if kwargs.get("fontsize_xyticks") else 12)
+        fontsize_title = (kwargs["fontsize_title"]
+                          if kwargs.get("fontsize_title") else 20)
+        fontsize_label = (kwargs["fontsize_label"]
+                          if kwargs.get("fontsize_label") else 14)
+        fontsize_xyticks = (kwargs["fontsize_xyticks"]
+                            if kwargs.get("fontsize_xyticks") else 12)
         n_x_ticks = kwargs["n_x_ticks"] if kwargs.get("n_x_ticks") else 10
-        threshold_value = (
-            kwargs["threshold_value"] if kwargs.get("threshold_value") else 0.1
-        )
-        color_fillbetween = (kwargs["color_fillbetween"] if kwargs.get(
-            "color_fillbetween") else "pink")
-        alpha_fillbetween = (
-            kwargs["alpha_fillbetween"] if kwargs.get("alpha_fillbetween") else 0.2)
+        threshold_value = (kwargs["threshold_value"]
+                           if kwargs.get("threshold_value") else 0.1)
+        color_fillbetween = (kwargs["color_fillbetween"]
+                             if kwargs.get("color_fillbetween") else "pink")
+        alpha_fillbetween = (kwargs["alpha_fillbetween"]
+                             if kwargs.get("alpha_fillbetween") else 0.2)
         xcorr_lw = kwargs["xcorr_lw"] if kwargs.get("xcorr_lw") else 5
         usevlines = kwargs["usevlines"] if kwargs.get("usevlines") else True
         normed = kwargs["normed"] if kwargs.get("normed") else True
-        file_name_addition = (
-            kwargs["file_name_addition"] if kwargs.get("file_name_addition") else ""
-        )  # add any additional string to the file name.
+        file_name_addition = (kwargs["file_name_addition"]
+                              if kwargs.get("file_name_addition") else ""
+                              )  # add any additional string to the file name.
         # Set to false since facecolor is set to default. Would overwrite
         # facecolor to make transparent.
-        transparent = (kwargs["transparent"]
-                       if kwargs.get("transparent") else False)
+        transparent = kwargs["transparent"] if kwargs.get(
+            "transparent") else False
         facecolor = kwargs["facecolor"] if kwargs.get(
             "facecolor") else "#151934"
 
@@ -1252,9 +1205,8 @@ class Exploratory_data_analysis:
         )
 
         # Plot aestethics
-        ax.set_title(
-            f"{y_variable.title()} vs {x_variable.title()}",
-            fontsize=fontsize_title)
+        ax.set_title(f"{y_variable.title()} vs {x_variable.title()}",
+                     fontsize=fontsize_title)
         ax.set_xlabel("<-- lead | lag -->", fontsize=fontsize_label)
         ax.set_xticks(np.arange(-max_lags, max_lags + 5, n_x_ticks))
         ax.tick_params(axis="x", labelbottom=True)
@@ -1265,8 +1217,8 @@ class Exploratory_data_analysis:
             fig.savefig(
                 os.path.join(
                     save_path,
-                    f"cross_correlation_{y_variable}_v_{x_variable}{file_name_addition}" +
-                    ".png",
+                    f"cross_correlation_{y_variable}_v_{x_variable}{file_name_addition}"
+                    + ".png",
                 ),
                 facecolor=facecolor,
                 transparent=transparent,
@@ -1277,9 +1229,10 @@ class Exploratory_data_analysis:
         if streamlit:
             return fig
 
-    def granger_causality_generator(
-        self, y_variable: str, x_variable: str, max_lags=12
-    ):
+    def granger_causality_generator(self,
+                                    y_variable: str,
+                                    x_variable: str,
+                                    max_lags=12):
         """Function to calculate the granger causality and return the values for the max_lag period as a dictionary.
 
         Args:
@@ -1313,15 +1266,15 @@ class Exploratory_data_analysis:
         return result_dict
 
     def single_granger_plot(
-        self,
-        y_variable: str,
-        x_variable: str,
-        max_lags=12,
-        streamlit=False,
-        save_path=None,
-        figsize=(15, 6),
-        dpi=180,
-        **kwargs,
+            self,
+            y_variable: str,
+            x_variable: str,
+            max_lags=12,
+            streamlit=False,
+            save_path=None,
+            figsize=(15, 6),
+            dpi=180,
+            **kwargs,
     ):
         """Function to plot the granger causality between x and y for n lags.
 
@@ -1334,31 +1287,28 @@ class Exploratory_data_analysis:
             dpi (int, optional): dpi (int, optional): DPI value of the plot. Defaults to 180.
         """
         # Parse some kwargs configurations
-        fontsize_title = (
-            kwargs["fontsize_title"] if kwargs.get("fontsize_title") else 20
-        )
-        fontsize_label = (
-            kwargs["fontsize_label"] if kwargs.get("fontsize_label") else 14
-        )
-        fontsize_xyticks = (
-            kwargs["fontsize_xyticks"] if kwargs.get("fontsize_xyticks") else 12)
-        file_name_addition = (
-            kwargs["file_name_addition"] if kwargs.get("file_name_addition") else ""
-        )  # add any additional string to the file name.
+        fontsize_title = (kwargs["fontsize_title"]
+                          if kwargs.get("fontsize_title") else 20)
+        fontsize_label = (kwargs["fontsize_label"]
+                          if kwargs.get("fontsize_label") else 14)
+        fontsize_xyticks = (kwargs["fontsize_xyticks"]
+                            if kwargs.get("fontsize_xyticks") else 12)
+        file_name_addition = (kwargs["file_name_addition"]
+                              if kwargs.get("file_name_addition") else ""
+                              )  # add any additional string to the file name.
         # Set to false since facecolor is set to default. Would overwrite
         # facecolor to make transparent.
-        transparent = (kwargs["transparent"]
-                       if kwargs.get("transparent") else False)
+        transparent = kwargs["transparent"] if kwargs.get(
+            "transparent") else False
         facecolor = kwargs["facecolor"] if kwargs.get(
             "facecolor") else "#151934"
-        show_pval = (
-            kwargs["show_pval"] if kwargs.get("show_pval") else True
-        )  # If p-value is shown. Can be True and False.
+        show_pval = (kwargs["show_pval"] if kwargs.get("show_pval") else True
+                     )  # If p-value is shown. Can be True and False.
 
         # Generate the Granger Causality
-        grange_dict = self.granger_causality_generator(
-            y_variable, x_variable, max_lags=max_lags
-        )
+        grange_dict = self.granger_causality_generator(y_variable,
+                                                       x_variable,
+                                                       max_lags=max_lags)
 
         # Generate Plots
         fig, ax = plt.subplots(figsize=figsize, dpi=dpi)
@@ -1391,8 +1341,8 @@ class Exploratory_data_analysis:
             fig.savefig(
                 os.path.join(
                     save_path,
-                    f"granger_causality_{y_variable}_v_{x_variable}{file_name_addition}" +
-                    ".png",
+                    f"granger_causality_{y_variable}_v_{x_variable}{file_name_addition}"
+                    + ".png",
                 ),
                 facecolor=facecolor,
                 transparent=transparent,
@@ -1408,14 +1358,14 @@ class Exploratory_data_analysis:
     # XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
     def plotly_single_timeseries_plot(
-        self,
-        y_variable: str,
-        rolling_mean=False,
-        rolling_std=False,
-        figsize=(1400, 500),
-        streamlit=False,
-        display_fig=True,
-        **kwargs,
+            self,
+            y_variable: str,
+            rolling_mean=False,
+            rolling_std=False,
+            figsize=(1400, 500),
+            streamlit=False,
+            display_fig=True,
+            **kwargs,
     ):
         """Function to plotly plot as a single time series plot. Select if rolling average and rolling standard deviation is included.
 
@@ -1437,29 +1387,24 @@ class Exploratory_data_analysis:
         fig = go.Figure()
 
         fig.add_trace(
-            go.Scatter(
-                x=self.x_date,
-                y=round(
-                    self.df[y_variable],
-                    1),
-                name="Trend"))
+            go.Scatter(x=self.x_date,
+                       y=round(self.df[y_variable], 1),
+                       name="Trend"))
 
         if rolling_mean:
             fig.add_trace(
                 go.Scatter(
                     x=self.x_date,
-                    y=round(
-                        self.df[y_variable].rolling(rolling_window).mean(),
-                        1),
+                    y=round(self.df[y_variable].rolling(rolling_window).mean(),
+                            1),
                     name="Moving Average",
                 ))
         if rolling_std:
             fig.add_trace(
                 go.Scatter(
                     x=self.x_date,
-                    y=round(
-                        self.df[y_variable].rolling(rolling_window).std(),
-                        1),
+                    y=round(self.df[y_variable].rolling(rolling_window).std(),
+                            1),
                     name="Moving Standard Deviation",
                 ))
         fig.update_layout(
@@ -1482,13 +1427,13 @@ class Exploratory_data_analysis:
             return fig
 
     def plotly_seasonal_boxplot_ym(
-        self,
-        y_variable: str,
-        box_group: str,
-        figsize=(1400, 500),
-        streamlit=False,
-        display_fig=True,
-        **kwargs,
+            self,
+            y_variable: str,
+            box_group: str,
+            figsize=(1400, 500),
+            streamlit=False,
+            display_fig=True,
+            **kwargs,
     ):
         """Function to plot a single box plto for either month or year as defined by the box_group variable.
 
@@ -1510,12 +1455,10 @@ class Exploratory_data_analysis:
             self.df[box_group] = [d.strftime("%b") for d in self.df.index]
         fig = go.Figure()
 
-        fig.add_trace(
-            go.Box(
-                x=self.df[box_group],
-                y=self.df[y_variable],
-            )
-        )
+        fig.add_trace(go.Box(
+            x=self.df[box_group],
+            y=self.df[y_variable],
+        ))
 
         fig.update_layout(
             title=f"Seasonal Boxplot - {box_group}",
@@ -1539,14 +1482,14 @@ class Exploratory_data_analysis:
             return fig
 
     def plotly_single_correlation(
-        self,
-        y_variable: str,
-        x_variable: str,
-        max_lags=12,
-        figsize=(1400, 500),
-        streamlit=False,
-        display_fig=True,
-        **kwargs,
+            self,
+            y_variable: str,
+            x_variable: str,
+            max_lags=12,
+            figsize=(1400, 500),
+            streamlit=False,
+            display_fig=True,
+            **kwargs,
     ):
         """Function to generate the crosscorrelation plot of a number of lags between target and feature variable.
 
@@ -1561,38 +1504,36 @@ class Exploratory_data_analysis:
         Returns:
             plotly figure object: Returns plotly figure object if streamlit is true.
         """
-        df_corr = self.crosscorrelation_generator(
-            y_variable=y_variable, x_variable=x_variable, max_lags=max_lags
-        )
+        df_corr = self.crosscorrelation_generator(y_variable=y_variable,
+                                                  x_variable=x_variable,
+                                                  max_lags=max_lags)
         fig = go.Figure()
 
         fig.add_trace(
             go.Scatter(
                 x=np.array(
-                    range(int(df_corr["Lag"].min() - 1), int(df_corr["Lag"].max() + 2))
-                ),
+                    range(int(df_corr["Lag"].min() - 1),
+                          int(df_corr["Lag"].max() + 2))),
                 y=(len(df_corr) + 2) * [0.1],
                 fill="tozeroy",
                 fillcolor="rgba(245,218,223,0.2)",
                 marker_color="rgba(245,218,223,0.0)",
                 hoverinfo="skip",
                 showlegend=False,
-            )
-        )
+            ))
 
         fig.add_trace(
             go.Scatter(
                 x=np.array(
-                    range(int(df_corr["Lag"].min() - 1), int(df_corr["Lag"].max() + 2))
-                ),
+                    range(int(df_corr["Lag"].min() - 1),
+                          int(df_corr["Lag"].max() + 2))),
                 y=(len(df_corr) + 2) * [-0.1],
                 fill="tozeroy",
                 fillcolor="rgba(245,218,223,0.2)",
                 marker_color="rgba(245,218,223,0.0)",
                 hoverinfo="skip",
                 showlegend=False,
-            )
-        )
+            ))
 
         fig.add_trace(
             go.Bar(
@@ -1600,13 +1541,12 @@ class Exploratory_data_analysis:
                 y=df_corr["Correlation"],
                 orientation="v",
                 marker_color="rgba(98,249,252,0.9)",
-            )
-        )
+            ))
 
         fig.update_layout(
-            yaxis=dict(
-                categoryorder="total ascending"),
-            title=f"Crosscorrelation: {y_variable.title()} vs {x_variable.title()}",
+            yaxis=dict(categoryorder="total ascending"),
+            title=
+            f"Crosscorrelation: {y_variable.title()} vs {x_variable.title()}",
             autosize=False,
             width=figsize[0],
             height=figsize[1],
@@ -1616,17 +1556,11 @@ class Exploratory_data_analysis:
                 tickmode="linear",
                 tick0=1,
                 dtick=1,
-                range=(
-                    df_corr["Lag"].min() - 0.5,
-                    df_corr["Lag"].max() + 0.5),
+                range=(df_corr["Lag"].min() - 0.5, df_corr["Lag"].max() + 0.5),
             ),
             hovermode="x",
             template="plotly_dark",
-            margin=dict(
-                l=80,
-                r=30,
-                t=80,
-                b=50),
+            margin=dict(l=80, r=30, t=80, b=50),
             plot_bgcolor="#151934",
             paper_bgcolor="#151934",
             showlegend=False,
@@ -1639,14 +1573,14 @@ class Exploratory_data_analysis:
             return fig
 
     def plotly_single_granger(
-        self,
-        y_variable: str,
-        x_variable: str,
-        max_lags=12,
-        figsize=(1400, 500),
-        streamlit=False,
-        display_fig=True,
-        **kwargs,
+            self,
+            y_variable: str,
+            x_variable: str,
+            max_lags=12,
+            figsize=(1400, 500),
+            streamlit=False,
+            display_fig=True,
+            **kwargs,
     ):
         """Function to generate the single granger causality plot.
 
@@ -1663,9 +1597,9 @@ class Exploratory_data_analysis:
         """
 
         # Generate the Granger Causality
-        grange_dict = self.granger_causality_generator(
-            y_variable, x_variable, max_lags=max_lags
-        )
+        grange_dict = self.granger_causality_generator(y_variable,
+                                                       x_variable,
+                                                       max_lags=max_lags)
 
         fig = go.Figure()
 
@@ -1675,29 +1609,21 @@ class Exploratory_data_analysis:
                 x=grange_dict["Lag-range"],
                 orientation="v",
                 marker_color="rgba(98,249,252,0.9)",
-            )
-        )
+            ))
 
         fig.update_layout(
-            yaxis=dict(
-                categoryorder="total ascending"),
-            title=f"Granger Causality: {y_variable.title()} vs {x_variable.title()}",
+            yaxis=dict(categoryorder="total ascending"),
+            title=
+            f"Granger Causality: {y_variable.title()} vs {x_variable.title()}",
             autosize=False,
             width=figsize[0],
             height=figsize[1],
             xaxis_title="Lag ->",
             yaxis_title="Granger Causality Score",
-            xaxis=dict(
-                tickmode="linear",
-                tick0=1,
-                dtick=1),
+            xaxis=dict(tickmode="linear", tick0=1, dtick=1),
             hovermode="x",
             template="plotly_dark",
-            margin=dict(
-                l=80,
-                r=30,
-                t=80,
-                b=50),
+            margin=dict(l=80, r=30, t=80, b=50),
             plot_bgcolor="#151934",
             paper_bgcolor="#151934",
         )
@@ -1709,13 +1635,13 @@ class Exploratory_data_analysis:
             return fig
 
     def plotly_insider_activity(
-        self,
-        start_date: str,
-        end_date: str,
-        figsize=(1400, 500),
-        streamlit=False,
-        display_fig=True,
-        **kwargs,
+            self,
+            start_date: str,
+            end_date: str,
+            figsize=(1400, 500),
+            streamlit=False,
+            display_fig=True,
+            **kwargs,
     ):
         """Function to generate the insider activity over time.
 
@@ -1739,8 +1665,7 @@ class Exploratory_data_analysis:
                 y=self.df.index,
                 name="Overall Insider activity",
                 line=dict(color="#000000"),
-            )
-        )
+            ))
 
         fig.add_trace(
             go.Scatter(
@@ -1748,8 +1673,7 @@ class Exploratory_data_analysis:
                 y=self.df.index,
                 name="Buy",
                 line=dict(color="#008000"),
-            )
-        )
+            ))
 
         fig.add_trace(
             go.Scatter(
@@ -1757,8 +1681,7 @@ class Exploratory_data_analysis:
                 y=self.df.index,
                 name="Sale",
                 line=dict(color="#FF0000"),
-            )
-        )
+            ))
 
         fig.add_trace(
             go.Scatter(
@@ -1766,8 +1689,7 @@ class Exploratory_data_analysis:
                 y=self.df.index,
                 name="Option Exercise",
                 line=dict(color="#FFFF00"),
-            )
-        )
+            ))
         # Plot aestethics
         fig.update_layout(
             title=f"Insider activity over time",
@@ -1788,11 +1710,11 @@ class Exploratory_data_analysis:
             return fig
 
     def plotly_individual_insider_activity(
-        self,
-        figsize=(1400, 500),
-        streamlit=False,
-        display_fig=True,
-        **kwargs,
+            self,
+            figsize=(1400, 500),
+            streamlit=False,
+            display_fig=True,
+            **kwargs,
     ):
         """Function to generate the insider activity for every individual.
 
@@ -1821,8 +1743,7 @@ class Exploratory_data_analysis:
                 name="overall distribution",
                 opacity=0.7,
                 marker=dict(color="#e15c46"),
-            )
-        )
+            ))
 
         fig.add_trace(
             go.Scatter(
@@ -1831,8 +1752,7 @@ class Exploratory_data_analysis:
                 name="Buy",
                 mode="lines+markers",
                 marker=dict(size=5, color="#735797"),
-            )
-        )
+            ))
 
         fig.add_trace(
             go.Scatter(
@@ -1841,8 +1761,7 @@ class Exploratory_data_analysis:
                 name="Sale",
                 mode="lines+markers",
                 marker=dict(size=5, color="#7ac74c"),
-            )
-        )
+            ))
 
         fig.add_trace(
             go.Scatter(
@@ -1851,8 +1770,7 @@ class Exploratory_data_analysis:
                 name="Option Exercise",
                 mode="lines+markers",
                 marker=dict(size=5, color="#FF0000"),
-            )
-        )
+            ))
 
         fig.update_layout(
             title="Distribution of number of insiders per company",
@@ -1873,11 +1791,11 @@ class Exploratory_data_analysis:
             return fig
 
     def plotly_top_contributor(
-        self,
-        figsize=(1400, 500),
-        streamlit=False,
-        display_fig=True,
-        **kwargs,
+            self,
+            figsize=(1400, 500),
+            streamlit=False,
+            display_fig=True,
+            **kwargs,
     ):
         """Function to generate the histogram plot for top insider activity.
 
@@ -1921,11 +1839,11 @@ class Exploratory_data_analysis:
             return fig
 
     def plotly_market_cap(
-        self,
-        figsize=(1400, 500),
-        streamlit=False,
-        display_fig=True,
-        **kwargs,
+            self,
+            figsize=(1400, 500),
+            streamlit=False,
+            display_fig=True,
+            **kwargs,
     ):
         """Function to generate the histogram plot for market capital.
 
@@ -1949,8 +1867,7 @@ class Exploratory_data_analysis:
                 y=top_market_cap["Value ($)"],
                 opacity=0.5,
                 marker=dict(color="#4C9900"),
-            )
-        )
+            ))
 
         fig.update_layout(
             title="Market Cap for Top Contributor of insider trading",
@@ -2025,8 +1942,7 @@ class Exploratory_data_analysis:
                 y=df_timeseries["Volume"],
                 name="S&P 500",
                 line=dict(color="rgba(50,50,50,0.2)"),
-            )
-        )
+            ))
 
         fig.update_layout(
             title="Comparison of Insider trading with market value",
@@ -2047,11 +1963,11 @@ class Exploratory_data_analysis:
             return fig
 
     def plotly_insider_activity_roles(
-        self,
-        figsize=(1400, 500),
-        streamlit=False,
-        display_fig=True,
-        **kwargs,
+            self,
+            figsize=(1400, 500),
+            streamlit=False,
+            display_fig=True,
+            **kwargs,
     ):
         """Function to generate the insider activty plot w.r.t roles.
 
@@ -2081,8 +1997,7 @@ class Exploratory_data_analysis:
                     name=role,
                     mode="lines+markers",
                     marker=dict(size=5, color=c),
-                )
-            )
+                ))
         fig.update_layout(
             title="Insider Activity for different Roles",
             xaxis_title="Date",
@@ -2099,7 +2014,6 @@ class Exploratory_data_analysis:
             fig.show()
         if streamlit == True:
             return fig
-        
 
     def plotly_insider_activity_timeseries_plot(
         self,
@@ -2153,8 +2067,7 @@ class Exploratory_data_analysis:
                     mode="markers",
                     opacity=0.6,
                     marker=dict(size=15, color=c),
-                )
-            )
+                ))
         fig.update_layout(
             title=f"Insider activity over time",
             xaxis_title="Date in months",
@@ -2212,8 +2125,7 @@ class Exploratory_data_analysis:
                     name=trans,
                     opacity=0.5,
                     marker=dict(color=c),
-                )
-            )
+                ))
         fig.update_layout(
             title=f"{returns} terms returns on Insider trades and S&P 500 stocks",
             xaxis=dict(title="Return", zeroline=False),
