@@ -5,3 +5,4 @@ plotly==5.11.0
 seaborn==0.12.2
 statsmodels==0.13.5
 nbformat>=4.2.0
+jupyter-book>=0.12.0
