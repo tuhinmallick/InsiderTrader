@@ -938,38 +938,34 @@ class Exploratory_data_analysis:
         if streamlit:
             return plt
 
-    def ask_adfuller(self,
-                     y_variable: str,
-                     autolag="aic",
-                     streamlit=False,
-                     **kwargs):
+    def ask_adfuller(self, col_list: list, autolag="aic", **kwargs):
         """Function to run ad fuller test on target variable.
 
         Args:
-            y_variable (str): Column name of the target variable in the dataframe.
+            col_list (list): List of column name of the target variable in the dataframe.
             autolag (str, optional): Method to use when automatically determining the lag length among the values. Defaults to "aic". Can be AIC, BIC, t-stat.
         """
         # Parse some kwargs configuration
         # "c" default, "ct" constant and trend, "ctt" constant linear and quatratic, "n" non constant
         regression = kwargs["maxlag"] if kwargs.get("maxlag") else "c"
         # Run the test:
-        test_results = adfuller(self.df[y_variable],
-                                regression=regression,
-                                autolag=autolag)
-
-        print(
-            "---------------------------------------------------------------------------------------------------------------------"
-        )
-        print("AD Fuller Test:")
-        print(
-            "---------------------------------------------------------------------------------------------------------------------"
-        )
-        print("Test statistic: ", test_results[0])
-        print("p-value: ", test_results[1])
-        print("Critical Values:", test_results[4])
-        print(
-            "----------------------------------------------------------------------------------------------------------------------"
-        )
+        for y_variable in col_list:
+            test_results = adfuller(self.df[y_variable],
+                                    regression=regression,
+                                    autolag=autolag)
+            print(
+                "---------------------------------------------------------------------------------------------------------------------"
+            )
+            print(f"AD Fuller Test for {y_variable}:")
+            print(
+                "---------------------------------------------------------------------------------------------------------------------"
+            )
+            print("Test statistic: ", test_results[0])
+            print("p-value: ", test_results[1])
+            print("Critical Values:", test_results[4])
+            print(
+                "----------------------------------------------------------------------------------------------------------------------"
+            )
 
     def plot_stl_decomposition(
             self,
@@ -1630,7 +1626,7 @@ class Exploratory_data_analysis:
                                                        max_lags=max_lags)
 
         fig = go.Figure()
-
+        p_value = grange_dict["P-value"]
         fig.add_trace(
             go.Bar(
                 y=grange_dict["F-value"],
@@ -1639,6 +1635,16 @@ class Exploratory_data_analysis:
                 marker_color="rgba(98,249,252,0.9)",
             ))
 
+        fig.add_trace(
+            go.Scatter(
+                y=grange_dict["P-value"],
+                x=grange_dict["Lag-range"],
+                name="P-Value",
+                mode="lines+markers",
+                marker=dict(size=5, color="#735797"),
+            ))
+
+        p_value = grange_dict["P-value"]
         fig.update_layout(
             yaxis=dict(categoryorder="total ascending"),
             title=
