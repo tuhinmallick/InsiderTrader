@@ -13,7 +13,7 @@ jobs:
         - uses: conda-incubator/setup-miniconda@v2
           with:
             environment-file: environment.yml
-            python-version: 3.9
+            python-version: 3.10.9
             auto-activate-base: false
         - name: Dependencies
           shell: bash -l {0}
