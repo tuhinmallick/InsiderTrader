@@ -21,7 +21,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/tuhinmallick/InsiderTrader">
-    <img src="docs/images/project_logo_.jpg" alt="Logo" width="80" height="80">
+    <img src="docs/images/logo.jpg" alt="Logo" width="80" height="80">
   </a>
 
 <h3 align="center">InsiderTrader</h3>
