@@ -1,14 +1,5 @@
-<!-- Improved compatibility of back to top link: See: https://github.com/othneildrew/Best-README-Template/pull/73 -->
+
 <a name="readme-top"></a>
-<!--
-*** Thanks for checking out the Best-README-Template. If you have a suggestion
-*** that would make this better, please fork the repo and create a pull request
-*** or simply open an issue with the tag "enhancement".
-*** Don't forget to give the project a star!
-*** Thanks again! Now go create something AMAZING! :D
--->
-
-
 
 <!-- PROJECT SHIELDS -->
 <!--
@@ -83,14 +74,12 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
-
 Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `github_username`, `repo_name`, `twitter_handle`, `linkedin_username`, `email_client`, `email`, `project_title`, `project_description`
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
-
+<!-- 
 ### Built With
 
 * [![Next][Next.js]][Next-url]
@@ -102,7 +91,7 @@ Here's a blank template to get started: To avoid retyping too much info. Do a se
 * [![Bootstrap][Bootstrap.com]][Bootstrap-url]
 * [![JQuery][JQuery.com]][JQuery-url]
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+<p align="right">(<a href="#readme-top">back to top</a>)</p> -->
 
 
 
@@ -114,26 +103,30 @@ To get a local copy up and running follow these simple example steps.
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
+This is an example of how to list things you need to use the package and how to install them.
+
 
 ### Installation
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
-   ```sh
+1. Clone the repo
+   ```bash
    git clone https://github.com/tuhinmallick/InsiderTrader.git
    ```
-3. Install NPM packages
-   ```sh
-   npm install
+2. Go to the project directory
+   ```bash
+   cd InsiderTrader
    ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
+3. Install environment or dependecies
+   ```bash
+   conda env create -n ENVNAME --file docs/environment.yml
+   ```
+   or 
+   ```bash
+   pip install -r requirements.txt
+   ```
+4. Import the package in `.py`
+   ```bash
+   from insider_eda.eda_base import Exploratory_data_analysis
    ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -143,9 +136,7 @@ This is an example of how to list things you need to use the software and how to
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation](https://example.com)_
+_For more examples, please refer to the [Notebook](https://github.com/tuhinmallick/InsiderTrader/blob/main/notebooks/Insider_trading_analysis.ipynb)_
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -154,8 +145,8 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 <!-- ROADMAP -->
 ## Roadmap
 
-- [ ] Feature 1
-- [ ] Feature 2
+- [X] Granger casaulty test
+- [X] AD Fuller test
 - [ ] Feature 3
     - [ ] Nested Feature
 
@@ -184,13 +175,17 @@ Don't forget to give the project a star! Thanks again!
 
 
 <!-- LICENSE -->
-## License
+## 🛡 License
 
-Distributed under the MIT License. See `LICENSE.txt` for more information.
+[![License](https://img.shields.io/github/license/tuhinmallick/InsiderTrader)](https://github.com/tuhinmallick/InsiderTrader/blob/master/LICENSE)
+
+This project is licensed under the terms of the `MIT` license. See [LICENSE](https://github.com/tuhinmallick/InsiderTrader/blob/master/LICENSE) for more details.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+## Authors
 
+- [@tuhinmallick](https://www.github.com/tuhinmallick)
 
 <!-- CONTACT -->
 ## Contact
