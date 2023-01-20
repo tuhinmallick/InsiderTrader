@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import plotly.graph_objects as go
+import plotly.io as pio
 import seaborn as sns
 from matplotlib.pyplot import cm
 from plotly.subplots import make_subplots
@@ -20,7 +21,7 @@ from statsmodels.tsa.statespace.tools import diff
 from statsmodels.tsa.stattools import adfuller
 from statsmodels.tsa.stattools import grangercausalitytests
 
-
+pio.renderers.default='notebook'
 class Exploratory_data_analysis:
     """
     This class is for Exploratory Data Analysis.
