@@ -1572,8 +1572,7 @@ class Exploratory_data_analysis:
 
         fig.update_layout(
             yaxis=dict(categoryorder="total ascending"),
-            title=
-            f"Crosscorrelation: {y_variable.title()} vs {x_variable.title()}",
+            title=f"Crosscorrelation: {y_variable.title()} vs {x_variable.title()}",
             autosize=False,
             width=figsize[0],
             height=figsize[1],
@@ -1629,7 +1628,7 @@ class Exploratory_data_analysis:
                                                        max_lags=max_lags)
 
         fig = go.Figure()
-        p_value=grange_dict["P-value"]
+        p_value = grange_dict["P-value"]
         fig.add_trace(
             go.Bar(
                 y=grange_dict["F-value"],
@@ -1637,7 +1636,7 @@ class Exploratory_data_analysis:
                 orientation="v",
                 marker_color="rgba(98,249,252,0.9)",
             ))
-        
+
         fig.add_trace(
             go.Scatter(
                 y=grange_dict["P-value"],
@@ -1646,12 +1645,11 @@ class Exploratory_data_analysis:
                 mode="lines+markers",
                 marker=dict(size=5, color="#735797"),
             ))
-        
-        p_value=grange_dict["P-value"]
+
+        p_value = grange_dict["P-value"]
         fig.update_layout(
             yaxis=dict(categoryorder="total ascending"),
-            title=
-            f"Granger Causality: {y_variable.title()} vs {x_variable.title()}",
+            title=f"Granger Causality: {y_variable.title()} vs {x_variable.title()}",
             autosize=False,
             width=figsize[0],
             height=figsize[1],
@@ -2196,8 +2194,7 @@ class Exploratory_data_analysis:
                     marker=dict(color=c),
                 ))
         fig.update_layout(
-            title=
-            f"{returns} terms returns on Insider trades and S&P 500 stocks",
+            title=f"{returns} terms returns on Insider trades and S&P 500 stocks",
             xaxis=dict(title="Return", zeroline=False),
             yaxis=dict(title="Returns in %", zeroline=False),
             autosize=True,
