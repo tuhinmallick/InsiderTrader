@@ -938,10 +938,7 @@ class Exploratory_data_analysis:
         if streamlit:
             return plt
 
-    def ask_adfuller(self,
-                     col_list: list,
-                     autolag="aic",
-                     **kwargs):
+    def ask_adfuller(self, col_list: list, autolag="aic", **kwargs):
         """Function to run ad fuller test on target variable.
 
         Args:
@@ -1629,7 +1626,7 @@ class Exploratory_data_analysis:
                                                        max_lags=max_lags)
 
         fig = go.Figure()
-        p_value=grange_dict["P-value"]
+        p_value = grange_dict["P-value"]
         fig.add_trace(
             go.Bar(
                 y=grange_dict["F-value"],
@@ -1637,7 +1634,7 @@ class Exploratory_data_analysis:
                 orientation="v",
                 marker_color="rgba(98,249,252,0.9)",
             ))
-        
+
         fig.add_trace(
             go.Scatter(
                 y=grange_dict["P-value"],
@@ -1646,8 +1643,8 @@ class Exploratory_data_analysis:
                 mode="lines+markers",
                 marker=dict(size=5, color="#735797"),
             ))
-        
-        p_value=grange_dict["P-value"]
+
+        p_value = grange_dict["P-value"]
         fig.update_layout(
             yaxis=dict(categoryorder="total ascending"),
             title=
