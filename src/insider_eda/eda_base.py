@@ -20,6 +20,12 @@ from statsmodels.tsa.statespace.tools import diff
 from statsmodels.tsa.stattools import adfuller
 from statsmodels.tsa.stattools import grangercausalitytests
 
+<<<<<<< HEAD
+=======
+pio.renderers.default = "notebook"
+
+
+>>>>>>> 3a1181817103f205f265aa809a0b67153fe3e713
 class Exploratory_data_analysis:
     """
     This class is for Exploratory Data Analysis.
