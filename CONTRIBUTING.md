@@ -20,9 +20,9 @@ The sections below outline the steps in each case.
 
 1. use the search functionality [here](https://github.com/tuhinmallick/InsiderTrader/issues) to see if someone already filed the same issue;
 1. if your issue search did not yield any relevant results, make a new issue, making sure to provide enough information to the rest of the community to understand the cause and context of the problem. Depending on the issue, you may want to include:
-    - the [SHA hashcode](https://help.github.com/articles/autolinked-references-and-urls/#commit-shas) of the commit that is causing your problem;
-    - some identifying information (name and version number) for dependencies you're using;
-    - information about the operating system;
+   - the [SHA hashcode](https://help.github.com/articles/autolinked-references-and-urls/#commit-shas) of the commit that is causing your problem;
+   - some identifying information (name and version number) for dependencies you're using;
+   - information about the operating system;
 1. apply relevant labels to the newly created issue.
 
 ## You want to make some kind of change to the code base
@@ -31,7 +31,7 @@ The sections below outline the steps in each case.
 1. (**important**) wait until some kind of consensus is reached about your idea being a good idea;
 1. if needed, fork the repository to your own Github profile and create your own feature branch off of the latest main commit. While working on your feature branch, make sure to stay up to date with the main branch by pulling in changes, possibly from the 'upstream' repository (follow the instructions [here](https://help.github.com/articles/configuring-a-remote-for-a-fork/) and [here](https://help.github.com/articles/syncing-a-fork/));
 1. Install dependencies with `pip3 install -r requirements.txt`;
-1. make sure the existing tests still work by running ``pytest``. If project tests fails use ``pytest --keep-baked-projects`` to keep generated project in /tmp/pytest-* and investigate;
+1. make sure the existing tests still work by running `pytest`. If project tests fails use `pytest --keep-baked-projects` to keep generated project in /tmp/pytest-\* and investigate;
 1. add your own tests (if necessary);
 1. update or expand the documentation;
 1. push your feature branch to (your fork of) the Python Template repository on GitHub;

@@ -4,15 +4,15 @@ author: Tuhin Mallick
 logo: docs/images/logo.jpg
 
 repository:
-    url: https://github.com/tuhinmallick/InsiderTrader
-    branch: main
+  url: https://github.com/tuhinmallick/InsiderTrader
+  branch: main
 
 html:
-    home_page_in_navbar: false
-    extra_navbar: ""
-    use_edit_page_button: true
-    use_repository_button: true
-    use_issues_button: true
-    baseurl: https://github.com/tuhinmallick/InsiderTrader
+  home_page_in_navbar: false
+  extra_navbar: ""
+  use_edit_page_button: true
+  use_repository_button: true
+  use_issues_button: true
+  baseurl: https://github.com/tuhinmallick/InsiderTrader
 
 only_build_toc_files: true
