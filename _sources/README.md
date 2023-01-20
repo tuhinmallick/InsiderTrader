@@ -1,220 +1,222 @@
-# 🚀 Project Template
 
-The <span style="color:#3EACAD">template</span> is a standardized, but flexible *project* and *documentation* structure of folders and files for sharing your data science work.
+<a name="readme-top"></a>
 
-Inspired by [literate programming](http://literateprogramming.com) and [Cookiecutter Data Science](https://drivendata.github.io/cookiecutter-data-science/), maintained by the [World Bank Development Data Group](https://www.worldbank.org/en/about/unit/unit-dec#2) and built as [GitHub template repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template), the <span style="color:#3EACAD">template</span> contains:
+<!-- PROJECT SHIELDS -->
+<!--
+*** I'm using markdown "reference style" links for readability.
+*** Reference links are enclosed in brackets [ ] instead of parentheses ( ).
+*** See the bottom of this document for the declaration of the reference variables
+*** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
+*** https://www.markdownguide.org/basic-syntax/#reference-style-links
+-->
+[![Contributors][contributors-shield]][contributors-url]
+[![Forks][forks-shield]][forks-url]
+[![Stargazers][stars-shield]][stars-url]
+[![Issues][issues-shield]][issues-url]
+[![MIT License][license-shield]][license-url]
+[![LinkedIn][linkedin-shield]][linkedin-url]
 
-- **README**, **CODE_OF_CONDUCT**, **CONTRIBUTING**
-    > README files are important and often neglected. The files should inform anyone about about the first steps to use, learn and contribute to your project.
+<!-- PROJECT LOGO -->
+<br />
+<div align="center">
+  <a href="https://github.com/tuhinmallick/InsiderTrader">
+    <img src="docs/images/project_logo_.jpg" alt="Logo" width="80" height="80">
+  </a>
 
-- **LICENSE**
-  > The LICENSE is a document that  determines what others can and cannot do with contents of the repository. If no license is present, no one has permission to use and/or modify your code.
+<h3 align="center">InsiderTrader</h3>
 
-- [Issues and Pull Requests GitHub templates](https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/configuring-issue-templates-for-your-repository)
-    > GitHub allows to customize how issues and pull requests are presented to the public. Custom templates encourage collaboration and maintainability.
+  <p align="center">
+    InsiderTrader is a python package that helps in detecting insider trading activities in the stock market.
+    <br />
+    <a href="https://github.com/tuhinmallick/InsiderTrader"><strong>Explore the docs »</strong></a>
+    <br />
+    <br />
+    <a href="https://github.com/tuhinmallick/InsiderTrader/blob/main/notebooks/Insider_trading_analysis.ipynb">View Demo</a>
+    ·
+    <a href="https://github.com/tuhinmallick/InsiderTrader/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/tuhinmallick/InsiderTrader/issues">Request Feature</a>
+  </p>
+</div>
 
-- **docs/**
 
-    > Documentation is often never priotized until last minute. The <span style="color:#3EACAD">template</span> aims to revert the malpractice by setting up the documentation as an integral part of the code repository. With the power of [Jupyter Book](https://jupyterbook.org), data practioners have a way to share [Jupyter notebooks](https://jupyter.org) on [GitHub Pages](https://pages.github.com) in a standardized and effortless way.
 
-- **data/**
-    > Placeholder folder for data. Data is immutable. By default, the data folder is present but ignored from version control, in order to prevent files of being mistakenly versioned in the code repository.
+<!-- TABLE OF CONTENTS -->
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#about-the-project">About The Project</a>
+      <ul>
+        <li><a href="#built-with">Built With</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#installation">Installation</a></li>
+      </ul>
+    </li>
+    <li><a href="#usage">Usage</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#contributing">Contributing</a></li>
+    <li><a href="#license">License</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#acknowledgments">Acknowledgments</a></li>
+  </ol>
+</details>
 
-- **src/**
-    > Placeholder folder for source code. If Python, it is recommended the package is made pip-installable.
 
-- **notebooks/**
-    > Placeholder folder for [Jupyter notebooks](https://jupyter.org). Markdown files and Jupyter notebooks can be added to `docs/_toc.yml` (Table of Contents) to compose the *documentation*.
 
-```{important}
-Admittedly, even the best of the templates would never be perfect; the <span style="color:#3EACAD">template</span> aims to encourage teams to start thinking and assimilate **best practices**, **collaborative coding**, **documentation**​, **reproducibility​** as an integral part of the project. *In a standardized way*.
+<!-- ABOUT THE PROJECT -->
+## About The Project
 
-In this spirit, in case you have feedback, please [open an issue](https://github.com/worldbank/template/issues) or [submit a pull request](https://github.com/worldbank/template/pulls) to share your ideas and suggestions.
-```
+Insider trading refers to the practice of buying or selling securities by individuals who possess non-public information about a company. This information may include financial results, mergers and acquisitions, or other confidential information that is not yet available to the public. The individuals who engage in insider trading are typically corporate insiders, such as company executives and board members, but it can also include anyone who possesses non-public information.
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+<!-- 
+### Built With
+
+* [![Next][Next.js]][Next-url]
+* [![React][React.js]][React-url]
+* [![Vue][Vue.js]][Vue-url]
+* [![Angular][Angular.io]][Angular-url]
+* [![Svelte][Svelte.dev]][Svelte-url]
+* [![Laravel][Laravel.com]][Laravel-url]
+* [![Bootstrap][Bootstrap.com]][Bootstrap-url]
+* [![JQuery][JQuery.com]][JQuery-url]
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p> -->
+
+
+
+<!-- GETTING STARTED -->
+## Getting Started
+
+To get a local copy up and running follow these simple example steps.
+
+### Prerequisites
+
+This is an example of how to list things you need to use the package and how to install them.
+
+
+### Installation
+
+1. Clone the repo
+   ```bash
+   git clone https://github.com/tuhinmallick/InsiderTrader.git
+   ```
+2. Go to the project directory
+   ```bash
+   cd InsiderTrader
+   ```
+3. Install environment or dependecies
+   ```bash
+   conda env create -n ENVNAME --file docs/environment.yml
+   ```
+   or 
+   ```bash
+   pip install -r requirements.txt
+   ```
+4. Import the package in `.py`
+   ```bash
+   from insider_eda.eda_base import Exploratory_data_analysis
+   ```
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+<!-- USAGE EXAMPLES -->
 ## Usage
 
-### Getting Started
+_For more examples, please refer to the [Notebook](https://github.com/tuhinmallick/InsiderTrader/blob/main/notebooks/Insider_trading_analysis.ipynb)_
 
-```{margin} ✨ Can't see the <span style="color:#3EACAD">template</span> ?
-Please ensure you are logged in on [GitHub](https://github.com) and have permissions to create a repository.
-```
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-1. **Create new repository from template**
 
-    The <span style="color:#3EACAD">template</span> is a [GitHub template repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template); in other words, you can generate a new GitHub repository with the same files and folders to use as the starting point for your project.
 
-    > 🌟 [Create new repository from **template**](https://github.com/worldbank/template/generate)
+<!-- ROADMAP -->
+## Roadmap
 
-    ```{figure} docs/images/github-template.png
-    ---
-    ---
-    ```
+- [X] Granger casaulty test
+- [X] AD Fuller test
+- [ ] Feature 3
+    - [ ] Nested Feature
 
-    Now, give your repository a name, choose the **visibility** (Public or Private) and click **Create repository from template**.
+See the [open issues](https://github.com/tuhinmallick/InsiderTrader/issues) for a full list of proposed features (and known issues).
 
-    ```{figure} docs/images/github-template-create.png
-    ---
-    ---
-    ```
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-    *Voilà!* The repository has been created with the same files and folders of the <span style="color:#3EACAD">template</span>.
 
-    ```{seealso}
-    For additional information, see the [GitHub documentation](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template)
-    ```
 
-2. **Enable and Publish via [GitHub Pages](https://pages.github.com)**
+<!-- CONTRIBUTING -->
+## Contributing
 
-    After creating the repository from the <span style="color:#3EACAD">template</span>, a [Jupyter Book](https://jupyterbook.org) will be automatically built from the `main` branch and deployed to the `gh-pages` branch via [GitHub Actions](https://github.com/features/actions).
+Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
-    ```{figure} docs/images/github-template-action.png
-    ---
-    ---
-    ```
+If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
+Don't forget to give the project a star! Thanks again!
 
-    To publish the *documentation*, please enable [GitHub Pages](https://pages.github.com) by going to the repository's settings (`Settings > Pages`), and selecting to deploy from the `gh-pages` branch.
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-    ```{figure} docs/images/github-template-pages.png
-    ---
-    ---
-    ```
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-    ```{tip}
-    The *documentation* can be published from either *public* and *private* repositories. If publishing private content, please remember to carefully select the content to be made public and to abide by your organization's Data Privacy Policy.
-    ```
 
-3. **Update configurations**
 
-    The <span style="color:#3EACAD">template</span> comes with a default `docs/_config.yml` Jupyter Book configuration file. Remember to update it to reflect your project's name and details.
+<!-- LICENSE -->
+## 🛡 License
 
-      ```
-      repository:
-      url: https://github.com/worldbank/template
-      branch: main
-      ```
+[![License](https://img.shields.io/github/license/tuhinmallick/InsiderTrader)](https://github.com/tuhinmallick/InsiderTrader/blob/master/LICENSE)
 
-    In case your project uses Python, it is *strongly* recommended distributing it as a [package](https://packaging.python.org/).
+This project is licensed under the terms of the `MIT` license. See [LICENSE](https://github.com/tuhinmallick/InsiderTrader/blob/master/LICENSE) for more details.
 
-    ```{tip}
-    The <span style="color:#3EACAD">template</span> contains an example - the [datalab](https://github.com/worldbank/template/tree/main/src/datalab) Python package - and will automatically find and install any `src` packages as long as `setup.cfg` is kept up-to-date.
-    ```
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-   ```{seealso}
-    [Jupyter Book Configuration Reference](https://jupyterbook.org/en/stable/customize/config.html)
+## Authors
 
-    [Python Packaging User Guide](https://packaging.python.org/)
-    ```
+- [@tuhinmallick](https://www.github.com/tuhinmallick)
 
-4. **Review and update README files**
+<!-- CONTACT -->
+## Contact
 
-    The <span style="color:#3EACAD">template</span> comes with README files - including [this **README**](README) - that should provide anyone with the information about the first steps to use, learn and contribute to your project. Please **replace** and/or **repurpose** the files with instructions and detailed information about your project.
+Your Name - [@tuhinmallick](https://twitter.com/tuhinmallick) - tuhin.mllk@gmail.com
 
-    > - **CODE_OF_CONDUCT**
-    > - **CONTRIBUTING**
-    > - **README**
-    > - Issues and Pull Requests GitHub templates
+Project Link: [https://github.com/tuhinmallick/InsiderTrader](https://github.com/tuhinmallick/InsiderTrader)
 
-    ```{seealso}
-    [Awesome README](https://github.com/matiassingers/awesome-readme)
-    ```
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-5. **Choose a license**
 
-    A LICENSE is the document that guarantees the repository can be shared, modified and receive contributions. Otherwise, if no license is present, all rights are reserved. The <span style="color:#3EACAD">template</span> is licensed under the [**World Bank Master Community License Agreement**](LICENSE); if necessary, choose a different license for your project.
 
-    ```{seealso}
-    [Choose an Open Source License](https://choosealicense.com)
-    ```
+<!-- ACKNOWLEDGMENTS -->
+## Acknowledgments
 
-<hr>
+* [ilyaryabov](https://www.kaggle.com/datasets/ilyaryabov/insider-trading-sp500-inside-info)
 
-**Congratulations!** You just created a beautiful home for your project. To access your project page, use (and share) the link as shown below.
 
-> 🌟 `https://<your-github-username>.github.io/<your-project-name>`
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-For example, see this <span style="color:#3EACAD">template</span> as a live demo.
 
-> 🌟 [worldbank.github.io/template](http://worldbank.github.io/template) (Live Demo)
 
-### Adding Content
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+[contributors-shield]: https://img.shields.io/github/contributors/tuhinmallick/InsiderTrader.svg?style=for-the-badge
+[contributors-url]: https://github.com/tuhinmallick/InsiderTrader/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/tuhinmallick/InsiderTrader.svg?style=for-the-badge
+[forks-url]: https://github.com/tuhinmallick/InsiderTrader/network/members
+[stars-shield]: https://img.shields.io/github/stars/tuhinmallick/InsiderTrader.svg?style=for-the-badge
+[stars-url]: https://github.com/tuhinmallick/InsiderTrader/stargazers
+[issues-shield]: https://img.shields.io/github/issues/tuhinmallick/InsiderTrader.svg?style=for-the-badge
+[issues-url]: https://github.com/tuhinmallick/InsiderTrader/issues
+[license-shield]: https://img.shields.io/github/license/tuhinmallick/InsiderTrader.svg?style=for-the-badge
+[license-url]: https://github.com/tuhinmallick/InsiderTrader/blob/master/LICENSE.txt
+[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
+[linkedin-url]: https://linkedin.com/in/tuhinmallick
 
-The <span style="color:#3EACAD">template</span> is created as a [Jupyter Book](https://jupyterbook.org/intro.html) - an open-source project to build beautiful, publication-quality books and documents from computational content. Let's see below how to add, execute and publish new content for your project.
-
-#### Table of Contents
-
-When ready to publish the *documentation* on [GitHub Pages](https://pages.github.com/), all you need to do is edit the [table of contents](#table-of-contents) and add and/or update content you would like to display. [Jupyter Book](https://jupyterbook.org) supports content written as [Markdown](https://daringfireball.net/projects/markdown/), [Jupyter](https://jupyter.org) notebooks and [reStructuredText](https://docutils.sourceforge.io/rst.html) files and the `docs/_toc.yml` file controls the [table of contents](#table-of-contents) of your book.
-
-The <span style="color:#3EACAD">template</span> comes with the [table of contents](#table-of-contents) below as an example.
-
-```
-format: jb-book
-root: README
-
-parts:
-  - caption: Documentation
-    numbered: True
-    chapters:
-    - file: notebooks/world-bank-api.ipynb
-  - caption: Additional Resources
-    chapters:
-      - url: https://datapartnership.org
-        title: Development Data Partnership
-      - url: https://www.worldbank.org/en/about/unit/unit-dec
-        title: World Bank DEC
-      - url: https://www.worldbank.org/en/research/dime
-        title: World Bank DIME
-```
-
-```{seealso}
-[Jupyter Book Structure and organize content](https://jupyterbook.org/en/stable/basics/organize.html)
-```
-
-#### Dependencies
-
-The next step is ensure your code is maintainable, realiable and reproducible by including
-any dependencies and requirements, such as packages, configurations, secrets (template) and addtional instructions.
-
-The <span style="color:#3EACAD">template</span> uses [conda](https://docs.conda.io/) as environment manager and, as [conventional](https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html), the environment is controlled by the `environment.yml` file.
-
-The `environment.yml` file is where you specify any packages available on the [Anaconda repository](https://anaconda.org) as well as from the Anaconda Cloud (including [conda-forge](https://conda-forge.org)) to install for your project. Ensure to include the pinned version of packages required by your project (including by Jupyter notebooks).
-
-```
-channels:
-  - conda-forge
-  - defaults
-dependencies:
-  - python=3.9
-  - bokeh=2.4.3
-  - pandas=1.4.3
-  - pip:
-    - requests==2.28.1
-```
-
-To (re)create the environment on your installation of [conda](https://conda.io) via [anaconda](https://docs.anaconda.com/anaconda/install/), [miniconda](https://docs.conda.io/projects/continuumio-conda/en/latest/user-guide/install/) or preferably [miniforge](https://github.com/conda-forge/miniforge), you only need to pass the `environment.yml` file, which will install requirements and guarantee that whoever uses your code has the necessary packages (and correct versions). By default, the <span style="color:#3EACAD">template</span> uses [Python 3.9](https://www.python.org).
-
-```
-conda env create -n <your-environment-name> -f environment.yml
-```
-
-```{seealso}
-[Conda Managing Environments](https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html)
-```
-
-#### Jupyter Notebooks
-
-[Jupyter Notebooks](https://jupyter.org) can be beautifully rendered and downloaded from your book. [Jupyter Book](https://jupyterbook.org) will execute notebooks during the build (on GitHub) and display **code outputs** and **interactive visualizations** as part of the *documentation* on the fly. By default, the <span style="color:#3EACAD">template</span> will execute any files listed on the [table of contents](#table-of-contents) that have a notebook structure.
-
-The <span style="color:#3EACAD">template</span> comes with a Jupyter notebook example, `notebooks/world-bank-api.ipynb`, to illustrate.
-
-```{important}
-**All** Jupyter notebooks will be executed by [GitHub Actions](https://github.com/features/actions) during build on each commit to the `main` branch. Thus, it is important to include all [requirements and dependencies](#dependencies) in the repository. In case you would like to ignore a notebook, you can [exclude files from execution](https://jupyterbook.org/en/stable/content/execute.html#exclude-files-from-execution).
-```
-
-```{seealso}
-[Jupyter Book Write executable content](https://jupyterbook.org/en/stable/content/executable/index.html)
-```
-
-## License
-
-The <span style="color:#3EACAD">template</span> is licensed under the [**World Bank Master Community License Agreement**](LICENSE.md). Remember to replace the [license](LICENSE.md) if necessary. If open source, [choose an open source license](https://choosealicense.com).
