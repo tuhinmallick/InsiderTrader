@@ -11,11 +11,15 @@ import plotly.io as pio
 import seaborn as sns
 from matplotlib.pyplot import cm
 from plotly.subplots import make_subplots
-from statsmodels.graphics.tsaplots import (month_plot, plot_acf, plot_pacf,
-                                           quarter_plot)
-from statsmodels.tsa.seasonal import STL, seasonal_decompose
+from statsmodels.graphics.tsaplots import month_plot
+from statsmodels.graphics.tsaplots import plot_acf
+from statsmodels.graphics.tsaplots import plot_pacf
+from statsmodels.graphics.tsaplots import quarter_plot
+from statsmodels.tsa.seasonal import seasonal_decompose
+from statsmodels.tsa.seasonal import STL
 from statsmodels.tsa.statespace.tools import diff
-from statsmodels.tsa.stattools import adfuller, grangercausalitytests
+from statsmodels.tsa.stattools import adfuller
+from statsmodels.tsa.stattools import grangercausalitytests
 
 pio.renderers.default = "notebook"
 
