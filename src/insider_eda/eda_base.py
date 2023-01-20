@@ -20,6 +20,7 @@ from statsmodels.tsa.statespace.tools import diff
 from statsmodels.tsa.stattools import adfuller
 from statsmodels.tsa.stattools import grangercausalitytests
 
+
 class Exploratory_data_analysis:
     """
     This class is for Exploratory Data Analysis.
@@ -1568,8 +1569,7 @@ class Exploratory_data_analysis:
 
         fig.update_layout(
             yaxis=dict(categoryorder="total ascending"),
-            title=
-            f"Crosscorrelation: {y_variable.title()} vs {x_variable.title()}",
+            title=f"Crosscorrelation: {y_variable.title()} vs {x_variable.title()}",
             autosize=False,
             width=figsize[0],
             height=figsize[1],
@@ -1646,8 +1646,7 @@ class Exploratory_data_analysis:
         p_value = grange_dict["P-value"]
         fig.update_layout(
             yaxis=dict(categoryorder="total ascending"),
-            title=
-            f"Granger Causality: {y_variable.title()} vs {x_variable.title()}",
+            title=f"Granger Causality: {y_variable.title()} vs {x_variable.title()}",
             autosize=False,
             width=figsize[0],
             height=figsize[1],
@@ -2192,8 +2191,7 @@ class Exploratory_data_analysis:
                     marker=dict(color=c),
                 ))
         fig.update_layout(
-            title=
-            f"{returns} terms returns on Insider trades and S&P 500 stocks",
+            title=f"{returns} terms returns on Insider trades and S&P 500 stocks",
             xaxis=dict(title="Return", zeroline=False),
             yaxis=dict(title="Returns in %", zeroline=False),
             autosize=True,
