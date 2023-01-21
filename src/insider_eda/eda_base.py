@@ -1446,7 +1446,7 @@ class Exploratory_data_analysis:
 
         if display_fig:
             # NOTE this could also be adjusted to save the fig.
-            fig.show()
+            fig.show(renderer="notebook")
         if streamlit:
             return fig
 
@@ -1501,7 +1501,7 @@ class Exploratory_data_analysis:
 
         if display_fig:
             # NOTE this could also be adjusted to save the fig.
-            fig.show()
+            fig.show(renderer="notebook")
         if streamlit:
             return fig
 
@@ -1592,7 +1592,7 @@ class Exploratory_data_analysis:
 
         if display_fig:
             # NOTE this could also be adjusted to save the fig.
-            fig.show()
+            fig.show(renderer="notebook")
         if streamlit:
             return fig
 
@@ -1664,7 +1664,7 @@ class Exploratory_data_analysis:
 
         if display_fig:
             # NOTE this could also be adjusted to save the fig.
-            fig.show()
+            fig.show(renderer="notebook")
         if streamlit:
             return fig
 
@@ -1742,7 +1742,7 @@ class Exploratory_data_analysis:
 
         if display_fig:
             # NOTE this could also be adjusted to save the fig.
-            fig.show()
+            fig.show(renderer="notebook")
         if streamlit:
             return fig
 
@@ -1827,7 +1827,7 @@ class Exploratory_data_analysis:
 
         if display_fig:
             # NOTE this could also be adjusted to save the fig.
-            fig.show()
+            fig.show(renderer="notebook")
         if streamlit:
             return fig
 
@@ -1877,7 +1877,7 @@ class Exploratory_data_analysis:
 
         if display_fig:
             # NOTE this could also be adjusted to save the fig.
-            fig.show()
+            fig.show(renderer="notebook")
         if streamlit:
             return fig
 
@@ -1928,7 +1928,7 @@ class Exploratory_data_analysis:
 
         if display_fig == True:
             # NOTE this could also be adjusted to save the fig.
-            fig.show()
+            fig.show(renderer="notebook")
         if streamlit == True:
             return fig
 
@@ -2010,7 +2010,7 @@ class Exploratory_data_analysis:
 
         if display_fig:
             # NOTE this could also be adjusted to save the fig.
-            fig.show()
+            fig.show(renderer="notebook")
         if streamlit:
             return fig
 
@@ -2065,7 +2065,7 @@ class Exploratory_data_analysis:
 
         if display_fig == True:
             # NOTE this could also be adjusted to save the fig.
-            fig.show()
+            fig.show(renderer="notebook")
         if streamlit == True:
             return fig
 
@@ -2142,7 +2142,7 @@ class Exploratory_data_analysis:
 
         if display_fig:
             # NOTE this could also be adjusted to save the fig.
-            fig.show()
+            fig.show(renderer="notebook")
         if streamlit:
             return fig
 
@@ -2207,6 +2207,6 @@ class Exploratory_data_analysis:
 
         if display_fig:
             # NOTE this could also be adjusted to save the fig.
-            fig.show()
+            fig.show(renderer="notebook")
         if streamlit:
             return fig
