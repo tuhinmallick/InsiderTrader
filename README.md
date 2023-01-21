@@ -9,7 +9,7 @@
 *** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
 *** https://www.markdownguide.org/basic-syntax/#reference-style-links
 -->
-[![PyPI version](https://badge.fury.io/py/InsiderTrader.svg)](https://badge.fury.io/py/InsiderTrader)
+[![PyPI version](https://badge.fury.io/py/InsiderTrader.svg?style=for-the-badge)](https://badge.fury.io/py/InsiderTrader)
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
