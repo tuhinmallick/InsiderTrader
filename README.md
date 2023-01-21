@@ -105,7 +105,16 @@ To get a local copy up and running follow these simple example steps.
 This is an example of how to list things you need to use the package and how to install them.
 
 
-### Installation
+## Installation
+
+Install InsiderTrader from pypi
+
+```bash
+  pip install InsiderTrader==0.1.0
+```
+    
+
+### Usage
 
 1. Clone the repo
    ```bash
@@ -133,7 +142,7 @@ This is an example of how to list things you need to use the package and how to 
 
 
 <!-- USAGE EXAMPLES -->
-## Usage
+## Example
 
 _For more examples, please refer to the [Notebook](https://github.com/tuhinmallick/InsiderTrader/blob/main/notebooks/Insider_trading_analysis.ipynb)_
 
