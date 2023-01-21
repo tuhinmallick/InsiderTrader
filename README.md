@@ -107,7 +107,7 @@ This is an example of how to list things you need to use the package and how to 
 
 ## Installation
 
-Install InsiderTrader from pypi
+Install [InsiderTrader](https://pypi.org/project/InsiderTrader/0.1.0/) from pypi
 
 ```bash
   pip install InsiderTrader==0.1.0
