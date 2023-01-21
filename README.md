@@ -145,8 +145,8 @@ _For more examples, please refer to the [Notebook](https://github.com/tuhinmalli
 
 - [X] Granger casaulty test
 - [X] AD Fuller test
-- [ ] Feature 3
-    - [ ] Nested Feature
+- [ ] Make package pip installable
+    - [ ] Make readme.rst
 
 See the [open issues](https://github.com/tuhinmallick/InsiderTrader/issues) for a full list of proposed features (and known issues).
 
