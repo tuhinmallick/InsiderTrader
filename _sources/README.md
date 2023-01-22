@@ -1,4 +1,3 @@
-
 <a name="readme-top"></a>
 
 <!-- PROJECT SHIELDS -->
@@ -9,14 +8,14 @@
 *** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
 *** https://www.markdownguide.org/basic-syntax/#reference-style-links
 -->
-[![PyPI version](https://badge.fury.io/py/InsiderTrader.svg)](https://badge.fury.io/py/InsiderTrader)
+
+[![PyPI version](https://badge.fury.io/py/insidertrader.svg)](https://badge.fury.io/py/insidertrader)
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
-
 
 <!-- PROJECT LOGO -->
 <br />
@@ -40,8 +39,6 @@
     <a href="https://github.com/tuhinmallick/InsiderTrader/issues">Request Feature</a>
   </p>
 </div>
-
-
 
 <!-- TABLE OF CONTENTS -->
 <details>
@@ -69,17 +66,15 @@
   </ol>
 </details>
 
-
-
 <!-- ABOUT THE PROJECT -->
+
 ## About The Project
 
 Insider trading refers to the practice of buying or selling securities by individuals who possess non-public information about a company. This information may include financial results, mergers and acquisitions, or other confidential information that is not yet available to the public. The individuals who engage in insider trading are typically corporate insiders, such as company executives and board members, but it can also include anyone who possesses non-public information.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
-<!-- 
+<!--
 ### Built With
 
 * [![Next][Next.js]][Next-url]
@@ -93,17 +88,21 @@ Insider trading refers to the practice of buying or selling securities by indivi
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p> -->
 
-
-
 <!-- GETTING STARTED -->
+
 ## Getting Started
 
 To get a local copy up and running follow these simple example steps.
 
-
-
-
 ### Installation
+
+Install [InsiderTrader](https://pypi.org/project/insidertrader/0.1.0/) from pypi
+
+```bash
+  pip install insidertrader
+```
+
+### Usage
 
 Install [InsiderTrader](https://pypi.org/project/InsiderTrader/0.1.0/) from pypi
 
@@ -126,7 +125,7 @@ Install [InsiderTrader](https://pypi.org/project/InsiderTrader/0.1.0/) from pypi
    ```bash
    conda env create -n ENVNAME --file docs/environment.yml
    ```
-   or 
+   or
    ```bash
    pip install -r requirements.txt
    ```
@@ -137,8 +136,6 @@ Install [InsiderTrader](https://pypi.org/project/InsiderTrader/0.1.0/) from pypi
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
-
 <!-- USAGE EXAMPLES -->
 ## Example
 
@@ -146,23 +143,21 @@ _For more examples, please refer to the [Notebook](https://github.com/tuhinmalli
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
-
 <!-- ROADMAP -->
+
 ## Roadmap
 
-- [X] Granger casaulty test
-- [X] AD Fuller test
+- [x] Granger casaulty test
+- [x] AD Fuller test
 - [ ] Make package pip installable
-    - [ ] Make readme.rst
+  - [ ] Make readme.rst
 
 See the [open issues](https://github.com/tuhinmallick/InsiderTrader/issues) for a full list of proposed features (and known issues).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
-
 <!-- CONTRIBUTING -->
+
 ## Contributing
 
 Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
@@ -178,9 +173,8 @@ Don't forget to give the project a star! Thanks again!
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
-
 <!-- LICENSE -->
+
 ## 🛡 License
 
 [![License](https://img.shields.io/github/license/tuhinmallick/InsiderTrader)](https://github.com/tuhinmallick/InsiderTrader/blob/master/LICENSE)
@@ -194,6 +188,7 @@ This project is licensed under the terms of the `MIT` license. See [LICENSE](htt
 - [@tuhinmallick](https://www.github.com/tuhinmallick)
 
 <!-- CONTACT -->
+
 ## Contact
 
 Your Name - [@tuhinmallick](https://twitter.com/tuhinmallick) - tuhin.mllk@gmail.com
@@ -202,20 +197,17 @@ Project Link: [https://github.com/tuhinmallick/InsiderTrader](https://github.com
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
-
 <!-- ACKNOWLEDGMENTS -->
+
 ## Acknowledgments
 
-* [ilyaryabov](https://www.kaggle.com/datasets/ilyaryabov/insider-trading-sp500-inside-info)
-
+- [ilyaryabov](https://www.kaggle.com/datasets/ilyaryabov/insider-trading-sp500-inside-info)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
-
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+
 [contributors-shield]: https://img.shields.io/github/contributors/tuhinmallick/InsiderTrader.svg?style=for-the-badge
 [contributors-url]: https://github.com/tuhinmallick/InsiderTrader/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/tuhinmallick/InsiderTrader.svg?style=for-the-badge
@@ -228,4 +220,3 @@ Project Link: [https://github.com/tuhinmallick/InsiderTrader](https://github.com
 [license-url]: https://github.com/tuhinmallick/InsiderTrader/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/tuhinmallick
-
