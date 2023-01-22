@@ -9,6 +9,7 @@
 *** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
 *** https://www.markdownguide.org/basic-syntax/#reference-style-links
 -->
+[![PyPI version](https://badge.fury.io/py/InsiderTrader.svg)](https://badge.fury.io/py/InsiderTrader)
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
@@ -24,10 +25,10 @@
     <img src="docs/images/logo.jpg" alt="Logo" width="80" height="80">
   </a>
 
-<h3 align="center">InsiderTrader</h3>
+<h3 align="center">InsiderTraders</h3>
 
   <p align="center">
-    InsiderTrader is a python package that helps in detecting insider trading activities in the stock market.
+    InsiderTraders is a python package that helps in detecting insider trading activities in the stock market.
     <br />
     <a href="https://github.com/tuhinmallick/InsiderTrader"><strong>Explore the docs »</strong></a>
     <br />
@@ -99,12 +100,19 @@ Insider trading refers to the practice of buying or selling securities by indivi
 
 To get a local copy up and running follow these simple example steps.
 
-### Prerequisites
 
-This is an example of how to list things you need to use the package and how to install them.
 
 
 ### Installation
+
+Install [InsiderTrader](https://pypi.org/project/InsiderTrader/0.1.0/) from pypi
+
+```bash
+  pip install insider-traders
+```
+    
+
+### Usage
 
 1. Clone the repo
    ```bash
@@ -132,7 +140,7 @@ This is an example of how to list things you need to use the package and how to 
 
 
 <!-- USAGE EXAMPLES -->
-## Usage
+## Example
 
 _For more examples, please refer to the [Notebook](https://github.com/tuhinmallick/InsiderTrader/blob/main/notebooks/Insider_trading_analysis.ipynb)_
 
@@ -145,8 +153,8 @@ _For more examples, please refer to the [Notebook](https://github.com/tuhinmalli
 
 - [X] Granger casaulty test
 - [X] AD Fuller test
-- [ ] Feature 3
-    - [ ] Nested Feature
+- [ ] Make package pip installable
+    - [ ] Make readme.rst
 
 See the [open issues](https://github.com/tuhinmallick/InsiderTrader/issues) for a full list of proposed features (and known issues).
 
