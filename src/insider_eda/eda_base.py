@@ -96,12 +96,12 @@ class Exploratory_data_analysis:
             for lag in range(-max_lags, max_lags + 1)
         ]  # NOTE needs to be +1 to reach the value.
 
-        # Combine into dataframe.
-        df_corr = pd.DataFrame({
-            "Lag": np.array(range(-max_lags, max_lags + 1)),
-            "Correlation": xcov_monthly,
-        })
-        return df_corr
+        return pd.DataFrame(
+            {
+                "Lag": np.array(range(-max_lags, max_lags + 1)),
+                "Correlation": xcov_monthly,
+            }
+        )
 
     def insider_activity(self, df: pd.DataFrame):
         """
@@ -130,7 +130,7 @@ class Exploratory_data_analysis:
         df_sale_count = df_sale.groupby(df_sale["Date"]).count()
         df_opt_count = df_opt.groupby(df_opt["Date"]).count()
 
-        combined_df = {
+        return {
             "df_buy": df_buy,
             "df_sale": df_sale,
             "df_opt": df_opt,
@@ -139,8 +139,6 @@ class Exploratory_data_analysis:
             "df_sale_count": df_sale_count,
             "df_opt_count": df_opt_count,
         }
-
-        return combined_df
 
     def transactions_per_insider(self, df: pd.DataFrame):
         """
@@ -178,9 +176,7 @@ class Exploratory_data_analysis:
 
         contributor = pd.DataFrame(self.df["Insider Trading"].value_counts())
         contributor.columns = ["incidents_num"]
-        top_contributors = contributor[
-            contributor["incidents_num"] > threshold]
-        return top_contributors
+        return contributor[contributor["incidents_num"] > threshold]
 
     def market_cap(self):
         """
@@ -193,9 +189,8 @@ class Exploratory_data_analysis:
         """
         num_of_contributors = list(self.top_contributor().index)
         total_value = []
-        for x in range(len(num_of_contributors)):
-            contributor = self.df[self.df["Insider Trading"] ==
-                                  num_of_contributors[x]]
+        for num_of_contributor in num_of_contributors:
+            contributor = self.df[self.df["Insider Trading"] == num_of_contributor]
             contributor_value = list(contributor["Value ($)"])[0]
             total_value.append(contributor_value)
         top_market_cap = pd.DataFrame(num_of_contributors)
@@ -236,8 +231,7 @@ class Exploratory_data_analysis:
         ]
         df_copy = df_copy.reset_index()
 
-        act_day, day_1, day_2, day_3, day_4, day_5, month = ([]
-                                                             for i in range(7))
+        act_day, day_1, day_2, day_3, day_4, day_5, month = ([] for _ in range(7))
         for i in range(len(df_copy)):
             for j in range(len(stock_df_copy)):
                 if df_copy["new_trans_date"][i] == stock_df_copy.index[j]:
@@ -273,8 +267,7 @@ class Exploratory_data_analysis:
         """
         df_copy = self.df.copy()
 
-        act_day, day_1, day_2, day_3, day_4, day_5, month = ([]
-                                                             for i in range(7))
+        act_day, day_1, day_2, day_3, day_4, day_5, month = ([] for _ in range(7))
         for day in range(len(stock_df_copy)):
             day_1.append((
                 (stock_df_copy["Close_day1"][day] - stock_df_copy[diff][day]) /
@@ -435,12 +428,12 @@ class Exploratory_data_analysis:
         if rolling_mean:
             ax.plot(
                 self.df[y_variable].rolling(rolling_window).mean(),
-                label=f"Moving Average",
+                label="Moving Average",
             )
         if rolling_std:
             ax.plot(
                 self.df[y_variable].rolling(rolling_window).std(),
-                label=f"Moving Standard Deviation",
+                label="Moving Standard Deviation",
             )
         if (rolling_mean) or (rolling_std):
             plt.legend(fontsize=fontsize_legend)
@@ -468,9 +461,7 @@ class Exploratory_data_analysis:
                 facecolor=facecolor,
                 transparent=transparent,
             )
-            plt.show()
-        else:
-            plt.show()
+        plt.show()
         if streamlit:
             return fig
 
@@ -530,14 +521,12 @@ class Exploratory_data_analysis:
         if save_path is not None:
             fig.savefig(
                 os.path.join(
-                    save_path,
-                    f"monthly_plot_{y_variable}{file_name_addition}" + ".png"),
+                    save_path, f"monthly_plot_{y_variable}{file_name_addition}.png"
+                ),
                 facecolor=facecolor,
                 transparent=transparent,
             )
-            plt.show()
-        else:
-            plt.show()
+        plt.show()
         if streamlit:
             return fig
 
@@ -607,9 +596,7 @@ class Exploratory_data_analysis:
                 facecolor=facecolor,
                 transparent=transparent,
             )
-            plt.show()
-        else:
-            plt.show()
+        plt.show()
         if streamlit:
             return fig
 
@@ -725,9 +712,7 @@ class Exploratory_data_analysis:
                 facecolor=facecolor,
                 transparent=transparent,
             )
-            plt.show()
-        else:
-            plt.show()
+        plt.show()
         if streamlit:
             return fig
 
@@ -772,14 +757,12 @@ class Exploratory_data_analysis:
         columns = [values]
 
         # Append the lags t+1.
-        for i in range(1, (lags + 1)):
-            columns.append(values.shift(i))
+        columns.extend(values.shift(i) for i in range(1, (lags + 1)))
         df_lag = pd.concat(columns, axis=1)
         columns = ["t+1"]
 
         # Append the lags t-h
-        for i in range(1, (lags + 1)):
-            columns.append(f"t-{i}")
+        columns.extend(f"t-{i}" for i in range(1, (lags + 1)))
         df_lag.columns = columns
 
         plt.figure(1)
@@ -793,14 +776,12 @@ class Exploratory_data_analysis:
         if save_path is not None:
             plt.savefig(
                 os.path.join(
-                    save_path,
-                    f"lag_plot_{y_variable}{file_name_addition}" + ".png"),
+                    save_path, f"lag_plot_{y_variable}{file_name_addition}.png"
+                ),
                 facecolor=facecolor,
                 transparent=transparent,
             )
-            plt.show()
-        else:
-            plt.show()
+        plt.show()
         if streamlit:
             return plt
 
@@ -856,14 +837,12 @@ class Exploratory_data_analysis:
         if save_path is not None:
             fig.savefig(
                 os.path.join(
-                    save_path,
-                    f"acf_pacf_{y_variable}{file_name_addition}" + ".png"),
+                    save_path, f"acf_pacf_{y_variable}{file_name_addition}.png"
+                ),
                 facecolor=facecolor,
                 transparent=transparent,
             )
-            plt.show()
-        else:
-            plt.show()
+        plt.show()
         if streamlit:
             return fig
 
@@ -932,9 +911,7 @@ class Exploratory_data_analysis:
                 facecolor=facecolor,
                 transparent=transparent,
             )
-            plt.show()
-        else:
-            plt.show()
+        plt.show()
         if streamlit:
             return plt
 
@@ -1027,9 +1004,7 @@ class Exploratory_data_analysis:
                 facecolor=facecolor,
                 transparent=transparent,
             )
-            plt.show()
-        else:
-            plt.show()
+        plt.show()
         if streamlit:
             return fig
 
@@ -1148,9 +1123,7 @@ class Exploratory_data_analysis:
                 facecolor=facecolor,
                 transparent=transparent,
             )
-            plt.show()
-        else:
-            plt.show()
+        plt.show()
         if streamlit:
             return fig
 
@@ -1247,9 +1220,7 @@ class Exploratory_data_analysis:
                 facecolor=facecolor,
                 transparent=transparent,
             )
-            plt.show()
-        else:
-            plt.show()
+        plt.show()
         if streamlit:
             return fig
 
@@ -1282,12 +1253,11 @@ class Exploratory_data_analysis:
             f, p, _, _ = res[lag][0]["ssr_ftest"]
             f_list.append(f)
             p_list.append(p)
-        result_dict = {
+        return {
             "F-value": f_list,
             "P-value": p_list,
             "Lag-range": np.array(lag_range).tolist(),
         }
-        return result_dict
 
     def single_granger_plot(
             self,
@@ -1371,9 +1341,7 @@ class Exploratory_data_analysis:
                 facecolor=facecolor,
                 transparent=transparent,
             )
-            plt.show()
-        else:
-            plt.show()
+        plt.show()
         if streamlit:
             return fig
 
@@ -1729,7 +1697,7 @@ class Exploratory_data_analysis:
             ))
         # Plot aestethics
         fig.update_layout(
-            title=f"Insider activity over time",
+            title="Insider activity over time",
             xaxis_title="Date in months",
             yaxis_title="Number of incident",
             autosize=False,
@@ -2128,7 +2096,7 @@ class Exploratory_data_analysis:
                     marker=dict(size=15, color=c),
                 ))
         fig.update_layout(
-            title=f"Insider activity over time",
+            title="Insider activity over time",
             xaxis_title="Date in months",
             yaxis_title="Number of incident",
             autosize=False,
