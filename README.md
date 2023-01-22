@@ -102,14 +102,6 @@ Install [InsiderTrader](https://pypi.org/project/insidertrader/0.1.0/) from pypi
   pip install insidertrader
 ```
 
-### Usage
-
-Install [InsiderTrader](https://pypi.org/project/InsiderTrader/0.1.0/) from pypi
-
-```bash
-  pip install InsiderTrader==0.1.0
-```
-    
 
 ### Usage
 
