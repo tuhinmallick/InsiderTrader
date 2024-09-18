@@ -1,6 +1,7 @@
 import sys
 import requests
 
+
 def check_version(package, version):
     """
     Retrieves metadata from PyPI and checks if a specified package has released
@@ -29,6 +30,7 @@ def check_version(package, version):
         if version in data['releases']:
             return True
     return False
+
 
 if __name__ == "__main__":
     if len(sys.argv) != 3:
