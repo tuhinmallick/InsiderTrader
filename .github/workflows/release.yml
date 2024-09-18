@@ -31,7 +31,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.10'  # Align with your Conda environment
+          python-version: '3.10'
 
       # Cache Poetry packages (optional but recommended)
       - name: Cache Poetry packages
@@ -83,6 +83,15 @@ jobs:
           git push "https://$GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY.git"
           git push "https://$GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" --tags
 
+      # Run Black Formatter
+      - name: Install Black
+        run: |
+          poetry add --dev black
+
+      - name: Run Black Formatter
+        run: |
+          poetry run black .
+
       # Build distribution
       - name: Build distribution
         run: |
@@ -108,7 +117,7 @@ jobs:
 
       # Notify on Publish Failure (optional)
       - name: Notify on Publish Failure
-        if: failure()
+        if: ${{ failure() }}
         run: |
           echo "Publishing to PyPI failed. The version may already exist."
           # Add additional notification logic here (e.g., Slack, Email)
