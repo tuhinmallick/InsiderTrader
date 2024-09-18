@@ -7,30 +7,54 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Step 1: Checkout the repository using GITHUB_TOKEN
       - uses: actions/checkout@v4
-
-      - name: Run python black code formatter
-        id: format_code # Add an ID to reference the output
-        uses: DataDog/action-py-black-formatter@v2.5
         with:
-          additional_args: "."
-          fail_on_error: true
-          main_branch: main
-          quiet_mode: false
-          print_diff_mode: false
-          check_mode: false
-          only_changed_files: false
-          base_commit: ${{ github.event.before }}
+          token: ${{ secrets.GITHUB_TOKEN }}
 
+      # Step 2: Set up Python environment
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'  # Align with your project Python version
+
+      # Step 3: Install Poetry
+      - name: Install Poetry
+        run: |
+          curl -sSL https://install.python-poetry.org | python3 -
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+
+      # Step 4: Install project dependencies
+      - name: Install dependencies
+        run: |
+          poetry install --no-interaction --no-root
+
+      # Step 5: Install Black as a development dependency
+      - name: Add Black Formatter
+        run: |
+          poetry add --dev black
+
+      # Step 6: Run Black to format the code
+      - name: Run Black Formatter
+        run: |
+          poetry run black .
+
+      # Step 7: Check if Black made any changes
+      - name: Check for formatting changes
+        id: check_black
+        run: |
+          git diff --exit-code
+        continue-on-error: true
+
+      # Step 8: Create Pull Request if formatting changes are detected
       - name: Create Pull Request
-        if: ${{ steps.format_code.outputs.is_formatted == 'true' }} # Correctly reference the output
+        if: steps.check_black.outcome == 'failure'
         uses: peter-evans/create-pull-request@v6
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          title: "Format Python code with psf/black push"
-          commit-message: ":art: Format Python code with psf/black"
+          title: "Format Python code with Black"
+          commit-message: ":art: Format Python code with Black"
           body: |
-            There appear to be some python formatting errors in ${{ github.sha }}. This pull request
-            uses the [psf/black](https://github.com/psf/black) formatter to fix these issues.
+            The Black formatter has made changes to ensure consistent code formatting.
           base: ${{ github.head_ref }}
           branch: actions/black
