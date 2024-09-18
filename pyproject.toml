@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "insidertrader"
-version = "0.1.2"
+version = "1.0.0"
 description = "A tool for insider trading analysis."
 authors = ["Tuhin Mallick <contact@tuhinmallick.com>"]
 license = "MIT"
