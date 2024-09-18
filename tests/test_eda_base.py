@@ -1,6 +1,7 @@
 """
 Tests eda_base.py.
 """
+
 import unittest
 
 import numpy as np
