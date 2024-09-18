@@ -11,24 +11,29 @@ on:
           - major
           - minor
           - patch
+      publish_to_pypi:
+        type: boolean
+        description: 'Publish to PyPI'
+        required: true
+        default: false
 
 jobs:
   release:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout the repository
+      # Checkout the repository using GITHUB_TOKEN
       - uses: actions/checkout@v4
         with:
-          token: ${{ secrets.DEPLOY_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       # Set up Python
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'  # Standardize to Python 3.11
+          python-version: '3.11'
 
-      # Cache Poetry packages (optional but recommended)
+      # Cache Poetry packages
       - name: Cache Poetry packages
         uses: actions/cache@v4
         with:
@@ -64,11 +69,51 @@ jobs:
         run: |
           poetry version ${{ github.event.inputs.bump }}
           export NEW_VERSION=v$(poetry version -s)
-          git commit -am "Bumping to version $NEW_VERSION"
+          git add pyproject.toml
+          git commit -m "Bumping to version $NEW_VERSION"
           git tag -a $NEW_VERSION -m "Release $NEW_VERSION"
 
       # Prepatch to the next version (prepare for the next development cycle)
       - name: Prepatch to the next version
         run: |
           poetry version prepatch
-          export NEXT_VERSION=v$(poetr
+          export NEXT_VERSION=v$(poetry version -s)
+          git add pyproject.toml
+          git commit -m "Prepatching to $NEXT_VERSION"
+          git tag -a $NEXT_VERSION -m "Prepatch $NEXT_VERSION"
+
+      # Push commits and tags using GITHUB_TOKEN
+      - name: Push changes
+        run: |
+          git push "https://$GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY.git"
+          git push "https://$GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" --tags
+
+      # Build distribution
+      - name: Build distribution
+        run: |
+          poetry build
+
+      # Publish to Test PyPI
+      - name: Publish to Test PyPI
+        if: always()
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.TEST_PYPI_API_TOKEN }}
+        run: |
+          poetry publish --repository test-pypi --username $TWINE_USERNAME --password $TWINE_PASSWORD
+
+      # Publish to PyPI (conditional)
+      - name: Publish to PyPI
+        if: ${{ github.event.inputs.publish_to_pypi == 'true' }}
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
+        run: |
+          poetry publish --username $TWINE_USERNAME --password $TWINE_PASSWORD
+
+      # Notify on Publish Failure (optional)
+      - name: Notify on Publish Failure
+        if: failure()
+        run: |
+          echo "Publishing to PyPI failed. The version may already exist."
+          # Add additional notification logic here (e.g., Slack, Email)
