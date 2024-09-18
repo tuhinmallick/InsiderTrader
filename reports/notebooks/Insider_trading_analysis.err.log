@@ -1,0 +1,163 @@
+Traceback (most recent call last):
+  File "/usr/share/miniconda/envs/test/lib/python3.10/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
+    executenb(
+  File "/usr/share/miniconda/envs/test/lib/python3.10/site-packages/nbclient/client.py", line 1314, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "/usr/share/miniconda/envs/test/lib/python3.10/site-packages/jupyter_core/utils/__init__.py", line 165, in wrapped
+    return loop.run_until_complete(inner)
+  File "/usr/share/miniconda/envs/test/lib/python3.10/asyncio/base_events.py", line 649, in run_until_complete
+    return future.result()
+  File "/usr/share/miniconda/envs/test/lib/python3.10/site-packages/nbclient/client.py", line 709, in async_execute
+    await self.async_execute_cell(
+  File "/usr/share/miniconda/envs/test/lib/python3.10/site-packages/nbclient/client.py", line 1062, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/usr/share/miniconda/envs/test/lib/python3.10/site-packages/nbclient/client.py", line 918, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+%load_ext autoreload
+%autoreload 2
+from insider_eda.eda_base import Exploratory_data_analysis
+------------------
+
+----- stderr -----
+
+A module that was compiled using NumPy 1.x cannot be run in
+NumPy 2.1.1 as it may crash. To support both 1.x and 2.x
+versions of NumPy, modules must be compiled with NumPy 2.0.
+Some module may need to rebuild instead e.g. with 'pybind11>=2.12'.
+
+If you are a user of the module, the easiest solution will be to
+downgrade to 'numpy<2' or try to upgrade the affected module.
+We expect that some modules will need time to support NumPy 2.
+
+Traceback (most recent call last):  File "/usr/share/miniconda/envs/test/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/usr/share/miniconda/envs/test/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/usr/share/miniconda/envs/test/lib/python3.10/site-packages/ipykernel_launcher.py", line 18, in <module>
+    app.launch_new_instance()
+  File "/usr/share/miniconda/envs/test/lib/python3.10/site-packages/traitlets/config/application.py", line 1075, in launch_instance
+    app.start()
+  File "/usr/share/miniconda/envs/test/lib/python3.10/site-packages/ipykernel/kernelapp.py", line 739, in start
+    self.io_loop.start()
+  File "/usr/share/miniconda/envs/test/lib/python3.10/site-packages/tornado/platform/asyncio.py", line 205, in start
+    self.asyncio_loop.run_forever()
+  File "/usr/share/miniconda/envs/test/lib/python3.10/asyncio/base_events.py", line 603, in run_forever
+    self._run_once()
+  File "/usr/share/miniconda/envs/test/lib/python3.10/asyncio/base_events.py", line 1906, in _run_once
+    handle._run()
+  File "/usr/share/miniconda/envs/test/lib/python3.10/asyncio/events.py", line 80, in _run
+    self._context.run(self._callback, *self._args)
+  File "/usr/share/miniconda/envs/test/lib/python3.10/site-packages/ipykernel/kernelbase.py", line 545, in dispatch_queue
+    await self.process_one()
+  File "/usr/share/miniconda/envs/test/lib/python3.10/site-packages/ipykernel/kernelbase.py", line 534, in process_one
+    await dispatch(*args)
+  File "/usr/share/miniconda/envs/test/lib/python3.10/site-packages/ipykernel/kernelbase.py", line 437, in dispatch_shell
+    await result
+  File "/usr/share/miniconda/envs/test/lib/python3.10/site-packages/ipykernel/ipkernel.py", line 362, in execute_request
+    await super().execute_request(stream, ident, parent)
+  File "/usr/share/miniconda/envs/test/lib/python3.10/site-packages/ipykernel/kernelbase.py", line 778, in execute_request
+    reply_content = await reply_content
+  File "/usr/share/miniconda/envs/test/lib/python3.10/site-packages/ipykernel/ipkernel.py", line 449, in do_execute
+    res = shell.run_cell(
+  File "/usr/share/miniconda/envs/test/lib/python3.10/site-packages/ipykernel/zmqshell.py", line 549, in run_cell
+    return super().run_cell(*args, **kwargs)
+  File "/usr/share/miniconda/envs/test/lib/python3.10/site-packages/IPython/core/interactiveshell.py", line 3075, in run_cell
+    result = self._run_cell(
+  File "/usr/share/miniconda/envs/test/lib/python3.10/site-packages/IPython/core/interactiveshell.py", line 3130, in _run_cell
+    result = runner(coro)
+  File "/usr/share/miniconda/envs/test/lib/python3.10/site-packages/IPython/core/async_helpers.py", line 128, in _pseudo_sync_runner
+    coro.send(None)
+  File "/usr/share/miniconda/envs/test/lib/python3.10/site-packages/IPython/core/interactiveshell.py", line 3334, in run_cell_async
+    has_raised = await self.run_ast_nodes(code_ast.body, cell_name,
+  File "/usr/share/miniconda/envs/test/lib/python3.10/site-packages/IPython/core/interactiveshell.py", line 3517, in run_ast_nodes
+    if await self.run_code(code, result, async_=asy):
+  File "/usr/share/miniconda/envs/test/lib/python3.10/site-packages/IPython/core/interactiveshell.py", line 3577, in run_code
+    exec(code_obj, self.user_global_ns, self.user_ns)
+  File "/tmp/ipykernel_1924/247545397.py", line 3, in <module>
+    from insider_eda.eda_base import Exploratory_data_analysis
+  File "/home/runner/work/InsiderTrader/InsiderTrader/src/insider_eda/eda_base.py", line 5, in <module>
+    import matplotlib.mlab as mlab
+  File "/usr/share/miniconda/envs/test/lib/python3.10/site-packages/matplotlib/__init__.py", line 113, in <module>
+    from . import _api, _version, cbook, _docstring, rcsetup
+  File "/usr/share/miniconda/envs/test/lib/python3.10/site-packages/matplotlib/rcsetup.py", line 27, in <module>
+    from matplotlib.colors import Colormap, is_color_like
+  File "/usr/share/miniconda/envs/test/lib/python3.10/site-packages/matplotlib/colors.py", line 56, in <module>
+    from matplotlib import _api, _cm, cbook, scale
+  File "/usr/share/miniconda/envs/test/lib/python3.10/site-packages/matplotlib/scale.py", line 22, in <module>
+    from matplotlib.ticker import (
+  File "/usr/share/miniconda/envs/test/lib/python3.10/site-packages/matplotlib/ticker.py", line 138, in <module>
+    from matplotlib import transforms as mtransforms
+  File "/usr/share/miniconda/envs/test/lib/python3.10/site-packages/matplotlib/transforms.py", line 49, in <module>
+    from matplotlib._path import (
+------------------
+
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mImportError[0m                               Traceback (most recent call last)
+Cell [0;32mIn[2], line 3[0m
+[1;32m      1[0m get_ipython()[38;5;241m.[39mrun_line_magic([38;5;124m'[39m[38;5;124mload_ext[39m[38;5;124m'[39m, [38;5;124m'[39m[38;5;124mautoreload[39m[38;5;124m'[39m)
+[1;32m      2[0m get_ipython()[38;5;241m.[39mrun_line_magic([38;5;124m'[39m[38;5;124mautoreload[39m[38;5;124m'[39m, [38;5;124m'[39m[38;5;124m2[39m[38;5;124m'[39m)
+[0;32m----> 3[0m [38;5;28;01mfrom[39;00m [38;5;21;01minsider_eda[39;00m[38;5;21;01m.[39;00m[38;5;21;01meda_base[39;00m [38;5;28;01mimport[39;00m Exploratory_data_analysis
+
+File [0;32m~/work/InsiderTrader/InsiderTrader/src/insider_eda/eda_base.py:5[0m
+[1;32m      2[0m [38;5;28;01mimport[39;00m [38;5;21;01mtime[39;00m
+[1;32m      3[0m [38;5;28;01mfrom[39;00m [38;5;21;01mdatetime[39;00m [38;5;28;01mimport[39;00m datetime
+[0;32m----> 5[0m [38;5;28;01mimport[39;00m [38;5;21;01mmatplotlib[39;00m[38;5;21;01m.[39;00m[38;5;21;01mmlab[39;00m [38;5;28;01mas[39;00m [38;5;21;01mmlab[39;00m
+[1;32m      6[0m [38;5;28;01mimport[39;00m [38;5;21;01mmatplotlib[39;00m[38;5;21;01m.[39;00m[38;5;21;01mpyplot[39;00m [38;5;28;01mas[39;00m [38;5;21;01mplt[39;00m
+[1;32m      7[0m [38;5;28;01mimport[39;00m [38;5;21;01mnumpy[39;00m [38;5;28;01mas[39;00m [38;5;21;01mnp[39;00m
+
+File [0;32m/usr/share/miniconda/envs/test/lib/python3.10/site-packages/matplotlib/__init__.py:113[0m
+[1;32m    109[0m [38;5;28;01mfrom[39;00m [38;5;21;01mpackaging[39;00m[38;5;21;01m.[39;00m[38;5;21;01mversion[39;00m [38;5;28;01mimport[39;00m parse [38;5;28;01mas[39;00m parse_version
+[1;32m    111[0m [38;5;66;03m# cbook must import matplotlib only within function[39;00m
+[1;32m    112[0m [38;5;66;03m# definitions, so it is safe to import from it here.[39;00m
+[0;32m--> 113[0m [38;5;28;01mfrom[39;00m [38;5;21;01m.[39;00m [38;5;28;01mimport[39;00m _api, _version, cbook, _docstring, rcsetup
+[1;32m    114[0m [38;5;28;01mfrom[39;00m [38;5;21;01mmatplotlib[39;00m[38;5;21;01m.[39;00m[38;5;21;01mcbook[39;00m [38;5;28;01mimport[39;00m sanitize_sequence
+[1;32m    115[0m [38;5;28;01mfrom[39;00m [38;5;21;01mmatplotlib[39;00m[38;5;21;01m.[39;00m[38;5;21;01m_api[39;00m [38;5;28;01mimport[39;00m MatplotlibDeprecationWarning
+
+File [0;32m/usr/share/miniconda/envs/test/lib/python3.10/site-packages/matplotlib/rcsetup.py:27[0m
+[1;32m     25[0m [38;5;28;01mfrom[39;00m [38;5;21;01mmatplotlib[39;00m [38;5;28;01mimport[39;00m _api, cbook
+[1;32m     26[0m [38;5;28;01mfrom[39;00m [38;5;21;01mmatplotlib[39;00m[38;5;21;01m.[39;00m[38;5;21;01mcbook[39;00m [38;5;28;01mimport[39;00m ls_mapper
+[0;32m---> 27[0m [38;5;28;01mfrom[39;00m [38;5;21;01mmatplotlib[39;00m[38;5;21;01m.[39;00m[38;5;21;01mcolors[39;00m [38;5;28;01mimport[39;00m Colormap, is_color_like
+[1;32m     28[0m [38;5;28;01mfrom[39;00m [38;5;21;01mmatplotlib[39;00m[38;5;21;01m.[39;00m[38;5;21;01m_fontconfig_pattern[39;00m [38;5;28;01mimport[39;00m parse_fontconfig_pattern
+[1;32m     29[0m [38;5;28;01mfrom[39;00m [38;5;21;01mmatplotlib[39;00m[38;5;21;01m.[39;00m[38;5;21;01m_enums[39;00m [38;5;28;01mimport[39;00m JoinStyle, CapStyle
+
+File [0;32m/usr/share/miniconda/envs/test/lib/python3.10/site-packages/matplotlib/colors.py:56[0m
+[1;32m     54[0m [38;5;28;01mimport[39;00m [38;5;21;01mmatplotlib[39;00m [38;5;28;01mas[39;00m [38;5;21;01mmpl[39;00m
+[1;32m     55[0m [38;5;28;01mimport[39;00m [38;5;21;01mnumpy[39;00m [38;5;28;01mas[39;00m [38;5;21;01mnp[39;00m
+[0;32m---> 56[0m [38;5;28;01mfrom[39;00m [38;5;21;01mmatplotlib[39;00m [38;5;28;01mimport[39;00m _api, _cm, cbook, scale
+[1;32m     57[0m [38;5;28;01mfrom[39;00m [38;5;21;01m.[39;00m[38;5;21;01m_color_data[39;00m [38;5;28;01mimport[39;00m BASE_COLORS, TABLEAU_COLORS, CSS4_COLORS, XKCD_COLORS
+[1;32m     60[0m [38;5;28;01mclass[39;00m [38;5;21;01m_ColorMapping[39;00m([38;5;28mdict[39m):
+
+File [0;32m/usr/share/miniconda/envs/test/lib/python3.10/site-packages/matplotlib/scale.py:22[0m
+[1;32m     20[0m [38;5;28;01mimport[39;00m [38;5;21;01mmatplotlib[39;00m [38;5;28;01mas[39;00m [38;5;21;01mmpl[39;00m
+[1;32m     21[0m [38;5;28;01mfrom[39;00m [38;5;21;01mmatplotlib[39;00m [38;5;28;01mimport[39;00m _api, _docstring
+[0;32m---> 22[0m [38;5;28;01mfrom[39;00m [38;5;21;01mmatplotlib[39;00m[38;5;21;01m.[39;00m[38;5;21;01mticker[39;00m [38;5;28;01mimport[39;00m (
+[1;32m     23[0m     NullFormatter, ScalarFormatter, LogFormatterSciNotation, LogitFormatter,
+[1;32m     24[0m     NullLocator, LogLocator, AutoLocator, AutoMinorLocator,
+[1;32m     25[0m     SymmetricalLogLocator, AsinhLocator, LogitLocator)
+[1;32m     26[0m [38;5;28;01mfrom[39;00m [38;5;21;01mmatplotlib[39;00m[38;5;21;01m.[39;00m[38;5;21;01mtransforms[39;00m [38;5;28;01mimport[39;00m Transform, IdentityTransform
+[1;32m     29[0m [38;5;28;01mclass[39;00m [38;5;21;01mScaleBase[39;00m:
+
+File [0;32m/usr/share/miniconda/envs/test/lib/python3.10/site-packages/matplotlib/ticker.py:138[0m
+[1;32m    136[0m [38;5;28;01mimport[39;00m [38;5;21;01mmatplotlib[39;00m [38;5;28;01mas[39;00m [38;5;21;01mmpl[39;00m
+[1;32m    137[0m [38;5;28;01mfrom[39;00m [38;5;21;01mmatplotlib[39;00m [38;5;28;01mimport[39;00m _api, cbook
+[0;32m--> 138[0m [38;5;28;01mfrom[39;00m [38;5;21;01mmatplotlib[39;00m [38;5;28;01mimport[39;00m transforms [38;5;28;01mas[39;00m mtransforms
+[1;32m    140[0m _log [38;5;241m=[39m logging[38;5;241m.[39mgetLogger([38;5;18m__name__[39m)
+[1;32m    142[0m __all__ [38;5;241m=[39m ([38;5;124m'[39m[38;5;124mTickHelper[39m[38;5;124m'[39m, [38;5;124m'[39m[38;5;124mFormatter[39m[38;5;124m'[39m, [38;5;124m'[39m[38;5;124mFixedFormatter[39m[38;5;124m'[39m,
+[1;32m    143[0m            [38;5;124m'[39m[38;5;124mNullFormatter[39m[38;5;124m'[39m, [38;5;124m'[39m[38;5;124mFuncFormatter[39m[38;5;124m'[39m, [38;5;124m'[39m[38;5;124mFormatStrFormatter[39m[38;5;124m'[39m,
+[1;32m    144[0m            [38;5;124m'[39m[38;5;124mStrMethodFormatter[39m[38;5;124m'[39m, [38;5;124m'[39m[38;5;124mScalarFormatter[39m[38;5;124m'[39m, [38;5;124m'[39m[38;5;124mLogFormatter[39m[38;5;124m'[39m,
+[0;32m   (...)[0m
+[1;32m    150[0m            [38;5;124m'[39m[38;5;124mMultipleLocator[39m[38;5;124m'[39m, [38;5;124m'[39m[38;5;124mMaxNLocator[39m[38;5;124m'[39m, [38;5;124m'[39m[38;5;124mAutoMinorLocator[39m[38;5;124m'[39m,
+[1;32m    151[0m            [38;5;124m'[39m[38;5;124mSymmetricalLogLocator[39m[38;5;124m'[39m, [38;5;124m'[39m[38;5;124mAsinhLocator[39m[38;5;124m'[39m, [38;5;124m'[39m[38;5;124mLogitLocator[39m[38;5;124m'[39m)
+
+File [0;32m/usr/share/miniconda/envs/test/lib/python3.10/site-packages/matplotlib/transforms.py:49[0m
+[1;32m     46[0m [38;5;28;01mfrom[39;00m [38;5;21;01mnumpy[39;00m[38;5;21;01m.[39;00m[38;5;21;01mlinalg[39;00m [38;5;28;01mimport[39;00m inv
+[1;32m     48[0m [38;5;28;01mfrom[39;00m [38;5;21;01mmatplotlib[39;00m [38;5;28;01mimport[39;00m _api
+[0;32m---> 49[0m [38;5;28;01mfrom[39;00m [38;5;21;01mmatplotlib[39;00m[38;5;21;01m.[39;00m[38;5;21;01m_path[39;00m [38;5;28;01mimport[39;00m (
+[1;32m     50[0m     affine_transform, count_bboxes_overlapping_bbox, update_path_extents)
+[1;32m     51[0m [38;5;28;01mfrom[39;00m [38;5;21;01m.[39;00m[38;5;21;01mpath[39;00m [38;5;28;01mimport[39;00m Path
+[1;32m     53[0m DEBUG [38;5;241m=[39m [38;5;28;01mFalse[39;00m
+
+[0;31mImportError[0m: numpy.core.multiarray failed to import
+
