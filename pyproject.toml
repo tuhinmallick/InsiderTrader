@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "insidertrader"
-version = "0.1.1"
+version = "0.1.2"
 description = "A tool for insider trading analysis."
 authors = ["Tuhin Mallick <contact@tuhinmallick.com>"]
 license = "MIT"
@@ -18,8 +18,7 @@ cryptography = "38.0.4"
 idna = "3.4"
 libffi = "3.4.2"
 requests = "2.28.1"
-ruamel.yaml = "0.17.21"
-ruamel.yaml.clib = "0.2.6"
+ruamel-yaml = "0.17.21"
 setuptools = "65.6.3"
 toolz = "0.12.0"
 tqdm = "4.64.1"
