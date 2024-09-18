@@ -1,9 +1,9 @@
 [tool.poetry]
 name = "insidertrader"
-version = "0.1.0"  # Update as necessary
+version = "0.1.0"
 description = "A tool for insider trading analysis."
 authors = ["Tuhin Mallick <contact@tuhinmallick.com>"]
-license = "MIT"  # Update as per your project's license
+license = "MIT"
 readme = "README.md"
 homepage = "https://github.com/tuhinmallick/InsiderTrader"
 repository = "https://github.com/tuhinmallick/InsiderTrader"
@@ -33,6 +33,11 @@ pytest = "^7.0"
 pycparser = "2.21"
 pyopenssl = "22.0.0"
 wheel = "0.37.1"
+
+[tool.black]
+line-length = 100
+target-version = ['py310']
+skip-string-normalization = true
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
