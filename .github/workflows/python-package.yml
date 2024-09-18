@@ -1,36 +1,29 @@
-name: Build and Publish Python Distribution
+name: Build and Test Python Package
 
 on:
   push:
     branches: [ main ]
   pull_request:
     branches: [ main ]
-  workflow_dispatch:
-    inputs:
-      publish_to_pypi:
-        description: 'Publish to PyPI'
-        required: true
-        default: 'false'
-        type: choice
-        options:
-          - 'true'
-          - 'false'
 
 jobs:
-  build-n-publish:
-    name: Build and publish Python distribution
+  build-and-test:
+    name: Build and Test
     runs-on: ubuntu-latest
+
     steps:
-      # Checkout the repository
+      # Checkout the repository using GITHUB_TOKEN
       - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       # Set up Python
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: '3.10'  # Align with your `pyproject.toml`
 
-      # Cache Poetry packages
+      # Cache Poetry packages (optional but recommended)
       - name: Cache Poetry packages
         uses: actions/cache@v4
         with:
@@ -43,7 +36,7 @@ jobs:
       - name: Install Poetry
         run: |
           curl -sSL https://install.python-poetry.org | python3 -
-          echo "::add-path::$HOME/.local/bin"
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
 
       # Install dependencies
       - name: Install dependencies
@@ -76,7 +69,9 @@ jobs:
 
       # Publish to PyPI (conditional)
       - name: Publish to PyPI
-        if: ${{ github.event.inputs.publish_to_pypi == 'true' }}
+        if: |
+          github.event_name == 'push' && github.ref == 'refs/heads/main' || 
+          (github.event_name == 'workflow_dispatch' && github.event.inputs.publish_to_pypi == 'true')
         env:
           TWINE_USERNAME: __token__
           TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
