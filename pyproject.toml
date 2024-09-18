@@ -30,6 +30,7 @@ pytest = "^7.0"
 pycparser = "2.21"
 pyopenssl = "22.0.0"
 wheel = "0.37.1"
+black = "^24.8.0"
 
 [tool.black]
 line-length = 100
