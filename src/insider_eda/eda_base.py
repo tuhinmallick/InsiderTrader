@@ -218,9 +218,7 @@ class Exploratory_data_analysis:
         df_copy["new_trans_date"] = [
             time.strptime(str(y.date()), "%Y-%m-%d") for y in df_copy["Date"]
         ]
-        stock_df_copy.index = [
-            time.strptime(str(x.date()), "%Y-%m-%d") for x in stock_df_copy.Date
-        ]
+        stock_df_copy.index = [time.strptime(str(x.date()), "%Y-%m-%d") for x in stock_df_copy.Date]
         df_copy = df_copy.reset_index()
 
         act_day, day_1, day_2, day_3, day_4, day_5, month = ([] for _ in range(7))
@@ -338,9 +336,7 @@ class Exploratory_data_analysis:
 
         return return_df
 
-    def show_returns(
-        self, df: pd.DataFrame, threshold: int, include: list, returns_type: str
-    ):
+    def show_returns(self, df: pd.DataFrame, threshold: int, include: list, returns_type: str):
         """
         Show returns for specified activities
 
@@ -417,15 +413,9 @@ class Exploratory_data_analysis:
             dpi (int, optional): DPI value of the plot. Defaults to 100.
         """
         # Parse some kwargs configurations
-        fontsize_title = (
-            kwargs["fontsize_title"] if kwargs.get("fontsize_title") else 20
-        )
-        fontsize_label = (
-            kwargs["fontsize_label"] if kwargs.get("fontsize_label") else 16
-        )
-        fontsize_legend = (
-            kwargs["fontsize_legend"] if kwargs.get("fontsize_legend") else 14
-        )
+        fontsize_title = kwargs["fontsize_title"] if kwargs.get("fontsize_title") else 20
+        fontsize_label = kwargs["fontsize_label"] if kwargs.get("fontsize_label") else 16
+        fontsize_legend = kwargs["fontsize_legend"] if kwargs.get("fontsize_legend") else 14
         rolling_window = kwargs["rolling_window"] if kwargs.get("rolling_window") else 6
         xlabel = kwargs["xlabel"] if kwargs.get("xlabel") else "Date"
         file_name_addition = (
@@ -498,12 +488,8 @@ class Exploratory_data_analysis:
             dpi (int, optional): DPI value of the plot. Defaults to 80.
         """
         # Parse some kwargs configurations
-        fontsize_title = (
-            kwargs["fontsize_title"] if kwargs.get("fontsize_title") else 20
-        )
-        fontsize_label = (
-            kwargs["fontsize_label"] if kwargs.get("fontsize_label") else 14
-        )
+        fontsize_title = kwargs["fontsize_title"] if kwargs.get("fontsize_title") else 20
+        fontsize_label = kwargs["fontsize_label"] if kwargs.get("fontsize_label") else 14
         line_color = kwargs["line_color"] if kwargs.get("line_color") else "cyan"
         zorder = kwargs["zorder"] if kwargs.get("zorder") else 0
         file_name_addition = (
@@ -533,9 +519,7 @@ class Exploratory_data_analysis:
 
         if save_path is not None:
             fig.savefig(
-                os.path.join(
-                    save_path, f"monthly_plot_{y_variable}{file_name_addition}.png"
-                ),
+                os.path.join(save_path, f"monthly_plot_{y_variable}{file_name_addition}.png"),
                 facecolor=facecolor,
                 transparent=transparent,
             )
@@ -562,12 +546,8 @@ class Exploratory_data_analysis:
             dpi (int, optional): DPI value of the plot. Defaults to 80.
         """
         # Parse some kwargs configurations
-        fontsize_title = (
-            kwargs["fontsize_title"] if kwargs.get("fontsize_title") else 20
-        )
-        fontsize_label = (
-            kwargs["fontsize_label"] if kwargs.get("fontsize_label") else 14
-        )
+        fontsize_title = kwargs["fontsize_title"] if kwargs.get("fontsize_title") else 20
+        fontsize_label = kwargs["fontsize_label"] if kwargs.get("fontsize_label") else 14
         line_color = kwargs["line_color"] if kwargs.get("line_color") else "cyan"
         zorder = kwargs["zorder"] if kwargs.get("zorder") else 0
         file_name_addition = (
@@ -628,21 +608,11 @@ class Exploratory_data_analysis:
             dpi (int, optional): DPI value of the plot. Defaults to 80.
         """
         # Parse some kwargs configurations
-        fontsize_title = (
-            kwargs["fontsize_title"] if kwargs.get("fontsize_title") else 20
-        )
-        fontsize_label = (
-            kwargs["fontsize_label"] if kwargs.get("fontsize_label") else 14
-        )
-        fontsize_ticks = (
-            kwargs["fontsize_ticks"] if kwargs.get("fontsize_ticks") else 14
-        )
-        x_labelrotation = (
-            kwargs["x_labelrotation"] if kwargs.get("x_labelrotation") else 45
-        )
-        box_line_color = (
-            kwargs["x_labelrotation"] if kwargs.get("x_labelrotation") else "silver"
-        )
+        fontsize_title = kwargs["fontsize_title"] if kwargs.get("fontsize_title") else 20
+        fontsize_label = kwargs["fontsize_label"] if kwargs.get("fontsize_label") else 14
+        fontsize_ticks = kwargs["fontsize_ticks"] if kwargs.get("fontsize_ticks") else 14
+        x_labelrotation = kwargs["x_labelrotation"] if kwargs.get("x_labelrotation") else 45
+        box_line_color = kwargs["x_labelrotation"] if kwargs.get("x_labelrotation") else "silver"
         file_name_addition = (
             kwargs["file_name_addition"] if kwargs.get("file_name_addition") else ""
         )  # add any additional string to the file name.
@@ -690,12 +660,8 @@ class Exploratory_data_analysis:
         )
 
         # Plot Aesthetics
-        axs[0].set_title(
-            label="Year-wise Box Plot\n(The Trend)", fontsize=fontsize_title
-        )
-        axs[1].set_title(
-            label="Month-wise Box Plot\n(The Seasonality)", fontsize=fontsize_title
-        )
+        axs[0].set_title(label="Year-wise Box Plot\n(The Trend)", fontsize=fontsize_title)
+        axs[1].set_title(label="Month-wise Box Plot\n(The Seasonality)", fontsize=fontsize_title)
 
         axs[0].set_xlabel(xlabel="Year".title(), fontsize=fontsize_label)
         axs[1].set_xlabel(xlabel="Month".title(), fontsize=fontsize_label)
@@ -703,12 +669,8 @@ class Exploratory_data_analysis:
         axs[0].set_ylabel(ylabel=y_variable.title(), fontsize=fontsize_label)
         axs[1].set_ylabel(ylabel=y_variable.title(), fontsize=fontsize_label)
 
-        axs[0].tick_params(
-            axis="x", labelsize=fontsize_ticks, labelrotation=x_labelrotation
-        )
-        axs[1].tick_params(
-            axis="x", labelsize=fontsize_ticks, labelrotation=x_labelrotation
-        )
+        axs[0].tick_params(axis="x", labelsize=fontsize_ticks, labelrotation=x_labelrotation)
+        axs[1].tick_params(axis="x", labelsize=fontsize_ticks, labelrotation=x_labelrotation)
 
         axs[0].tick_params(axis="y", labelsize=fontsize_ticks)
         axs[1].tick_params(axis="y", labelsize=fontsize_ticks)
@@ -748,12 +710,8 @@ class Exploratory_data_analysis:
             figsize (tuple, optional): Figure size of the plot in inch. Defaults to (16,7).
         """
         # Parse some kwargs configurations
-        fontsize_title = (
-            kwargs["fontsize_title"] if kwargs.get("fontsize_title") else 20
-        )
-        plot_matrix_shape = (
-            kwargs["plot_matrix_shape"] if kwargs.get("plot_matrix_shape") else 240
-        )
+        fontsize_title = kwargs["fontsize_title"] if kwargs.get("fontsize_title") else 20
+        plot_matrix_shape = kwargs["plot_matrix_shape"] if kwargs.get("plot_matrix_shape") else 240
         file_name_addition = (
             kwargs["file_name_addition"] if kwargs.get("file_name_addition") else ""
         )  # add any additional string to the file name.
@@ -788,9 +746,7 @@ class Exploratory_data_analysis:
 
         if save_path is not None:
             plt.savefig(
-                os.path.join(
-                    save_path, f"lag_plot_{y_variable}{file_name_addition}.png"
-                ),
+                os.path.join(save_path, f"lag_plot_{y_variable}{file_name_addition}.png"),
                 facecolor=facecolor,
                 transparent=transparent,
             )
@@ -847,9 +803,7 @@ class Exploratory_data_analysis:
 
         if save_path is not None:
             fig.savefig(
-                os.path.join(
-                    save_path, f"acf_pacf_{y_variable}{file_name_addition}.png"
-                ),
+                os.path.join(save_path, f"acf_pacf_{y_variable}{file_name_addition}.png"),
                 facecolor=facecolor,
                 transparent=transparent,
             )
@@ -885,12 +839,8 @@ class Exploratory_data_analysis:
             if kwargs.get("title_label")
             else f"{decompose_model.title()} Decomposition of {y_variable}"
         )
-        axhline_color = (
-            kwargs["axhline_color"] if kwargs.get("axhline_color") else "white"
-        )
-        axhline_linewidth = (
-            kwargs["axhline_linewidth"] if kwargs.get("axhline_linewidth") else 1.5
-        )
+        axhline_color = kwargs["axhline_color"] if kwargs.get("axhline_color") else "white"
+        axhline_linewidth = kwargs["axhline_linewidth"] if kwargs.get("axhline_linewidth") else 1.5
         file_name_addition = (
             kwargs["file_name_addition"] if kwargs.get("file_name_addition") else ""
         )  # add any additional string to the file name.
@@ -942,9 +892,7 @@ class Exploratory_data_analysis:
         regression = kwargs["maxlag"] if kwargs.get("maxlag") else "c"
         # Run the test:
         for y_variable in col_list:
-            test_results = adfuller(
-                self.df[y_variable], regression=regression, autolag=autolag
-            )
+            test_results = adfuller(self.df[y_variable], regression=regression, autolag=autolag)
             print(
                 "---------------------------------------------------------------------------------------------------------------------"
             )
@@ -983,12 +931,8 @@ class Exploratory_data_analysis:
             if kwargs.get("title_label")
             else f"STL Decomposition of {y_variable}"
         )
-        axhline_color = (
-            kwargs["axhline_color"] if kwargs.get("axhline_color") else "white"
-        )
-        axhline_linewidth = (
-            kwargs["axhline_linewidth"] if kwargs.get("axhline_linewidth") else 1.5
-        )
+        axhline_color = kwargs["axhline_color"] if kwargs.get("axhline_color") else "white"
+        axhline_linewidth = kwargs["axhline_linewidth"] if kwargs.get("axhline_linewidth") else 1.5
         file_name_addition = (
             kwargs["file_name_addition"] if kwargs.get("file_name_addition") else ""
         )  # add any additional string to the file name.
@@ -1049,25 +993,15 @@ class Exploratory_data_analysis:
             rect (tuple, optional): Tuple that indicates how the tight layout is configured. Defaults to (0,0,1,0.96).
         """
         # Parse some kwargs configurations
-        fontsize_title = (
-            kwargs["fontsize_title"] if kwargs.get("fontsize_title") else 20
-        )
-        fontsize_sub_title = (
-            kwargs["fontsize_title"] if kwargs.get("fontsize_title") else 16
-        )
-        fontsize_label = (
-            kwargs["fontsize_label"] if kwargs.get("fontsize_label") else 14
-        )
+        fontsize_title = kwargs["fontsize_title"] if kwargs.get("fontsize_title") else 20
+        fontsize_sub_title = kwargs["fontsize_title"] if kwargs.get("fontsize_title") else 16
+        fontsize_label = kwargs["fontsize_label"] if kwargs.get("fontsize_label") else 14
         n_x_ticks = kwargs["n_x_ticks"] if kwargs.get("n_x_ticks") else 10
-        threshold_value = (
-            kwargs["threshold_value"] if kwargs.get("threshold_value") else 0.1
-        )
+        threshold_value = kwargs["threshold_value"] if kwargs.get("threshold_value") else 0.1
         color_fillbetween = (
             kwargs["color_fillbetween"] if kwargs.get("color_fillbetween") else "pink"
         )
-        alpha_fillbetween = (
-            kwargs["alpha_fillbetween"] if kwargs.get("alpha_fillbetween") else 0.2
-        )
+        alpha_fillbetween = kwargs["alpha_fillbetween"] if kwargs.get("alpha_fillbetween") else 0.2
         xcorr_lw = kwargs["xcorr_lw"] if kwargs.get("xcorr_lw") else 2
         usevlines = kwargs["usevlines"] if kwargs.get("usevlines") else True
         normed = kwargs["normed"] if kwargs.get("normed") else True
@@ -1128,9 +1062,7 @@ class Exploratory_data_analysis:
             axs[i // 4, i % 4].set_visible(False)
             i += 1
         # Layout and plot
-        fig.suptitle(
-            f"Cross Correlation Against {y_variable.title()}", fontsize=fontsize_title
-        )
+        fig.suptitle(f"Cross Correlation Against {y_variable.title()}", fontsize=fontsize_title)
         fig.tight_layout(rect=rect)
 
         if save_path is not None:
@@ -1168,25 +1100,15 @@ class Exploratory_data_analysis:
             dpi (int, optional): dpi (int, optional): DPI value of the plot. Defaults to 180.
         """
         # Parse some kwargs configurations
-        fontsize_title = (
-            kwargs["fontsize_title"] if kwargs.get("fontsize_title") else 20
-        )
-        fontsize_label = (
-            kwargs["fontsize_label"] if kwargs.get("fontsize_label") else 14
-        )
-        fontsize_xyticks = (
-            kwargs["fontsize_xyticks"] if kwargs.get("fontsize_xyticks") else 12
-        )
+        fontsize_title = kwargs["fontsize_title"] if kwargs.get("fontsize_title") else 20
+        fontsize_label = kwargs["fontsize_label"] if kwargs.get("fontsize_label") else 14
+        fontsize_xyticks = kwargs["fontsize_xyticks"] if kwargs.get("fontsize_xyticks") else 12
         n_x_ticks = kwargs["n_x_ticks"] if kwargs.get("n_x_ticks") else 10
-        threshold_value = (
-            kwargs["threshold_value"] if kwargs.get("threshold_value") else 0.1
-        )
+        threshold_value = kwargs["threshold_value"] if kwargs.get("threshold_value") else 0.1
         color_fillbetween = (
             kwargs["color_fillbetween"] if kwargs.get("color_fillbetween") else "pink"
         )
-        alpha_fillbetween = (
-            kwargs["alpha_fillbetween"] if kwargs.get("alpha_fillbetween") else 0.2
-        )
+        alpha_fillbetween = kwargs["alpha_fillbetween"] if kwargs.get("alpha_fillbetween") else 0.2
         xcorr_lw = kwargs["xcorr_lw"] if kwargs.get("xcorr_lw") else 5
         usevlines = kwargs["usevlines"] if kwargs.get("usevlines") else True
         normed = kwargs["normed"] if kwargs.get("normed") else True
@@ -1225,9 +1147,7 @@ class Exploratory_data_analysis:
         )
 
         # Plot aestethics
-        ax.set_title(
-            f"{y_variable.title()} vs {x_variable.title()}", fontsize=fontsize_title
-        )
+        ax.set_title(f"{y_variable.title()} vs {x_variable.title()}", fontsize=fontsize_title)
         ax.set_xlabel("<-- lead | lag -->", fontsize=fontsize_label)
         ax.set_xticks(np.arange(-max_lags, max_lags + 5, n_x_ticks))
         ax.tick_params(axis="x", labelbottom=True)
@@ -1238,8 +1158,7 @@ class Exploratory_data_analysis:
             fig.savefig(
                 os.path.join(
                     save_path,
-                    f"cross_correlation_{y_variable}_v_{x_variable}{file_name_addition}"
-                    + ".png",
+                    f"cross_correlation_{y_variable}_v_{x_variable}{file_name_addition}" + ".png",
                 ),
                 facecolor=facecolor,
                 transparent=transparent,
@@ -1248,9 +1167,7 @@ class Exploratory_data_analysis:
         if streamlit:
             return fig
 
-    def granger_causality_generator(
-        self, y_variable: str, x_variable: str, max_lags=12
-    ):
+    def granger_causality_generator(self, y_variable: str, x_variable: str, max_lags=12):
         """Function to calculate the granger causality and return the values for the max_lag period as a dictionary.
 
         Args:
@@ -1304,15 +1221,9 @@ class Exploratory_data_analysis:
             dpi (int, optional): dpi (int, optional): DPI value of the plot. Defaults to 180.
         """
         # Parse some kwargs configurations
-        fontsize_title = (
-            kwargs["fontsize_title"] if kwargs.get("fontsize_title") else 20
-        )
-        fontsize_label = (
-            kwargs["fontsize_label"] if kwargs.get("fontsize_label") else 14
-        )
-        fontsize_xyticks = (
-            kwargs["fontsize_xyticks"] if kwargs.get("fontsize_xyticks") else 12
-        )
+        fontsize_title = kwargs["fontsize_title"] if kwargs.get("fontsize_title") else 20
+        fontsize_label = kwargs["fontsize_label"] if kwargs.get("fontsize_label") else 14
+        fontsize_xyticks = kwargs["fontsize_xyticks"] if kwargs.get("fontsize_xyticks") else 12
         file_name_addition = (
             kwargs["file_name_addition"] if kwargs.get("file_name_addition") else ""
         )  # add any additional string to the file name.
@@ -1325,9 +1236,7 @@ class Exploratory_data_analysis:
         )  # If p-value is shown. Can be True and False.
 
         # Generate the Granger Causality
-        grange_dict = self.granger_causality_generator(
-            y_variable, x_variable, max_lags=max_lags
-        )
+        grange_dict = self.granger_causality_generator(y_variable, x_variable, max_lags=max_lags)
 
         # Generate Plots
         fig, ax = plt.subplots(figsize=figsize, dpi=dpi)
@@ -1360,8 +1269,7 @@ class Exploratory_data_analysis:
             fig.savefig(
                 os.path.join(
                     save_path,
-                    f"granger_causality_{y_variable}_v_{x_variable}{file_name_addition}"
-                    + ".png",
+                    f"granger_causality_{y_variable}_v_{x_variable}{file_name_addition}" + ".png",
                 ),
                 facecolor=facecolor,
                 transparent=transparent,
@@ -1403,9 +1311,7 @@ class Exploratory_data_analysis:
 
         fig = go.Figure()
 
-        fig.add_trace(
-            go.Scatter(x=self.x_date, y=round(self.df[y_variable], 1), name="Trend")
-        )
+        fig.add_trace(go.Scatter(x=self.x_date, y=round(self.df[y_variable], 1), name="Trend"))
 
         if rolling_mean:
             fig.add_trace(
@@ -1529,9 +1435,7 @@ class Exploratory_data_analysis:
 
         fig.add_trace(
             go.Scatter(
-                x=np.array(
-                    range(int(df_corr["Lag"].min() - 1), int(df_corr["Lag"].max() + 2))
-                ),
+                x=np.array(range(int(df_corr["Lag"].min() - 1), int(df_corr["Lag"].max() + 2))),
                 y=(len(df_corr) + 2) * [0.1],
                 fill="tozeroy",
                 fillcolor="rgba(245,218,223,0.2)",
@@ -1543,9 +1447,7 @@ class Exploratory_data_analysis:
 
         fig.add_trace(
             go.Scatter(
-                x=np.array(
-                    range(int(df_corr["Lag"].min() - 1), int(df_corr["Lag"].max() + 2))
-                ),
+                x=np.array(range(int(df_corr["Lag"].min() - 1), int(df_corr["Lag"].max() + 2))),
                 y=(len(df_corr) + 2) * [-0.1],
                 fill="tozeroy",
                 fillcolor="rgba(245,218,223,0.2)",
@@ -1617,9 +1519,7 @@ class Exploratory_data_analysis:
         """
 
         # Generate the Granger Causality
-        grange_dict = self.granger_causality_generator(
-            y_variable, x_variable, max_lags=max_lags
-        )
+        grange_dict = self.granger_causality_generator(y_variable, x_variable, max_lags=max_lags)
 
         fig = go.Figure()
         p_value = grange_dict["P-value"]
@@ -1857,9 +1757,7 @@ class Exploratory_data_analysis:
         """
 
         # Generate the Top Contributor
-        top_contributor = self.top_contributor().sort_values(
-            by=["incidents_num"], ascending=False
-        )
+        top_contributor = self.top_contributor().sort_values(by=["incidents_num"], ascending=False)
         fig = go.Figure()
 
         fig.add_trace(
@@ -1909,9 +1807,7 @@ class Exploratory_data_analysis:
         """
 
         # Generate the market capital
-        top_market_cap = self.market_cap().sort_values(
-            by=["Value ($)"], ascending=False
-        )
+        top_market_cap = self.market_cap().sort_values(by=["Value ($)"], ascending=False)
 
         fig = go.Figure()
 
@@ -1983,9 +1879,7 @@ class Exploratory_data_analysis:
             c = next(color)
             df = "df_" + trans
             # Generate grouping of activities
-            grouped_trans = (
-                combined_df[df].groupby(combined_df[df]["Date"]).sum(numeric_only=True)
-            )
+            grouped_trans = combined_df[df].groupby(combined_df[df]["Date"]).sum(numeric_only=True)
             if threshold:
                 grouped_trans = grouped_trans[grouped_trans["Value ($)"] < threshold]
             fig.add_trace(
