@@ -75,7 +75,7 @@ Traceback (most recent call last):  File "/usr/share/miniconda/envs/test/lib/pyt
     if await self.run_code(code, result, async_=asy):
   File "/usr/share/miniconda/envs/test/lib/python3.10/site-packages/IPython/core/interactiveshell.py", line 3577, in run_code
     exec(code_obj, self.user_global_ns, self.user_ns)
-  File "/tmp/ipykernel_1922/247545397.py", line 3, in <module>
+  File "/tmp/ipykernel_1914/247545397.py", line 3, in <module>
     from insider_eda.eda_base import Exploratory_data_analysis
   File "/home/runner/work/InsiderTrader/InsiderTrader/src/insider_eda/eda_base.py", line 5, in <module>
     import matplotlib.mlab as mlab
