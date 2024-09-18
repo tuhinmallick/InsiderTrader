@@ -1,4 +1,5 @@
 name: Release
+
 on:
   workflow_dispatch:
     inputs:
@@ -14,39 +15,60 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
+
     steps:
+      # Checkout the repository
       - uses: actions/checkout@v4
         with:
           token: ${{ secrets.DEPLOY_TOKEN }}
+
+      # Set up Python
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v5
         with:
-          python-version: 3.9
-      - name: Update Poetry and dependencies
+          python-version: '3.11'  # Standardize to Python 3.11
+
+      # Cache Poetry packages (optional but recommended)
+      - name: Cache Poetry packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pypoetry
+          key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-poetry-
+
+      # Install Poetry
+      - name: Install Poetry
         run: |
-          pip install --upgrade pip
-          pip install --upgrade poetry
-          pip install --upgrade poetry-core
-      - name: Clear Poetry cache
-        run: poetry cache clear . --all
+          curl -sSL https://install.python-poetry.org | python3 -
+          echo "::add-path::$HOME/.local/bin"
+
+      # Install dependencies
       - name: Install dependencies
-        run: poetry install
-      - name: Configure git
         run: |
-          git config --global user.name 'Release bot'
-          git config --global user.email 'action@github.com'
-      - name: Bump release version and tag
+          poetry install --no-interaction --no-root
+
+      # Run tests (optional but recommended)
+      - name: Run tests
+        run: |
+          poetry run pytest
+
+      # Lint with flake8
+      - name: Lint with flake8
+        run: |
+          poetry run flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+          poetry run flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+
+      # Bump version
+      - name: Bump version
         run: |
           poetry version ${{ github.event.inputs.bump }}
           export NEW_VERSION=v$(poetry version -s)
           git commit -am "Bumping to version $NEW_VERSION"
-          git tag -a $NEW_VERSION -m $NEW_VERSION
+          git tag -a $NEW_VERSION -m "Release $NEW_VERSION"
+
+      # Prepatch to the next version (prepare for the next development cycle)
       - name: Prepatch to the next version
         run: |
           poetry version prepatch
-          export NEW_VERSION=v$(poetry version -s)
-          git commit -am "Prepatching to $NEW_VERSION"
-      - name: Push results
-        run: |
-          git push "https://$GITHUB_ACTOR:${{ secrets.DEPLOY_TOKEN }}@github.com/$GITHUB_REPOSITORY.git"
-          git push "https://$GITHUB_ACTOR:${{ secrets.DEPLOY_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" --tags
+          export NEXT_VERSION=v$(poetr
