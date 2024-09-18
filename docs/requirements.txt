@@ -3,6 +3,6 @@ numpy==2.1.1
 pandas==1.5.2
 plotly==5.11.0
 seaborn==0.13.2
-statsmodels==0.13.5
+statsmodels==0.14.3
 nbformat>=4.2.0
 jupyter-book>=0.12.0
