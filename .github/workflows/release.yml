@@ -5,12 +5,9 @@ on:
     inputs:
       bump:
         type: choice
-        description: How to bump the version
+        description: 'Version bump type'
         required: true
-        options:
-          - major
-          - minor
-          - patch
+        options: [major, minor, patch]
       publish_to_pypi:
         type: boolean
         description: 'Publish to PyPI'
@@ -22,102 +19,88 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout the repository using GITHUB_TOKEN
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
 
-      # Set up Python
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v4
         with:
           python-version: '3.10'
 
-      # Cache Poetry packages (optional but recommended)
-      - name: Cache Poetry packages
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/pypoetry
-          key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-poetry-
-
-      # Install Poetry
       - name: Install Poetry
-        run: |
-          curl -sSL https://install.python-poetry.org | python3 -
-          echo "$HOME/.local/bin" >> $GITHUB_PATH
+        uses: snok/install-poetry@v1
+        with:
+          version: 1.5.1
+          virtualenvs-create: true
+          virtualenvs-in-project: true
 
-      # Install dependencies
+      - name: Load cached venv
+        id: cached-poetry-dependencies
+        uses: actions/cache@v3
+        with:
+          path: .venv
+          key: venv-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('**/poetry.lock') }}
+
       - name: Install dependencies
-        run: |
-          poetry install --no-interaction --no-root
+        if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
+        run: poetry install --no-interaction --no-root
 
-      # Configure git
-      - name: Configure git
+      - name: Configure Git
         run: |
-          git config --global user.name 'Release Bot'
-          git config --global user.email 'action@github.com'
+          git config user.name github-actions
+          git config user.email github-actions@github.com
 
-      # Bump release version and tag
-      - name: Bump release version and tag
+      - name: Bump version
+        id: bump_version
         run: |
           poetry version ${{ github.event.inputs.bump }}
-          export NEW_VERSION=v$(poetry version -s)
-          git add pyproject.toml
-          git commit -m "Bumping to version $NEW_VERSION"
-          git tag -a $NEW_VERSION -m "Release $NEW_VERSION"
+          echo "NEW_VERSION=$(poetry version -s)" >> $GITHUB_OUTPUT
 
-      # Prepatch to the next version
-      - name: Prepatch to the next version
-        run: |
-          poetry version prepatch
-          export NEXT_VERSION=v$(poetry version -s)
-          git add pyproject.toml
-          git commit -m "Prepatching to $NEXT_VERSION"
-          git tag -a $NEXT_VERSION -m "Prepatch $NEXT_VERSION"
-
-      # Push commits and tags using GITHUB_TOKEN
-      - name: Push changes
-        run: |
-          git push "https://$GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY.git"
-          git push "https://$GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" --tags
-
-      # Run Black Formatter
-      - name: Install Black
-        run: |
-          poetry add --dev black
-
-      - name: Run Black Formatter
-        run: |
-          poetry run black .
-
-      # Build distribution
-      - name: Build distribution
-        run: |
-          poetry build
-
-      # Publish to Test PyPI
-      - name: Publish to Test PyPI
-        if: always()
+      - name: Update CHANGELOG
+        uses: release-drafter/release-drafter@v5
         env:
-          TWINE_USERNAME: __token__
-          TWINE_PASSWORD: ${{ secrets.TEST_PYPI_API_TOKEN }}
-        run: |
-          poetry publish --repository test-pypi --username $TWINE_USERNAME --password $TWINE_PASSWORD
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # Publish to PyPI (conditional)
+      - name: Commit changes
+        run: |
+          git add pyproject.toml CHANGELOG.md
+          git commit -m "Bump version to ${{ steps.bump_version.outputs.NEW_VERSION }}"
+          git tag v${{ steps.bump_version.outputs.NEW_VERSION }}
+
+      - name: Run tests
+        run: poetry run pytest
+
+      - name: Build package
+        run: poetry build
+
+      - name: Publish to TestPyPI
+        run: |
+          poetry config repositories.testpypi https://test.pypi.org/legacy/
+          poetry config pypi-token.testpypi ${{ secrets.TEST_PYPI_API_TOKEN }}
+          poetry publish -r testpypi
+
       - name: Publish to PyPI
         if: ${{ github.event.inputs.publish_to_pypi == 'true' }}
-        env:
-          TWINE_USERNAME: __token__
-          TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
         run: |
-          poetry publish --username $TWINE_USERNAME --password $TWINE_PASSWORD
+          poetry config pypi-token.pypi ${{ secrets.PYPI_API_TOKEN }}
+          poetry publish
 
-      # Notify on Publish Failure (optional)
-      - name: Notify on Publish Failure
-        if: ${{ failure() }}
-        run: |
-          echo "Publishing to PyPI failed. The version may already exist."
-          # Add additional notification logic here (e.g., Slack, Email)
+      - name: Push changes
+        run: git push origin main --tags
+
+      - name: Create GitHub Release
+        uses: release-drafter/release-drafter@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          version: v${{ steps.bump_version.outputs.NEW_VERSION }}
+          publish: true
+
+      - name: Notify on Failure
+        if: failure()
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          text: Release process failed
+          webhook_url: ${{ secrets.SLACK_WEBHOOK }}
