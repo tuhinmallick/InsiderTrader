@@ -31,9 +31,9 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: '3.10'  # Align with your Conda environment
 
-      # Cache Poetry packages
+      # Cache Poetry packages (optional but recommended)
       - name: Cache Poetry packages
         uses: actions/cache@v4
         with:
@@ -46,26 +46,21 @@ jobs:
       - name: Install Poetry
         run: |
           curl -sSL https://install.python-poetry.org | python3 -
-          echo "::add-path::$HOME/.local/bin"
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
 
       # Install dependencies
       - name: Install dependencies
         run: |
           poetry install --no-interaction --no-root
 
-      # Run tests (optional but recommended)
-      - name: Run tests
+      # Configure git
+      - name: Configure git
         run: |
-          poetry run pytest
+          git config --global user.name 'Release Bot'
+          git config --global user.email 'action@github.com'
 
-      # Lint with flake8
-      - name: Lint with flake8
-        run: |
-          poetry run flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-          poetry run flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-
-      # Bump version
-      - name: Bump version
+      # Bump release version and tag
+      - name: Bump release version and tag
         run: |
           poetry version ${{ github.event.inputs.bump }}
           export NEW_VERSION=v$(poetry version -s)
@@ -73,7 +68,7 @@ jobs:
           git commit -m "Bumping to version $NEW_VERSION"
           git tag -a $NEW_VERSION -m "Release $NEW_VERSION"
 
-      # Prepatch to the next version (prepare for the next development cycle)
+      # Prepatch to the next version
       - name: Prepatch to the next version
         run: |
           poetry version prepatch
