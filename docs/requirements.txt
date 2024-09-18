@@ -1,7 +1,7 @@
 matplotlib==3.6.3
 numpy==2.1.1
 pandas==1.5.3
-plotly==5.11.0
+plotly==5.24.1
 seaborn==0.13.2
 statsmodels==0.14.3
 nbformat>=4.2.0
