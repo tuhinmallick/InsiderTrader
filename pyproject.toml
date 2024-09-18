@@ -17,7 +17,7 @@ requests = "^2.28.1"
 
 [tool.poetry.dev-dependencies]
 flake8 = "^4.0"
-pytest = "^7.0"
+pytest = "^8.0.0"
 # Add other development dependencies as needed
 
 [build-system]
