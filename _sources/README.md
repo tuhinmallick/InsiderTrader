@@ -102,7 +102,6 @@ Install [InsiderTrader](https://pypi.org/project/insidertrader/0.1.0/) from pypi
   pip install insidertrader
 ```
 
-
 ### Usage
 
 1. Clone the repo
@@ -129,6 +128,7 @@ Install [InsiderTrader](https://pypi.org/project/insidertrader/0.1.0/) from pypi
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- USAGE EXAMPLES -->
+
 ## Example
 
 _For more examples, please refer to the [Notebook](https://github.com/tuhinmallick/InsiderTrader/blob/main/notebooks/Insider_trading_analysis.ipynb)_
@@ -141,8 +141,8 @@ _For more examples, please refer to the [Notebook](https://github.com/tuhinmalli
 
 - [x] Granger casaulty test
 - [x] AD Fuller test
-- [ ] Make package pip installable
-  - [ ] Make readme.rst
+- [x] Make package pip installable
+  - [x] Make readme.rst
 
 See the [open issues](https://github.com/tuhinmallick/InsiderTrader/issues) for a full list of proposed features (and known issues).
 
