@@ -36,12 +36,12 @@ jobs:
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
       - name: Build distribution
         run: python -m build
-      # - name: Publish to Test PyPI
-      #   env:
-      #     TWINE_USERNAME: __token__
-      #     TWINE_PASSWORD: ${{ secrets.TEST_PYPI_API_TOKEN }}
-      #   run: |
-      #     twine upload --verbose --repository-url https://test.pypi.org/legacy/ dist/*
+      - name: Publish to Test PyPI
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.TEST_PYPI_API_TOKEN }}
+        run: |
+          twine upload --verbose --repository-url https://test.pypi.org/legacy/ dist/*
       - name: Publish to PyPI
         if: github.event_name == 'push' && github.ref == 'refs/heads/main' || (github.event_name == 'workflow_dispatch' && github.event.inputs.publish_to_pypi == 'true')
         env:
