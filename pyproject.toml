@@ -9,7 +9,7 @@ homepage = "https://github.com/tuhinmallick/InsiderTrader"
 repository = "https://github.com/tuhinmallick/InsiderTrader"
 keywords = ["trading", "finance", "insider trading"]
 packages = [
-    { include = "insidertrader" }  # Explicitly include the insidertrader package
+    { include = "insider_eda", from = "src" }  # Explicitly set the package location
 ]
 
 [tool.poetry.dependencies]
