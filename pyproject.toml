@@ -8,7 +8,6 @@ readme = "README.md"
 homepage = "https://github.com/tuhinmallick/InsiderTrader"
 repository = "https://github.com/tuhinmallick/InsiderTrader"
 keywords = ["trading", "finance", "insider trading"]
-categories = ["Category :: Financial :: Investment"]
 
 [tool.poetry.dependencies]
 python = "^3.10"
@@ -26,7 +25,7 @@ tzdata = "2022g"
 urllib3 = "1.26.14"
 zstandard = "0.18.0"
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.dev.dependencies]
 flake8 = "^4.0"
 pytest = "^7.0"
 pycparser = "2.21"
