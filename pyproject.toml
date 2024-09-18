@@ -30,7 +30,7 @@ zstandard = "0.18.0"
 [tool.poetry.group.dev.dependencies]
 flake8 = "^4.0"
 pytest = "^7.0"
-pycparser = "2.21"
+pycparser = "2.22"
 pyopenssl = "22.0.0"
 wheel = "0.37.1"
 black = "^24.8.0"
