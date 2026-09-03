@@ -21,7 +21,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.10'  # Align with your `pyproject.toml`
+          python-version: '3.14'  # Align with your `pyproject.toml`
 
       # Cache Poetry packages (optional but recommended)
       - name: Cache Poetry packages
