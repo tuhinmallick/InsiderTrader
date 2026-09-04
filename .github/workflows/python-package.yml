@@ -25,7 +25,7 @@ jobs:
 
       # Cache Poetry packages (optional but recommended)
       - name: Cache Poetry packages
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: ~/.cache/pypoetry
           key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
